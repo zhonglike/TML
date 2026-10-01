@@ -18,6 +18,7 @@ const OUT = join(ROOT, 'dist');
 
 const INCLUDE = [
   'index.html',
+  'reset.html',
   'manifest.webmanifest',
   'sw.js',
   'src',
