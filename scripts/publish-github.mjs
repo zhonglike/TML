@@ -109,24 +109,30 @@ async function main() {
     '- 测试：引擎冒烟测试 + UI 无头渲染测试 + 发布前总检查（全部零依赖）',
   ].join('\n');
 
-  // 空仓库无法创建 git object（409），第一个文件用 Contents API 提交以初始化仓库。
-  // 注意：Contents API 的 content 必须是 base64（即使是纯文本）。
-  const [first, ...rest] = files;
-  const firstBuf = await readFile(first.abs);
-  await api(`/repos/${OWNER}/${REPO}/contents/${first.rel}`, {
-    method: 'PUT',
-    body: JSON.stringify({
-      message,
-      content: firstBuf.toString('base64'),
-      branch: BRANCH,
-    }),
-  });
-  console.log(`  已初始化仓库：${first.rel}`);
-
-  // 取回初始 commit 与其 tree 作为父提交
-  let head = await api(`/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`);
-  let headSha = head.object.sha;
-  let baseTree = (await api(`/repos/${OWNER}/${REPO}/git/commits/${headSha}`)).tree.sha;
+  // 判断仓库是否已有分支：空仓库无法创建 git object（409），
+  // 需要用 Contents API 提交第一个文件把仓库「点活」（注意 content 必须是 base64）。
+  let headSha = null;
+  let baseTree = null;
+  let rest = files;
+  try {
+    const ref = await api(`/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`);
+    headSha = ref.object.sha;
+    baseTree = (await api(`/repos/${OWNER}/${REPO}/git/commits/${headSha}`)).tree.sha;
+    console.log(`  现有 HEAD: ${headSha.slice(0, 8)}（增量发布）`);
+  } catch (e) {
+    console.log('  首次发布（空仓库）：用 Contents API 初始化');
+    const [first, ...others] = files;
+    const firstBuf = await readFile(first.abs);
+    await api(`/repos/${OWNER}/${REPO}/contents/${first.rel}`, {
+      method: 'PUT',
+      body: JSON.stringify({ message, content: firstBuf.toString('base64'), branch: BRANCH }),
+    });
+    rest = others;
+    const ref = await api(`/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`);
+    headSha = ref.object.sha;
+    baseTree = (await api(`/repos/${OWNER}/${REPO}/git/commits/${headSha}`)).tree.sha;
+    console.log(`  已初始化仓库：${first.rel} → ${headSha.slice(0, 8)}`);
+  }
 
   // 其余文件：并发创建 blob → tree → commit → 移动引用（每批一次 commit）
   const BATCH = 40;
