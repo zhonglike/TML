@@ -1,0 +1,39 @@
+name: Refresh price anchors
+
+# 定时把 data/prices.seed.json 重新生成并提交。
+# 默认只覆盖「锚价」，不改动物品清单；如果未来接入真实行情源，
+# 只需要在这里替换成抓取脚本即可（拉到 base 覆盖值）。
+on:
+  schedule:
+    - cron: '0 3 * * 1'    # 每周一 03:00 UTC（北京时间 11:00）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate price seed
+        run: node scripts/gen-seed.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name  'mono-bot'
+          git config user.email 'mono-bot@users.noreply.github.com'
+          if git diff --quiet -- data/prices.seed.json; then
+            echo "价格种子无变化"
+            exit 0
+          fi
+          git add data/prices.seed.json
+          git commit -m "chore(seed): refresh price anchors [skip ci]"
+          git push

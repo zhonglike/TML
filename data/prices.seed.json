@@ -1,0 +1,4289 @@
+{
+ "$schema": "mono/prices-seed@1",
+ "generatedAt": "2026-10-01T13:47:00.497Z",
+ "currency": "CNY",
+ "note": "价格锚点来自公开市场行情的人工整理；CI 定时任务可覆盖本文件的 base 字段来刷新锚价。",
+ "count": 535,
+ "items": {
+  "p250-sand-dune": {
+   "base": 0.35,
+   "vol": 0.115,
+   "min": 0.063,
+   "max": 1.925,
+   "r": "white",
+   "c": "cs2"
+  },
+  "mp9-storm": {
+   "base": 0.42,
+   "vol": 0.115,
+   "min": 0.0756,
+   "max": 2.31,
+   "r": "white",
+   "c": "cs2"
+  },
+  "scar20-jungle": {
+   "base": 0.48,
+   "vol": 0.115,
+   "min": 0.0864,
+   "max": 2.64,
+   "r": "white",
+   "c": "cs2"
+  },
+  "ssg08-blue-spruce": {
+   "base": 0.55,
+   "vol": 0.115,
+   "min": 0.099,
+   "max": 3.025,
+   "r": "white",
+   "c": "cs2"
+  },
+  "galil-cerberus": {
+   "base": 0.6,
+   "vol": 0.115,
+   "min": 0.108,
+   "max": 3.3,
+   "r": "white",
+   "c": "cs2"
+  },
+  "m249-aztec": {
+   "base": 0.7,
+   "vol": 0.115,
+   "min": 0.126,
+   "max": 3.85,
+   "r": "white",
+   "c": "cs2"
+  },
+  "negev-army-sheen": {
+   "base": 0.75,
+   "vol": 0.115,
+   "min": 0.135,
+   "max": 4.125,
+   "r": "white",
+   "c": "cs2"
+  },
+  "famas-cyanospatter": {
+   "base": 0.8,
+   "vol": 0.115,
+   "min": 0.144,
+   "max": 4.4,
+   "r": "white",
+   "c": "cs2"
+  },
+  "sg553-waves": {
+   "base": 0.9,
+   "vol": 0.115,
+   "min": 0.162,
+   "max": 4.95,
+   "r": "white",
+   "c": "cs2"
+  },
+  "sawedoff-forest": {
+   "base": 1.05,
+   "vol": 0.115,
+   "min": 0.189,
+   "max": 5.775,
+   "r": "white",
+   "c": "cs2"
+  },
+  "mag7-swat": {
+   "base": 1.15,
+   "vol": 0.115,
+   "min": 0.207,
+   "max": 6.325,
+   "r": "white",
+   "c": "cs2"
+  },
+  "nova-predator": {
+   "base": 1.25,
+   "vol": 0.115,
+   "min": 0.225,
+   "max": 6.875,
+   "r": "white",
+   "c": "cs2"
+  },
+  "xm1014-blue-steel": {
+   "base": 1.4,
+   "vol": 0.115,
+   "min": 0.252,
+   "max": 7.7,
+   "r": "white",
+   "c": "cs2"
+  },
+  "p2000-grassland": {
+   "base": 1.5,
+   "vol": 0.115,
+   "min": 0.27,
+   "max": 8.25,
+   "r": "white",
+   "c": "cs2"
+  },
+  "cz75-tread": {
+   "base": 1.6,
+   "vol": 0.115,
+   "min": 0.288,
+   "max": 8.8,
+   "r": "white",
+   "c": "cs2"
+  },
+  "tec9-varicamo": {
+   "base": 1.75,
+   "vol": 0.115,
+   "min": 0.315,
+   "max": 9.625,
+   "r": "white",
+   "c": "cs2"
+  },
+  "mp7-forest": {
+   "base": 1.9,
+   "vol": 0.115,
+   "min": 0.342,
+   "max": 10.45,
+   "r": "white",
+   "c": "cs2"
+  },
+  "ump45-scorched": {
+   "base": 2.1,
+   "vol": 0.115,
+   "min": 0.378,
+   "max": 11.55,
+   "r": "white",
+   "c": "cs2"
+  },
+  "p90-teardown": {
+   "base": 2.3,
+   "vol": 0.115,
+   "min": 0.414,
+   "max": 12.65,
+   "r": "white",
+   "c": "cs2"
+  },
+  "mac10-candy": {
+   "base": 2.5,
+   "vol": 0.115,
+   "min": 0.45,
+   "max": 13.75,
+   "r": "white",
+   "c": "cs2"
+  },
+  "ppbizon-facility": {
+   "base": 2.8,
+   "vol": 0.115,
+   "min": 0.504,
+   "max": 15.4,
+   "r": "white",
+   "c": "cs2"
+  },
+  "elites-soil": {
+   "base": 3.1,
+   "vol": 0.115,
+   "min": 0.558,
+   "max": 17.05,
+   "r": "white",
+   "c": "cs2"
+  },
+  "fiveseven-candy": {
+   "base": 3.5,
+   "vol": 0.115,
+   "min": 0.63,
+   "max": 19.25,
+   "r": "white",
+   "c": "cs2"
+  },
+  "r8-bone": {
+   "base": 4.2,
+   "vol": 0.115,
+   "min": 0.756,
+   "max": 23.1,
+   "r": "white",
+   "c": "cs2"
+  },
+  "m4a1s-varied": {
+   "base": 4.8,
+   "vol": 0.115,
+   "min": 0.864,
+   "max": 26.4,
+   "r": "white",
+   "c": "cs2"
+  },
+  "ak47-first": {
+   "base": 5.5,
+   "vol": 0.115,
+   "min": 0.99,
+   "max": 30.25,
+   "r": "white",
+   "c": "cs2"
+  },
+  "awp-worm": {
+   "base": 6.2,
+   "vol": 0.115,
+   "min": 1.116,
+   "max": 34.1,
+   "r": "white",
+   "c": "cs2"
+  },
+  "deagle-mudder": {
+   "base": 6.9,
+   "vol": 0.115,
+   "min": 1.242,
+   "max": 37.95,
+   "r": "white",
+   "c": "cs2"
+  },
+  "glock-bunsen": {
+   "base": 7.6,
+   "vol": 0.115,
+   "min": 1.368,
+   "max": 41.8,
+   "r": "white",
+   "c": "cs2"
+  },
+  "usp-blueprint": {
+   "base": 8.4,
+   "vol": 0.115,
+   "min": 1.512,
+   "max": 46.2,
+   "r": "white",
+   "c": "cs2"
+  },
+  "aug-commander": {
+   "base": 9.2,
+   "vol": 0.115,
+   "min": 1.656,
+   "max": 50.6,
+   "r": "white",
+   "c": "cs2"
+  },
+  "sg553-danger": {
+   "base": 10.5,
+   "vol": 0.115,
+   "min": 1.89,
+   "max": 57.75,
+   "r": "white",
+   "c": "cs2"
+  },
+  "ssg08-blood": {
+   "base": 11.8,
+   "vol": 0.115,
+   "min": 2.124,
+   "max": 64.9,
+   "r": "white",
+   "c": "cs2"
+  },
+  "nova-toy": {
+   "base": 12.6,
+   "vol": 0.115,
+   "min": 2.268,
+   "max": 69.3,
+   "r": "white",
+   "c": "cs2"
+  },
+  "p250-valence": {
+   "base": 13.5,
+   "vol": 0.115,
+   "min": 2.43,
+   "max": 74.25,
+   "r": "white",
+   "c": "cs2"
+  },
+  "mp9-nuclear": {
+   "base": 14.8,
+   "vol": 0.115,
+   "min": 2.664,
+   "max": 81.4,
+   "r": "white",
+   "c": "cs2"
+  },
+  "mac10-pipe": {
+   "base": 16.2,
+   "vol": 0.115,
+   "min": 2.916,
+   "max": 89.1,
+   "r": "white",
+   "c": "cs2"
+  },
+  "glock-weasel": {
+   "base": 17.5,
+   "vol": 0.115,
+   "min": 3.15,
+   "max": 96.25,
+   "r": "white",
+   "c": "cs2"
+  },
+  "ak47-emerald": {
+   "base": 19.5,
+   "vol": 0.069,
+   "min": 3.51,
+   "max": 107.25,
+   "r": "green",
+   "c": "cs2"
+  },
+  "m4a4-desert": {
+   "base": 21,
+   "vol": 0.069,
+   "min": 3.78,
+   "max": 115.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "awp-pit": {
+   "base": 23.5,
+   "vol": 0.069,
+   "min": 4.23,
+   "max": 129.25,
+   "r": "green",
+   "c": "cs2"
+  },
+  "usp-torque": {
+   "base": 26,
+   "vol": 0.069,
+   "min": 4.68,
+   "max": 143,
+   "r": "green",
+   "c": "cs2"
+  },
+  "glock-water": {
+   "base": 28.5,
+   "vol": 0.069,
+   "min": 5.13,
+   "max": 156.75,
+   "r": "green",
+   "c": "cs2"
+  },
+  "m4a1s-basilisk": {
+   "base": 31,
+   "vol": 0.069,
+   "min": 5.58,
+   "max": 170.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "p250-asimov": {
+   "base": 33.5,
+   "vol": 0.069,
+   "min": 6.03,
+   "max": 184.25,
+   "r": "green",
+   "c": "cs2"
+  },
+  "famas-mecha": {
+   "base": 36,
+   "vol": 0.069,
+   "min": 6.48,
+   "max": 198,
+   "r": "green",
+   "c": "cs2"
+  },
+  "galil-ar-modern": {
+   "base": 39,
+   "vol": 0.069,
+   "min": 7.02,
+   "max": 214.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "sg553-colony": {
+   "base": 42,
+   "vol": 0.069,
+   "min": 7.56,
+   "max": 231,
+   "r": "green",
+   "c": "cs2"
+  },
+  "aug-torque": {
+   "base": 45,
+   "vol": 0.069,
+   "min": 8.1,
+   "max": 247.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "mp9-bulldozer": {
+   "base": 48,
+   "vol": 0.069,
+   "min": 8.64,
+   "max": 264,
+   "r": "green",
+   "c": "cs2"
+  },
+  "mp7-impire": {
+   "base": 52,
+   "vol": 0.069,
+   "min": 9.36,
+   "max": 286,
+   "r": "green",
+   "c": "cs2"
+  },
+  "mac10-neon": {
+   "base": 56,
+   "vol": 0.069,
+   "min": 10.08,
+   "max": 308,
+   "r": "green",
+   "c": "cs2"
+  },
+  "ump45-primal": {
+   "base": 60,
+   "vol": 0.069,
+   "min": 10.8,
+   "max": 330,
+   "r": "green",
+   "c": "cs2"
+  },
+  "p90-trigon": {
+   "base": 65,
+   "vol": 0.069,
+   "min": 11.7,
+   "max": 357.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "deagle-lightning": {
+   "base": 70,
+   "vol": 0.069,
+   "min": 12.6,
+   "max": 385,
+   "r": "green",
+   "c": "cs2"
+  },
+  "fiveseven-monkey": {
+   "base": 75,
+   "vol": 0.069,
+   "min": 13.5,
+   "max": 412.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "tec9-bamboo": {
+   "base": 80,
+   "vol": 0.069,
+   "min": 14.4,
+   "max": 440,
+   "r": "green",
+   "c": "cs2"
+  },
+  "cz75-emerald": {
+   "base": 86,
+   "vol": 0.069,
+   "min": 15.48,
+   "max": 473,
+   "r": "green",
+   "c": "cs2"
+  },
+  "ssg08-bigiron": {
+   "base": 92,
+   "vol": 0.069,
+   "min": 16.56,
+   "max": 506,
+   "r": "green",
+   "c": "cs2"
+  },
+  "aug-chameleon": {
+   "base": 98,
+   "vol": 0.069,
+   "min": 17.64,
+   "max": 539,
+   "r": "green",
+   "c": "cs2"
+  },
+  "xm1014-quicksilver": {
+   "base": 105,
+   "vol": 0.069,
+   "min": 18.9,
+   "max": 577.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "m249-jungle": {
+   "base": 112,
+   "vol": 0.069,
+   "min": 20.16,
+   "max": 616,
+   "r": "green",
+   "c": "cs2"
+  },
+  "negev-manowar": {
+   "base": 120,
+   "vol": 0.069,
+   "min": 21.6,
+   "max": 660,
+   "r": "green",
+   "c": "cs2"
+  },
+  "usp-stainless": {
+   "base": 128,
+   "vol": 0.069,
+   "min": 23.04,
+   "max": 704,
+   "r": "green",
+   "c": "cs2"
+  },
+  "glock-grinder": {
+   "base": 137,
+   "vol": 0.069,
+   "min": 24.66,
+   "max": 753.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "p2000-fire": {
+   "base": 146,
+   "vol": 0.069,
+   "min": 26.28,
+   "max": 803,
+   "r": "green",
+   "c": "cs2"
+  },
+  "sawedoff-serenity": {
+   "base": 156,
+   "vol": 0.069,
+   "min": 28.08,
+   "max": 858,
+   "r": "green",
+   "c": "cs2"
+  },
+  "mag7-hazard": {
+   "base": 166,
+   "vol": 0.069,
+   "min": 29.88,
+   "max": 913,
+   "r": "green",
+   "c": "cs2"
+  },
+  "nova-antique": {
+   "base": 176,
+   "vol": 0.069,
+   "min": 31.68,
+   "max": 968,
+   "r": "green",
+   "c": "cs2"
+  },
+  "m4a4-tornado": {
+   "base": 188,
+   "vol": 0.069,
+   "min": 33.84,
+   "max": 1034,
+   "r": "green",
+   "c": "cs2"
+  },
+  "ak47-safari": {
+   "base": 199,
+   "vol": 0.069,
+   "min": 35.82,
+   "max": 1094.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "awp-wormgod": {
+   "base": 212,
+   "vol": 0.069,
+   "min": 38.16,
+   "max": 1166,
+   "r": "green",
+   "c": "cs2"
+  },
+  "galil-cerberus2": {
+   "base": 226,
+   "vol": 0.069,
+   "min": 40.68,
+   "max": 1243,
+   "r": "green",
+   "c": "cs2"
+  },
+  "famas-rollcage": {
+   "base": 240,
+   "vol": 0.069,
+   "min": 43.2,
+   "max": 1320,
+   "r": "green",
+   "c": "cs2"
+  },
+  "sg553-cyrex": {
+   "base": 255,
+   "vol": 0.069,
+   "min": 45.9,
+   "max": 1402.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "ump45-lab": {
+   "base": 270,
+   "vol": 0.069,
+   "min": 48.6,
+   "max": 1485,
+   "r": "green",
+   "c": "cs2"
+  },
+  "mp9-hydra": {
+   "base": 286,
+   "vol": 0.069,
+   "min": 51.48,
+   "max": 1573,
+   "r": "green",
+   "c": "cs2"
+  },
+  "mac10-curse": {
+   "base": 302,
+   "vol": 0.069,
+   "min": 54.36,
+   "max": 1661,
+   "r": "green",
+   "c": "cs2"
+  },
+  "ppbizon-judge": {
+   "base": 320,
+   "vol": 0.069,
+   "min": 57.6,
+   "max": 1760,
+   "r": "green",
+   "c": "cs2"
+  },
+  "p90-elite": {
+   "base": 338,
+   "vol": 0.069,
+   "min": 60.84,
+   "max": 1859,
+   "r": "green",
+   "c": "cs2"
+  },
+  "cz75-xiangliu": {
+   "base": 356,
+   "vol": 0.069,
+   "min": 64.08,
+   "max": 1958,
+   "r": "green",
+   "c": "cs2"
+  },
+  "tec9-fubar": {
+   "base": 375,
+   "vol": 0.069,
+   "min": 67.5,
+   "max": 2062.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "deagle-mecha": {
+   "base": 395,
+   "vol": 0.069,
+   "min": 71.1,
+   "max": 2172.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "fiveseven-case": {
+   "base": 415,
+   "vol": 0.069,
+   "min": 74.7,
+   "max": 2282.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "r8-fade": {
+   "base": 436,
+   "vol": 0.069,
+   "min": 78.48,
+   "max": 2398,
+   "r": "green",
+   "c": "cs2"
+  },
+  "elites-moon": {
+   "base": 458,
+   "vol": 0.069,
+   "min": 82.44,
+   "max": 2519,
+   "r": "green",
+   "c": "cs2"
+  },
+  "m4a1s-guardian": {
+   "base": 480,
+   "vol": 0.069,
+   "min": 86.4,
+   "max": 2640,
+   "r": "green",
+   "c": "cs2"
+  },
+  "ak47-blue-laminate": {
+   "base": 505,
+   "vol": 0.069,
+   "min": 90.9,
+   "max": 2777.5,
+   "r": "green",
+   "c": "cs2"
+  },
+  "awp-corticera": {
+   "base": 530,
+   "vol": 0.069,
+   "min": 95.4,
+   "max": 2915,
+   "r": "green",
+   "c": "cs2"
+  },
+  "m4a4-black-mirage": {
+   "base": 300,
+   "vol": 0.0575,
+   "min": 54,
+   "max": 1650,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-redline": {
+   "base": 128,
+   "vol": 0.0575,
+   "min": 23.04,
+   "max": 704,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-undead": {
+   "base": 33,
+   "vol": 0.0575,
+   "min": 5.94,
+   "max": 181.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a1s-cyrex": {
+   "base": 168,
+   "vol": 0.0575,
+   "min": 30.24,
+   "max": 924,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-fuel-injector": {
+   "base": 6999,
+   "vol": 0.0575,
+   "min": 1259.82,
+   "max": 38494.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a4-asimov": {
+   "base": 470,
+   "vol": 0.0575,
+   "min": 84.6,
+   "max": 2585,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "glock-fade": {
+   "base": 1180,
+   "vol": 0.0575,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "usp-kill-confirmed": {
+   "base": 320,
+   "vol": 0.0575,
+   "min": 57.6,
+   "max": 1760,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "deagle-code-red": {
+   "base": 560,
+   "vol": 0.0575,
+   "min": 100.8,
+   "max": 3080,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "p250-undead": {
+   "base": 42,
+   "vol": 0.0575,
+   "min": 7.56,
+   "max": 231,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-lightning": {
+   "base": 1450,
+   "vol": 0.0575,
+   "min": 261,
+   "max": 7975,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-electric-hive": {
+   "base": 860,
+   "vol": 0.0575,
+   "min": 154.8,
+   "max": 4730,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a4-neon": {
+   "base": 640,
+   "vol": 0.0575,
+   "min": 115.2,
+   "max": 3520,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-point": {
+   "base": 380,
+   "vol": 0.0575,
+   "min": 68.4,
+   "max": 2090,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-jaguar": {
+   "base": 520,
+   "vol": 0.0575,
+   "min": 93.6,
+   "max": 2860,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a1s-printstream": {
+   "base": 3100,
+   "vol": 0.0575,
+   "min": 558,
+   "max": 17050,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "mp9-starlight": {
+   "base": 190,
+   "vol": 0.0575,
+   "min": 34.2,
+   "max": 1045,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "mac10-disco": {
+   "base": 210,
+   "vol": 0.0575,
+   "min": 37.8,
+   "max": 1155,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "mp7-nemesis": {
+   "base": 240,
+   "vol": 0.0575,
+   "min": 43.2,
+   "max": 1320,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ump45-momentum": {
+   "base": 175,
+   "vol": 0.0575,
+   "min": 31.5,
+   "max": 962.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "p90-asiimov": {
+   "base": 700,
+   "vol": 0.0575,
+   "min": 126,
+   "max": 3850,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "famas-afterimage": {
+   "base": 260,
+   "vol": 0.0575,
+   "min": 46.8,
+   "max": 1430,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "galil-sugar": {
+   "base": 230,
+   "vol": 0.0575,
+   "min": 41.4,
+   "max": 1265,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "aug-symphony": {
+   "base": 285,
+   "vol": 0.0575,
+   "min": 51.3,
+   "max": 1567.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "sg553-damascus": {
+   "base": 305,
+   "vol": 0.0575,
+   "min": 54.9,
+   "max": 1677.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ssg08-detour": {
+   "base": 155,
+   "vol": 0.0575,
+   "min": 27.9,
+   "max": 852.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "cz75-victoria": {
+   "base": 340,
+   "vol": 0.0575,
+   "min": 61.2,
+   "max": 1870,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "fiveseven-fowl": {
+   "base": 205,
+   "vol": 0.0575,
+   "min": 36.9,
+   "max": 1127.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "tec9-remote": {
+   "base": 225,
+   "vol": 0.0575,
+   "min": 40.5,
+   "max": 1237.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "elites-deck": {
+   "base": 180,
+   "vol": 0.0575,
+   "min": 32.4,
+   "max": 990,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "xm1014-tranquility": {
+   "base": 195,
+   "vol": 0.0575,
+   "min": 35.1,
+   "max": 1072.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "mag7-justice": {
+   "base": 165,
+   "vol": 0.0575,
+   "min": 29.7,
+   "max": 907.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "nova-hyper": {
+   "base": 150,
+   "vol": 0.0575,
+   "min": 27,
+   "max": 825,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "sawedoff-kiss": {
+   "base": 185,
+   "vol": 0.0575,
+   "min": 33.3,
+   "max": 1017.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m249-hurricane": {
+   "base": 220,
+   "vol": 0.0575,
+   "min": 39.6,
+   "max": 1210,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "negev-power": {
+   "base": 200,
+   "vol": 0.0575,
+   "min": 36,
+   "max": 1100,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "p2000-handgun": {
+   "base": 170,
+   "vol": 0.0575,
+   "min": 30.6,
+   "max": 935,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "r8-survival": {
+   "base": 160,
+   "vol": 0.0575,
+   "min": 28.8,
+   "max": 880,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a4-zirka": {
+   "base": 420,
+   "vol": 0.0575,
+   "min": 75.6,
+   "max": 2310,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-wildfire": {
+   "base": 2600,
+   "vol": 0.0575,
+   "min": 468,
+   "max": 14300,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-emerald2": {
+   "base": 245,
+   "vol": 0.0575,
+   "min": 44.1,
+   "max": 1347.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a1s-golden": {
+   "base": 1350,
+   "vol": 0.0575,
+   "min": 243,
+   "max": 7425,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-slate": {
+   "base": 290,
+   "vol": 0.0575,
+   "min": 52.2,
+   "max": 1595,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "glock-weasel2": {
+   "base": 420,
+   "vol": 0.0575,
+   "min": 75.6,
+   "max": 2310,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "usp-blue-phosphor": {
+   "base": 1290,
+   "vol": 0.0575,
+   "min": 232.2,
+   "max": 7095,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a4-desolate": {
+   "base": 350,
+   "vol": 0.0575,
+   "min": 63,
+   "max": 1925,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-asiimov": {
+   "base": 980,
+   "vol": 0.0575,
+   "min": 176.4,
+   "max": 5390,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-case-hardened": {
+   "base": 1750,
+   "vol": 0.0575,
+   "min": 315,
+   "max": 9625,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-boom": {
+   "base": 1180,
+   "vol": 0.0575,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a1s-hot-rod": {
+   "base": 760,
+   "vol": 0.0575,
+   "min": 136.8,
+   "max": 4180,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "mp9-food": {
+   "base": 165,
+   "vol": 0.0575,
+   "min": 29.7,
+   "max": 907.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "mac10-neon2": {
+   "base": 158,
+   "vol": 0.0575,
+   "min": 28.44,
+   "max": 869,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-blood": {
+   "base": 460,
+   "vol": 0.0575,
+   "min": 82.8,
+   "max": 2530,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "deagle-printstream": {
+   "base": 4200,
+   "vol": 0.0575,
+   "min": 756,
+   "max": 23100,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-nightwish": {
+   "base": 260,
+   "vol": 0.0575,
+   "min": 46.8,
+   "max": 1430,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a4-charter": {
+   "base": 330,
+   "vol": 0.0575,
+   "min": 59.4,
+   "max": 1815,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-containment": {
+   "base": 720,
+   "vol": 0.0575,
+   "min": 129.6,
+   "max": 3960,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "glock-moonrise": {
+   "base": 480,
+   "vol": 0.0575,
+   "min": 86.4,
+   "max": 2640,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "usp-cortex": {
+   "base": 340,
+   "vol": 0.0575,
+   "min": 61.2,
+   "max": 1870,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-asiimov": {
+   "base": 1150,
+   "vol": 0.0575,
+   "min": 207,
+   "max": 6325,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a1s-master": {
+   "base": 560,
+   "vol": 0.0575,
+   "min": 100.8,
+   "max": 3080,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "mp9-starlight2": {
+   "base": 175,
+   "vol": 0.0575,
+   "min": 31.5,
+   "max": 962.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-neo-noir": {
+   "base": 1420,
+   "vol": 0.0575,
+   "min": 255.6,
+   "max": 7810,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-head-shot": {
+   "base": 390,
+   "vol": 0.0575,
+   "min": 70.2,
+   "max": 2145,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "m4a4-magnesium": {
+   "base": 355,
+   "vol": 0.0575,
+   "min": 63.9,
+   "max": 1952.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "tec9-brass": {
+   "base": 148,
+   "vol": 0.0575,
+   "min": 26.64,
+   "max": 814,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "galil-chromatic": {
+   "base": 215,
+   "vol": 0.0575,
+   "min": 38.7,
+   "max": 1182.5,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "awp-fade": {
+   "base": 5400,
+   "vol": 0.0575,
+   "min": 972,
+   "max": 29700,
+   "r": "blue",
+   "c": "cs2"
+  },
+  "ak47-vulcan": {
+   "base": 3200,
+   "vol": 0.0517,
+   "min": 576,
+   "max": 17600,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-asiimov2": {
+   "base": 8600,
+   "vol": 0.0517,
+   "min": 1548,
+   "max": 47300,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a4-horus": {
+   "base": 8199,
+   "vol": 0.0517,
+   "min": 1475.82,
+   "max": 45094.5,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a1s-hyper-beast": {
+   "base": 1600,
+   "vol": 0.0517,
+   "min": 288,
+   "max": 8800,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-prince": {
+   "base": 12300,
+   "vol": 0.0517,
+   "min": 2214,
+   "max": 67650,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-asiimov1": {
+   "base": 42000,
+   "vol": 0.0517,
+   "min": 7560,
+   "max": 231000,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-wasteland": {
+   "base": 2100,
+   "vol": 0.0517,
+   "min": 378,
+   "max": 11550,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-neon-rider": {
+   "base": 1750,
+   "vol": 0.0517,
+   "min": 315,
+   "max": 9625,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a4-the-empress": {
+   "base": 2400,
+   "vol": 0.0517,
+   "min": 432,
+   "max": 13200,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a4-royal": {
+   "base": 1300,
+   "vol": 0.0517,
+   "min": 234,
+   "max": 7150,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-asiimov3": {
+   "base": 96000,
+   "vol": 0.0517,
+   "min": 17280,
+   "max": 528000,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-forest-ddp": {
+   "base": 4800,
+   "vol": 0.0517,
+   "min": 864,
+   "max": 26400,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "usp-printstream": {
+   "base": 4600,
+   "vol": 0.0517,
+   "min": 828,
+   "max": 25300,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "glock-printstream": {
+   "base": 1900,
+   "vol": 0.0517,
+   "min": 342,
+   "max": 10450,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "deagle-blaze": {
+   "base": 2800,
+   "vol": 0.0517,
+   "min": 504,
+   "max": 15400,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "deagle-printstream2": {
+   "base": 9800,
+   "vol": 0.0517,
+   "min": 1764,
+   "max": 53900,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-fire-serpent": {
+   "base": 34000,
+   "vol": 0.0517,
+   "min": 6120,
+   "max": 187000,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a1s-printstream2": {
+   "base": 7800,
+   "vol": 0.0517,
+   "min": 1404,
+   "max": 42900,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-chromatic": {
+   "base": 3600,
+   "vol": 0.0517,
+   "min": 648,
+   "max": 19800,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-jaguar2": {
+   "base": 2600,
+   "vol": 0.0517,
+   "min": 468,
+   "max": 14300,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a4-asiimov2": {
+   "base": 3100,
+   "vol": 0.0517,
+   "min": 558,
+   "max": 17050,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-blood2": {
+   "base": 2200,
+   "vol": 0.0517,
+   "min": 396,
+   "max": 12100,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a1s-golden2": {
+   "base": 6200,
+   "vol": 0.0517,
+   "min": 1116,
+   "max": 34100,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-lightning2": {
+   "base": 5600,
+   "vol": 0.0517,
+   "min": 1008,
+   "max": 30800,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "usp-kill2": {
+   "base": 1450,
+   "vol": 0.0517,
+   "min": 261,
+   "max": 7975,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-cyclop": {
+   "base": 1450,
+   "vol": 0.0517,
+   "min": 261,
+   "max": 7975,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a4-moonrise": {
+   "base": 1100,
+   "vol": 0.0517,
+   "min": 198,
+   "max": 6050,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-mortis": {
+   "base": 2200,
+   "vol": 0.0517,
+   "min": 396,
+   "max": 12100,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-legion": {
+   "base": 1680,
+   "vol": 0.0517,
+   "min": 302.4,
+   "max": 9240,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a1s-blue-phosphor": {
+   "base": 1350,
+   "vol": 0.0517,
+   "min": 243,
+   "max": 7425,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-wildfire2": {
+   "base": 4700,
+   "vol": 0.0517,
+   "min": 846,
+   "max": 25850,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-the-empress": {
+   "base": 3300,
+   "vol": 0.0517,
+   "min": 594,
+   "max": 18150,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a4-hyper": {
+   "base": 2900,
+   "vol": 0.0517,
+   "min": 522,
+   "max": 15950,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-atheris": {
+   "base": 5600,
+   "vol": 0.0517,
+   "min": 1008,
+   "max": 30800,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-asiimov3": {
+   "base": 2900,
+   "vol": 0.0517,
+   "min": 522,
+   "max": 15950,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "deagle-code-red2": {
+   "base": 2400,
+   "vol": 0.0517,
+   "min": 432,
+   "max": 13200,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-emerald-pinstripe": {
+   "base": 1900,
+   "vol": 0.0517,
+   "min": 342,
+   "max": 10450,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "m4a1s-hot-rod2": {
+   "base": 2650,
+   "vol": 0.0517,
+   "min": 477,
+   "max": 14575,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "awp-containment2": {
+   "base": 2950,
+   "vol": 0.0517,
+   "min": 531,
+   "max": 16225,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-slate2": {
+   "base": 1250,
+   "vol": 0.0517,
+   "min": 225,
+   "max": 6875,
+   "r": "purple",
+   "c": "cs2"
+  },
+  "ak47-xray": {
+   "base": 16680,
+   "vol": 0.0345,
+   "min": 3002.4,
+   "max": 91740,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "ak47-hydroponic": {
+   "base": 28970,
+   "vol": 0.0345,
+   "min": 5214.6,
+   "max": 159335,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "m4a4-howling": {
+   "base": 44899,
+   "vol": 0.0345,
+   "min": 8081.82,
+   "max": 246944.5,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "awp-dragon-lore": {
+   "base": 80500,
+   "vol": 0.0345,
+   "min": 14490,
+   "max": 442750,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "awp-medusa": {
+   "base": 39800,
+   "vol": 0.0345,
+   "min": 7164,
+   "max": 218900,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "m4a4-howl2": {
+   "base": 128000,
+   "vol": 0.0345,
+   "min": 23040,
+   "max": 704000,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "ak47-fire-serpent2": {
+   "base": 78000,
+   "vol": 0.0345,
+   "min": 14040,
+   "max": 429000,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "awp-dragon-lore2": {
+   "base": 165000,
+   "vol": 0.0345,
+   "min": 29700,
+   "max": 907500,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "m4a1s-printstream3": {
+   "base": 26000,
+   "vol": 0.0345,
+   "min": 4680,
+   "max": 143000,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "ak47-wild-lotus": {
+   "base": 21500,
+   "vol": 0.0345,
+   "min": 3870,
+   "max": 118250,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "awp-gungnir": {
+   "base": 88000,
+   "vol": 0.0345,
+   "min": 15840,
+   "max": 484000,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "m4a1s-master2": {
+   "base": 9800,
+   "vol": 0.0345,
+   "min": 1764,
+   "max": 53900,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "ak47-gold-arabesque": {
+   "base": 12300,
+   "vol": 0.0345,
+   "min": 2214,
+   "max": 67650,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "m4a4-asimov3": {
+   "base": 12800,
+   "vol": 0.0345,
+   "min": 2304,
+   "max": 70400,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "ak47-case-hardened2": {
+   "base": 168000,
+   "vol": 0.0345,
+   "min": 30240,
+   "max": 924000,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "awp-black-nile": {
+   "base": 34500,
+   "vol": 0.0345,
+   "min": 6210,
+   "max": 189750,
+   "r": "gold",
+   "c": "cs2"
+  },
+  "butterfly-doppler-ruby": {
+   "base": 98500,
+   "vol": 0.0287,
+   "min": 44325,
+   "max": 236400,
+   "r": "red",
+   "c": "cs2"
+  },
+  "butterfly-crimson-web": {
+   "base": 136000,
+   "vol": 0.0287,
+   "min": 61200,
+   "max": 326400,
+   "r": "red",
+   "c": "cs2"
+  },
+  "butterfly-marble-fade": {
+   "base": 38500,
+   "vol": 0.0287,
+   "min": 17325,
+   "max": 92400,
+   "r": "red",
+   "c": "cs2"
+  },
+  "karambit-case-hardened-blue": {
+   "base": 400000,
+   "vol": 0.0287,
+   "min": 180000,
+   "max": 960000,
+   "r": "red",
+   "c": "cs2"
+  },
+  "karambit-doppler-ruby": {
+   "base": 172000,
+   "vol": 0.0287,
+   "min": 77400,
+   "max": 412800,
+   "r": "red",
+   "c": "cs2"
+  },
+  "m9-doppler-ruby": {
+   "base": 70200,
+   "vol": 0.0287,
+   "min": 31590,
+   "max": 168480,
+   "r": "red",
+   "c": "cs2"
+  },
+  "karambit-fade": {
+   "base": 52000,
+   "vol": 0.0287,
+   "min": 23400,
+   "max": 124800,
+   "r": "red",
+   "c": "cs2"
+  },
+  "butterfly-slaughter": {
+   "base": 46000,
+   "vol": 0.0287,
+   "min": 20700,
+   "max": 110400,
+   "r": "red",
+   "c": "cs2"
+  },
+  "karambit-tiger-tooth": {
+   "base": 89000,
+   "vol": 0.0287,
+   "min": 40050,
+   "max": 213600,
+   "r": "red",
+   "c": "cs2"
+  },
+  "sport-gloves-pandora": {
+   "base": 43800,
+   "vol": 0.0287,
+   "min": 19710,
+   "max": 105120,
+   "r": "red",
+   "c": "cs2"
+  },
+  "awp-dragon-lore-lore": {
+   "base": 285000,
+   "vol": 0.0287,
+   "min": 128250,
+   "max": 684000,
+   "r": "red",
+   "c": "cs2"
+  },
+  "c-p106-100": {
+   "base": 320,
+   "vol": 0.1,
+   "min": 57.6,
+   "max": 1760,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-p104-100": {
+   "base": 420,
+   "vol": 0.1,
+   "min": 75.6,
+   "max": 2310,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-cmp-30hx": {
+   "base": 560,
+   "vol": 0.1,
+   "min": 100.8,
+   "max": 3080,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-rx470-8g": {
+   "base": 260,
+   "vol": 0.1,
+   "min": 46.8,
+   "max": 1430,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-token-trial": {
+   "base": 5,
+   "vol": 0.1,
+   "min": 0.9,
+   "max": 27.5,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-token-cheap": {
+   "base": 22,
+   "vol": 0.1,
+   "min": 3.96,
+   "max": 121,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-token-embed": {
+   "base": 40,
+   "vol": 0.1,
+   "min": 7.2,
+   "max": 220,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-token-asr": {
+   "base": 78,
+   "vol": 0.1,
+   "min": 14.04,
+   "max": 429,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-token-tts": {
+   "base": 95,
+   "vol": 0.1,
+   "min": 17.1,
+   "max": 522.5,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-rent-4090-hour": {
+   "base": 12,
+   "vol": 0.1,
+   "min": 2.16,
+   "max": 66,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-dataset-toy": {
+   "base": 30,
+   "vol": 0.1,
+   "min": 5.4,
+   "max": 165,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-lora-style": {
+   "base": 180,
+   "vol": 0.1,
+   "min": 32.4,
+   "max": 990,
+   "r": "white",
+   "c": "compute"
+  },
+  "c-tesla-t4": {
+   "base": 1450,
+   "vol": 0.06,
+   "min": 261,
+   "max": 7975,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-tesla-p40": {
+   "base": 980,
+   "vol": 0.06,
+   "min": 176.4,
+   "max": 5390,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-v100-16g": {
+   "base": 3200,
+   "vol": 0.06,
+   "min": 576,
+   "max": 17600,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-token-deepseek-v3": {
+   "base": 260,
+   "vol": 0.06,
+   "min": 46.8,
+   "max": 1430,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-token-qwen": {
+   "base": 240,
+   "vol": 0.06,
+   "min": 43.2,
+   "max": 1320,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-token-glm": {
+   "base": 230,
+   "vol": 0.06,
+   "min": 41.4,
+   "max": 1265,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-token-kimi": {
+   "base": 280,
+   "vol": 0.06,
+   "min": 50.4,
+   "max": 1540,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-token-mini": {
+   "base": 320,
+   "vol": 0.06,
+   "min": 57.6,
+   "max": 1760,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-dataset-speech": {
+   "base": 1800,
+   "vol": 0.06,
+   "min": 324,
+   "max": 9900,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-dataset-code": {
+   "base": 2600,
+   "vol": 0.06,
+   "min": 468,
+   "max": 14300,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-dataset-legal": {
+   "base": 3200,
+   "vol": 0.06,
+   "min": 576,
+   "max": 17600,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-rent-4090-cluster": {
+   "base": 620,
+   "vol": 0.06,
+   "min": 111.6,
+   "max": 3410,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-rent-a100-week": {
+   "base": 1900,
+   "vol": 0.06,
+   "min": 342,
+   "max": 10450,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-lora-domain": {
+   "base": 2600,
+   "vol": 0.06,
+   "min": 468,
+   "max": 14300,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-quant-strategy": {
+   "base": 3800,
+   "vol": 0.06,
+   "min": 684,
+   "max": 20900,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-rtx-3060-12g-cluster": {
+   "base": 1250,
+   "vol": 0.06,
+   "min": 225,
+   "max": 6875,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-rtx-2070": {
+   "base": 980,
+   "vol": 0.06,
+   "min": 176.4,
+   "max": 5390,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-rtx-2080ti": {
+   "base": 1850,
+   "vol": 0.06,
+   "min": 333,
+   "max": 10175,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-mi50": {
+   "base": 2200,
+   "vol": 0.06,
+   "min": 396,
+   "max": 12100,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-ascend-310": {
+   "base": 2600,
+   "vol": 0.06,
+   "min": 468,
+   "max": 14300,
+   "r": "green",
+   "c": "compute"
+  },
+  "c-token-claude-haiku": {
+   "base": 480,
+   "vol": 0.05,
+   "min": 86.4,
+   "max": 2640,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-token-gpt5-full": {
+   "base": 1200,
+   "vol": 0.05,
+   "min": 216,
+   "max": 6600,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-token-claude-opus": {
+   "base": 1800,
+   "vol": 0.05,
+   "min": 324,
+   "max": 9900,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-token-gemini": {
+   "base": 760,
+   "vol": 0.05,
+   "min": 136.8,
+   "max": 4180,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-token-r1": {
+   "base": 640,
+   "vol": 0.05,
+   "min": 115.2,
+   "max": 3520,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-dataset-face": {
+   "base": 9600,
+   "vol": 0.05,
+   "min": 1728,
+   "max": 52800,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-dataset-lidar": {
+   "base": 14500,
+   "vol": 0.05,
+   "min": 2610,
+   "max": 79750,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-dataset-medical": {
+   "base": 16800,
+   "vol": 0.05,
+   "min": 3024,
+   "max": 92400,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-dataset-finance": {
+   "base": 7200,
+   "vol": 0.05,
+   "min": 1296,
+   "max": 39600,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-dataset-multimodal": {
+   "base": 12500,
+   "vol": 0.05,
+   "min": 2250,
+   "max": 68750,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rtx-4060ti-16g": {
+   "base": 2900,
+   "vol": 0.05,
+   "min": 522,
+   "max": 15950,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rtx-4070ti-super": {
+   "base": 5600,
+   "vol": 0.05,
+   "min": 1008,
+   "max": 30800,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rtx-3090-24g": {
+   "base": 5400,
+   "vol": 0.05,
+   "min": 972,
+   "max": 29700,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rtx-a4000": {
+   "base": 6200,
+   "vol": 0.05,
+   "min": 1116,
+   "max": 34100,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rtx-a5000": {
+   "base": 11800,
+   "vol": 0.05,
+   "min": 2124,
+   "max": 64900,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-mi210": {
+   "base": 42000,
+   "vol": 0.05,
+   "min": 7560,
+   "max": 231000,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-ascend-910b-lite": {
+   "base": 88000,
+   "vol": 0.05,
+   "min": 15840,
+   "max": 484000,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-mtt-s3000": {
+   "base": 4600,
+   "vol": 0.05,
+   "min": 828,
+   "max": 25300,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rent-h100-hour": {
+   "base": 55,
+   "vol": 0.05,
+   "min": 9.9,
+   "max": 302.5,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rent-h100-month": {
+   "base": 260000,
+   "vol": 0.05,
+   "min": 46800,
+   "max": 1430000,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rent-mi300-week": {
+   "base": 9800,
+   "vol": 0.05,
+   "min": 1764,
+   "max": 53900,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-lora-multimodal": {
+   "base": 8600,
+   "vol": 0.05,
+   "min": 1548,
+   "max": 47300,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rag-index": {
+   "base": 6800,
+   "vol": 0.05,
+   "min": 1224,
+   "max": 37400,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-digital-human": {
+   "base": 12500,
+   "vol": 0.05,
+   "min": 2250,
+   "max": 68750,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-whisper-ft": {
+   "base": 3600,
+   "vol": 0.05,
+   "min": 648,
+   "max": 19800,
+   "r": "blue",
+   "c": "compute"
+  },
+  "c-rtx-5070": {
+   "base": 4600,
+   "vol": 0.045,
+   "min": 828,
+   "max": 25300,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-rtx-5070ti": {
+   "base": 6600,
+   "vol": 0.045,
+   "min": 1188,
+   "max": 36300,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-rtx-5080": {
+   "base": 10500,
+   "vol": 0.045,
+   "min": 1890,
+   "max": 57750,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-rtx-4080-super": {
+   "base": 8200,
+   "vol": 0.045,
+   "min": 1476,
+   "max": 45100,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-rtx-4090d": {
+   "base": 17499,
+   "vol": 0.045,
+   "min": 3149.82,
+   "max": 96244.5,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-rtx-l4": {
+   "base": 16500,
+   "vol": 0.045,
+   "min": 2970,
+   "max": 90750,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-rtx-l40s": {
+   "base": 62000,
+   "vol": 0.045,
+   "min": 11160,
+   "max": 341000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-mi325x": {
+   "base": 260000,
+   "vol": 0.045,
+   "min": 46800,
+   "max": 1430000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-ascend-910b": {
+   "base": 145000,
+   "vol": 0.045,
+   "min": 26100,
+   "max": 797500,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-ascend-910c": {
+   "base": 285000,
+   "vol": 0.045,
+   "min": 51300,
+   "max": 1567500,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-gaudi-3": {
+   "base": 108000,
+   "vol": 0.045,
+   "min": 19440,
+   "max": 594000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-cambricon-370": {
+   "base": 68000,
+   "vol": 0.045,
+   "min": 12240,
+   "max": 374000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-dataset-imagenet": {
+   "base": 68000,
+   "vol": 0.045,
+   "min": 12240,
+   "max": 374000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-dataset-laion": {
+   "base": 46000,
+   "vol": 0.045,
+   "min": 8280,
+   "max": 253000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-dataset-commoncrawl": {
+   "base": 38000,
+   "vol": 0.045,
+   "min": 6840,
+   "max": 209000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-dataset-driving": {
+   "base": 92000,
+   "vol": 0.045,
+   "min": 16560,
+   "max": 506000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-model-sdxl-ft": {
+   "base": 26000,
+   "vol": 0.045,
+   "min": 4680,
+   "max": 143000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-model-flux-ft": {
+   "base": 34000,
+   "vol": 0.045,
+   "min": 6120,
+   "max": 187000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-model-legal": {
+   "base": 42000,
+   "vol": 0.045,
+   "min": 7560,
+   "max": 231000,
+   "r": "purple",
+   "c": "compute"
+  },
+  "c-rtx-5090": {
+   "base": 32000,
+   "vol": 0.03,
+   "min": 5760,
+   "max": 176000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-rtx-4090": {
+   "base": 19500,
+   "vol": 0.03,
+   "min": 3510,
+   "max": 107250,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-rtx-pro-6000": {
+   "base": 128000,
+   "vol": 0.03,
+   "min": 23040,
+   "max": 704000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-a100-40g": {
+   "base": 420000,
+   "vol": 0.03,
+   "min": 75600,
+   "max": 2310000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-a100-80g": {
+   "base": 760000,
+   "vol": 0.03,
+   "min": 136800,
+   "max": 4180000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-a800-80g": {
+   "base": 880000,
+   "vol": 0.03,
+   "min": 158400,
+   "max": 4840000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-h800-80g": {
+   "base": 1250000,
+   "vol": 0.03,
+   "min": 225000,
+   "max": 6875000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-dataset-all": {
+   "base": 165000,
+   "vol": 0.03,
+   "min": 29700,
+   "max": 907500,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-model-llama4": {
+   "base": 215000,
+   "vol": 0.03,
+   "min": 38700,
+   "max": 1182500,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-model-deepseek-weights": {
+   "base": 268000,
+   "vol": 0.03,
+   "min": 48240,
+   "max": 1474000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-rent-h200-month": {
+   "base": 620000,
+   "vol": 0.03,
+   "min": 111600,
+   "max": 3410000,
+   "r": "gold",
+   "c": "compute"
+  },
+  "c-h100-80g": {
+   "base": 520000,
+   "vol": 0.025,
+   "min": 234000,
+   "max": 1248000,
+   "r": "red",
+   "c": "compute"
+  },
+  "c-h100-nvl": {
+   "base": 680000,
+   "vol": 0.025,
+   "min": 306000,
+   "max": 1632000,
+   "r": "red",
+   "c": "compute"
+  },
+  "c-h200-141g": {
+   "base": 3800000,
+   "vol": 0.025,
+   "min": 1710000,
+   "max": 9120000,
+   "r": "red",
+   "c": "compute"
+  },
+  "c-b200-180g": {
+   "base": 4200000,
+   "vol": 0.025,
+   "min": 1890000,
+   "max": 10080000,
+   "r": "red",
+   "c": "compute"
+  },
+  "c-gb200-nvl72": {
+   "base": 24000000,
+   "vol": 0.025,
+   "min": 10800000,
+   "max": 57600000,
+   "r": "red",
+   "c": "compute"
+  },
+  "c-mi300x": {
+   "base": 1650000,
+   "vol": 0.025,
+   "min": 742500,
+   "max": 3960000,
+   "r": "red",
+   "c": "compute"
+  },
+  "hw-e5-2680v4": {
+   "base": 45,
+   "vol": 0.1,
+   "min": 8.1,
+   "max": 247.5,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-e5-2666v3": {
+   "base": 38,
+   "vol": 0.1,
+   "min": 6.84,
+   "max": 209,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-e3-1231v3": {
+   "base": 95,
+   "vol": 0.1,
+   "min": 17.1,
+   "max": 522.5,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-g4560": {
+   "base": 78,
+   "vol": 0.1,
+   "min": 14.04,
+   "max": 429,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-g1840": {
+   "base": 28,
+   "vol": 0.1,
+   "min": 5.04,
+   "max": 154,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-ddr4-8g-2666": {
+   "base": 85,
+   "vol": 0.1,
+   "min": 15.3,
+   "max": 467.5,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-ddr4-8g-nb": {
+   "base": 92,
+   "vol": 0.1,
+   "min": 16.56,
+   "max": 506,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-ssd-240g-sata": {
+   "base": 88,
+   "vol": 0.1,
+   "min": 15.84,
+   "max": 484,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-hdd-4t-bluedisk": {
+   "base": 520,
+   "vol": 0.1,
+   "min": 93.6,
+   "max": 2860,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-psu-400w": {
+   "base": 145,
+   "vol": 0.1,
+   "min": 26.1,
+   "max": 797.5,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-case-sama": {
+   "base": 168,
+   "vol": 0.1,
+   "min": 30.24,
+   "max": 924,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-cooler-ysj": {
+   "base": 96,
+   "vol": 0.1,
+   "min": 17.28,
+   "max": 528,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-kb-shuangfeiyan": {
+   "base": 45,
+   "vol": 0.1,
+   "min": 8.1,
+   "max": 247.5,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-psu-changcheng": {
+   "base": 215,
+   "vol": 0.1,
+   "min": 38.7,
+   "max": 1182.5,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-case-lianli-o11": {
+   "base": 620,
+   "vol": 0.1,
+   "min": 111.6,
+   "max": 3410,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-ram-16g-ddr4-no": {
+   "base": 320,
+   "vol": 0.1,
+   "min": 57.6,
+   "max": 1760,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-mining-rig": {
+   "base": 280,
+   "vol": 0.1,
+   "min": 50.4,
+   "max": 1540,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-used-office-pc": {
+   "base": 480,
+   "vol": 0.1,
+   "min": 86.4,
+   "max": 2640,
+   "r": "white",
+   "c": "hardware"
+  },
+  "hw-netbar-pc": {
+   "base": 1250,
+   "vol": 0.06,
+   "min": 225,
+   "max": 6875,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-rtx750ti": {
+   "base": 175,
+   "vol": 0.06,
+   "min": 31.5,
+   "max": 962.5,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-gtx960": {
+   "base": 240,
+   "vol": 0.06,
+   "min": 43.2,
+   "max": 1320,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-gtx1060-6g": {
+   "base": 520,
+   "vol": 0.06,
+   "min": 93.6,
+   "max": 2860,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-gtx1660s": {
+   "base": 780,
+   "vol": 0.06,
+   "min": 140.4,
+   "max": 4290,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-rx580": {
+   "base": 310,
+   "vol": 0.06,
+   "min": 55.8,
+   "max": 1705,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-rtx2060": {
+   "base": 890,
+   "vol": 0.06,
+   "min": 160.2,
+   "max": 4895,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-i3-12100f": {
+   "base": 450,
+   "vol": 0.06,
+   "min": 81,
+   "max": 2475,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-i3-10105f": {
+   "base": 330,
+   "vol": 0.06,
+   "min": 59.4,
+   "max": 1815,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-r5-5500": {
+   "base": 560,
+   "vol": 0.06,
+   "min": 100.8,
+   "max": 3080,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-r5-5600": {
+   "base": 620,
+   "vol": 0.06,
+   "min": 111.6,
+   "max": 3410,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-r5-3600": {
+   "base": 430,
+   "vol": 0.06,
+   "min": 77.4,
+   "max": 2365,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-r5-1600af": {
+   "base": 320,
+   "vol": 0.06,
+   "min": 57.6,
+   "max": 1760,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-x570": {
+   "base": 560,
+   "vol": 0.06,
+   "min": 100.8,
+   "max": 3080,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-b550": {
+   "base": 520,
+   "vol": 0.06,
+   "min": 93.6,
+   "max": 2860,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-h610": {
+   "base": 420,
+   "vol": 0.06,
+   "min": 75.6,
+   "max": 2310,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-ddr4-16g-3200": {
+   "base": 450,
+   "vol": 0.06,
+   "min": 81,
+   "max": 2475,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-ddr4-32g-3600": {
+   "base": 780,
+   "vol": 0.06,
+   "min": 140.4,
+   "max": 4290,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-ddr5-16g-5600": {
+   "base": 420,
+   "vol": 0.06,
+   "min": 75.6,
+   "max": 2310,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-ddr4-nb-16g": {
+   "base": 260,
+   "vol": 0.06,
+   "min": 46.8,
+   "max": 1430,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-ssd-1t-nvme": {
+   "base": 420,
+   "vol": 0.06,
+   "min": 75.6,
+   "max": 2310,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-ssd-500g-nvme": {
+   "base": 260,
+   "vol": 0.06,
+   "min": 46.8,
+   "max": 1430,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-hdd-16t-enterprise": {
+   "base": 1780,
+   "vol": 0.06,
+   "min": 320.4,
+   "max": 9790,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-psu-leadex-650": {
+   "base": 420,
+   "vol": 0.06,
+   "min": 75.6,
+   "max": 2310,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-psu-cm-gx750": {
+   "base": 460,
+   "vol": 0.06,
+   "min": 82.8,
+   "max": 2530,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-cooler-nhd15": {
+   "base": 700,
+   "vol": 0.06,
+   "min": 126,
+   "max": 3850,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-cooler-fc140": {
+   "base": 240,
+   "vol": 0.06,
+   "min": 43.2,
+   "max": 1320,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-cooler-360aio": {
+   "base": 520,
+   "vol": 0.06,
+   "min": 93.6,
+   "max": 2860,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-mon-24-144": {
+   "base": 620,
+   "vol": 0.06,
+   "min": 111.6,
+   "max": 3410,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-mouse-g502": {
+   "base": 260,
+   "vol": 0.06,
+   "min": 46.8,
+   "max": 1430,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-mining-3090-rig": {
+   "base": 8600,
+   "vol": 0.06,
+   "min": 1548,
+   "max": 47300,
+   "r": "green",
+   "c": "hardware"
+  },
+  "hw-i5-12400f": {
+   "base": 760,
+   "vol": 0.05,
+   "min": 136.8,
+   "max": 4180,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-i5-13400f": {
+   "base": 1080,
+   "vol": 0.05,
+   "min": 194.4,
+   "max": 5940,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-i5-14600kf": {
+   "base": 1450,
+   "vol": 0.05,
+   "min": 261,
+   "max": 7975,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-i7-12700kf": {
+   "base": 1380,
+   "vol": 0.05,
+   "min": 248.4,
+   "max": 7590,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-r7-5700x3d": {
+   "base": 1080,
+   "vol": 0.05,
+   "min": 194.4,
+   "max": 5940,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-r7-7600x": {
+   "base": 1180,
+   "vol": 0.05,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-r7-9600x": {
+   "base": 1450,
+   "vol": 0.05,
+   "min": 261,
+   "max": 7975,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rtx3050": {
+   "base": 1350,
+   "vol": 0.05,
+   "min": 243,
+   "max": 7425,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rtx3060-12g": {
+   "base": 1420,
+   "vol": 0.05,
+   "min": 255.6,
+   "max": 7810,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rtx4060": {
+   "base": 2180,
+   "vol": 0.05,
+   "min": 392.4,
+   "max": 11990,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rtx4060ti": {
+   "base": 2680,
+   "vol": 0.05,
+   "min": 482.4,
+   "max": 14740,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rtx4070": {
+   "base": 3950,
+   "vol": 0.05,
+   "min": 711,
+   "max": 21725,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rx6600": {
+   "base": 1180,
+   "vol": 0.05,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rx6700xt": {
+   "base": 1380,
+   "vol": 0.05,
+   "min": 248.4,
+   "max": 7590,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-rx6800xt": {
+   "base": 2100,
+   "vol": 0.05,
+   "min": 378,
+   "max": 11550,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-arc-a750": {
+   "base": 1250,
+   "vol": 0.05,
+   "min": 225,
+   "max": 6875,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-arc-b580": {
+   "base": 1850,
+   "vol": 0.05,
+   "min": 333,
+   "max": 10175,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-z690": {
+   "base": 1180,
+   "vol": 0.05,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-b660": {
+   "base": 720,
+   "vol": 0.05,
+   "min": 129.6,
+   "max": 3960,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-b760": {
+   "base": 860,
+   "vol": 0.05,
+   "min": 154.8,
+   "max": 4730,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-a620": {
+   "base": 620,
+   "vol": 0.05,
+   "min": 111.6,
+   "max": 3410,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ddr5-32g-6000": {
+   "base": 1180,
+   "vol": 0.05,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ddr5-48g-7200": {
+   "base": 1980,
+   "vol": 0.05,
+   "min": 356.4,
+   "max": 10890,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ddr5-nb-16g": {
+   "base": 380,
+   "vol": 0.05,
+   "min": 68.4,
+   "max": 2090,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-gskill-royal": {
+   "base": 1680,
+   "vol": 0.05,
+   "min": 302.4,
+   "max": 9240,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-2t-pcie4": {
+   "base": 960,
+   "vol": 0.05,
+   "min": 172.8,
+   "max": 5280,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-4t-pcie4": {
+   "base": 1780,
+   "vol": 0.05,
+   "min": 320.4,
+   "max": 9790,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-1t-pcie5": {
+   "base": 1180,
+   "vol": 0.05,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-990pro": {
+   "base": 1580,
+   "vol": 0.05,
+   "min": 284.4,
+   "max": 8690,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-sn850x": {
+   "base": 1420,
+   "vol": 0.05,
+   "min": 255.6,
+   "max": 7810,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-tiplus7100": {
+   "base": 1080,
+   "vol": 0.05,
+   "min": 194.4,
+   "max": 5940,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-980pro": {
+   "base": 720,
+   "vol": 0.05,
+   "min": 129.6,
+   "max": 3960,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-ssd-u2-384": {
+   "base": 4600,
+   "vol": 0.05,
+   "min": 828,
+   "max": 25300,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-psu-rm850x": {
+   "base": 880,
+   "vol": 0.05,
+   "min": 158.4,
+   "max": 4840,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-psu-rog1200": {
+   "base": 2280,
+   "vol": 0.05,
+   "min": 410.4,
+   "max": 12540,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-psu-seasonic-1000": {
+   "base": 1080,
+   "vol": 0.05,
+   "min": 194.4,
+   "max": 5940,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-cooler-h150i": {
+   "base": 1180,
+   "vol": 0.05,
+   "min": 212.4,
+   "max": 6490,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-mon-27-2k": {
+   "base": 1280,
+   "vol": 0.05,
+   "min": 230.4,
+   "max": 7040,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-mon-32-4k": {
+   "base": 2680,
+   "vol": 0.05,
+   "min": 482.4,
+   "max": 14740,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-mouse-gpw": {
+   "base": 780,
+   "vol": 0.05,
+   "min": 140.4,
+   "max": 4290,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-kb-razer": {
+   "base": 980,
+   "vol": 0.05,
+   "min": 176.4,
+   "max": 5390,
+   "r": "blue",
+   "c": "hardware"
+  },
+  "hw-r7-7800x3d": {
+   "base": 1900,
+   "vol": 0.03,
+   "min": 342,
+   "max": 10450,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-r7-5800x3d": {
+   "base": 2450,
+   "vol": 0.03,
+   "min": 441,
+   "max": 13475,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-r7-9800x3d": {
+   "base": 3200,
+   "vol": 0.03,
+   "min": 576,
+   "max": 17600,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-r9-9950x3d": {
+   "base": 5200,
+   "vol": 0.03,
+   "min": 936,
+   "max": 28600,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-i9-14900k": {
+   "base": 3600,
+   "vol": 0.03,
+   "min": 648,
+   "max": 19800,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-i9-13900k": {
+   "base": 2980,
+   "vol": 0.03,
+   "min": 536.4,
+   "max": 16390,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-i7-14700k": {
+   "base": 2450,
+   "vol": 0.03,
+   "min": 441,
+   "max": 13475,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-epyc-9654": {
+   "base": 48000,
+   "vol": 0.03,
+   "min": 8640,
+   "max": 264000,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx3080-10g": {
+   "base": 2750,
+   "vol": 0.03,
+   "min": 495,
+   "max": 15125,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx4070super": {
+   "base": 4680,
+   "vol": 0.03,
+   "min": 842.4,
+   "max": 25740,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx4080": {
+   "base": 6800,
+   "vol": 0.03,
+   "min": 1224,
+   "max": 37400,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rx7900xtx": {
+   "base": 6200,
+   "vol": 0.03,
+   "min": 1116,
+   "max": 34100,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx3090-24g": {
+   "base": 5400,
+   "vol": 0.03,
+   "min": 972,
+   "max": 29700,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-z790": {
+   "base": 2680,
+   "vol": 0.03,
+   "min": 482.4,
+   "max": 14740,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-x670e": {
+   "base": 2980,
+   "vol": 0.03,
+   "min": 536.4,
+   "max": 16390,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-z890": {
+   "base": 3280,
+   "vol": 0.03,
+   "min": 590.4,
+   "max": 18040,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-ddr5-64g-6400": {
+   "base": 3680,
+   "vol": 0.03,
+   "min": 662.4,
+   "max": 20240,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-ddr5-ecc-64g": {
+   "base": 8600,
+   "vol": 0.03,
+   "min": 1548,
+   "max": 47300,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-ddr4-ecc-32g": {
+   "base": 1280,
+   "vol": 0.03,
+   "min": 230.4,
+   "max": 7040,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-ssd-ent-768t": {
+   "base": 16800,
+   "vol": 0.03,
+   "min": 3024,
+   "max": 92400,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-hdd-24t-ent": {
+   "base": 4200,
+   "vol": 0.03,
+   "min": 756,
+   "max": 23100,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-cooler-custom-loop": {
+   "base": 5800,
+   "vol": 0.03,
+   "min": 1044,
+   "max": 31900,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-cooler-industrial-fan": {
+   "base": 260,
+   "vol": 0.03,
+   "min": 46.8,
+   "max": 1430,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx5080": {
+   "base": 10800,
+   "vol": 0.03,
+   "min": 1944,
+   "max": 59400,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx5070ti": {
+   "base": 6800,
+   "vol": 0.03,
+   "min": 1224,
+   "max": 37400,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx5060": {
+   "base": 2480,
+   "vol": 0.03,
+   "min": 446.4,
+   "max": 13640,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-mon-oled-240": {
+   "base": 5800,
+   "vol": 0.03,
+   "min": 1044,
+   "max": 31900,
+   "r": "gold",
+   "c": "hardware"
+  },
+  "hw-rtx4090": {
+   "base": 19800,
+   "vol": 0.025,
+   "min": 8910,
+   "max": 47520,
+   "r": "red",
+   "c": "hardware"
+  },
+  "hw-rtx5090": {
+   "base": 32800,
+   "vol": 0.025,
+   "min": 14760,
+   "max": 78720,
+   "r": "red",
+   "c": "hardware"
+  },
+  "hw-r9-9950x": {
+   "base": 4600,
+   "vol": 0.025,
+   "min": 2070,
+   "max": 11040,
+   "r": "red",
+   "c": "hardware"
+  },
+  "hw-mac-studio-m3ultra": {
+   "base": 62000,
+   "vol": 0.025,
+   "min": 27900,
+   "max": 148800,
+   "r": "red",
+   "c": "hardware"
+  },
+  "hw-dgx-spark": {
+   "base": 32000,
+   "vol": 0.025,
+   "min": 14400,
+   "max": 76800,
+   "r": "red",
+   "c": "hardware"
+  },
+  "a-coin-yuan": {
+   "base": 320,
+   "vol": 0.1,
+   "min": 57.6,
+   "max": 1760,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-coin-silver": {
+   "base": 780,
+   "vol": 0.1,
+   "min": 140.4,
+   "max": 4290,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-stamp-80": {
+   "base": 180,
+   "vol": 0.1,
+   "min": 32.4,
+   "max": 990,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-stamp-firstday": {
+   "base": 95,
+   "vol": 0.1,
+   "min": 17.1,
+   "max": 522.5,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-cassette-fc": {
+   "base": 68,
+   "vol": 0.1,
+   "min": 12.24,
+   "max": 374,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-game-cd": {
+   "base": 120,
+   "vol": 0.1,
+   "min": 21.6,
+   "max": 660,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-parking-slot": {
+   "base": 45000,
+   "vol": 0.1,
+   "min": 8100,
+   "max": 247500,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-old-town-1br": {
+   "base": 68000,
+   "vol": 0.1,
+   "min": 12240,
+   "max": 374000,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-suburb-store": {
+   "base": 92000,
+   "vol": 0.1,
+   "min": 16560,
+   "max": 506000,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-warehouse": {
+   "base": 156000,
+   "vol": 0.1,
+   "min": 28080,
+   "max": 858000,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-campground": {
+   "base": 88000,
+   "vol": 0.1,
+   "min": 15840,
+   "max": 484000,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-guild-base": {
+   "base": 36000,
+   "vol": 0.1,
+   "min": 6480,
+   "max": 198000,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-racetrack": {
+   "base": 128000,
+   "vol": 0.1,
+   "min": 23040,
+   "max": 704000,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-usdt": {
+   "base": 7.2,
+   "vol": 0.005,
+   "min": 1.296,
+   "max": 39.6,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-dogecoin": {
+   "base": 2.1,
+   "vol": 0.2,
+   "min": 0.378,
+   "max": 11.55,
+   "r": "white",
+   "c": "assets"
+  },
+  "a-coin-panda": {
+   "base": 16800,
+   "vol": 0.06,
+   "min": 3024,
+   "max": 92400,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-coin-commemorate": {
+   "base": 2300,
+   "vol": 0.06,
+   "min": 414,
+   "max": 12650,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-stamp-zodiac": {
+   "base": 1600,
+   "vol": 0.06,
+   "min": 288,
+   "max": 8800,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-stamp-error": {
+   "base": 4200,
+   "vol": 0.06,
+   "min": 756,
+   "max": 23100,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-manga-first": {
+   "base": 3200,
+   "vol": 0.06,
+   "min": 576,
+   "max": 17600,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-watch-vintage": {
+   "base": 8600,
+   "vol": 0.06,
+   "min": 1548,
+   "max": 47300,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-pen-limited": {
+   "base": 5400,
+   "vol": 0.06,
+   "min": 972,
+   "max": 29700,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-vinyl-first": {
+   "base": 2800,
+   "vol": 0.06,
+   "min": 504,
+   "max": 15400,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-camera-film": {
+   "base": 1950,
+   "vol": 0.06,
+   "min": 351,
+   "max": 10725,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-console-new": {
+   "base": 6800,
+   "vol": 0.06,
+   "min": 1224,
+   "max": 37400,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-arcade-board": {
+   "base": 4600,
+   "vol": 0.06,
+   "min": 828,
+   "max": 25300,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-short-id": {
+   "base": 12000,
+   "vol": 0.06,
+   "min": 2160,
+   "max": 66000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-mount-rare": {
+   "base": 8800,
+   "vol": 0.06,
+   "min": 1584,
+   "max": 48400,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-tcg-pack": {
+   "base": 32000,
+   "vol": 0.06,
+   "min": 5760,
+   "max": 176000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-sneaker-signature": {
+   "base": 46000,
+   "vol": 0.06,
+   "min": 8280,
+   "max": 253000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-jersey-signed": {
+   "base": 26000,
+   "vol": 0.06,
+   "min": 4680,
+   "max": 143000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-neighborhood-3br": {
+   "base": 210000,
+   "vol": 0.06,
+   "min": 37800,
+   "max": 1155000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-metaverse-core": {
+   "base": 320000,
+   "vol": 0.06,
+   "min": 57600,
+   "max": 1760000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-metaverse-shop": {
+   "base": 420000,
+   "vol": 0.06,
+   "min": 75600,
+   "max": 2310000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-metaverse-gallery": {
+   "base": 130000,
+   "vol": 0.06,
+   "min": 23400,
+   "max": 715000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-rental-yard": {
+   "base": 168000,
+   "vol": 0.06,
+   "min": 30240,
+   "max": 924000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-hotel-room": {
+   "base": 246000,
+   "vol": 0.06,
+   "min": 44280,
+   "max": 1353000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-arena": {
+   "base": 380000,
+   "vol": 0.06,
+   "min": 68400,
+   "max": 2090000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-hangar": {
+   "base": 268000,
+   "vol": 0.06,
+   "min": 48240,
+   "max": 1474000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-undersea-dc": {
+   "base": 620000,
+   "vol": 0.06,
+   "min": 111600,
+   "max": 3410000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-golf-member": {
+   "base": 148000,
+   "vol": 0.06,
+   "min": 26640,
+   "max": 814000,
+   "r": "green",
+   "c": "assets"
+  },
+  "a-btc": {
+   "base": 780000,
+   "vol": 0.15,
+   "min": 351000,
+   "max": 1872000,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-eth": {
+   "base": 26000,
+   "vol": 0.12,
+   "min": 11700,
+   "max": 62400,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-nvda-stock": {
+   "base": 1050,
+   "vol": 0.08,
+   "min": 472.5,
+   "max": 2520,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-card-charizard": {
+   "base": 1280000,
+   "vol": 0.025,
+   "min": 576000,
+   "max": 3072000,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-card-black-lotus": {
+   "base": 3600000,
+   "vol": 0.025,
+   "min": 1620000,
+   "max": 8640000,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-nft-001": {
+   "base": 520000,
+   "vol": 0.2,
+   "min": 234000,
+   "max": 1248000,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-nft-ape": {
+   "base": 860000,
+   "vol": 0.18,
+   "min": 387000,
+   "max": 2064000,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-villa-seaview": {
+   "base": 2400000,
+   "vol": 0.025,
+   "min": 1080000,
+   "max": 5760000,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-private-island": {
+   "base": 5600000,
+   "vol": 0.025,
+   "min": 2520000,
+   "max": 13440000,
+   "r": "red",
+   "c": "assets"
+  },
+  "a-maotai-stock": {
+   "base": 1580,
+   "vol": 0.03,
+   "min": 284.4,
+   "max": 8690,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-tsmc-stock": {
+   "base": 240,
+   "vol": 0.05,
+   "min": 43.2,
+   "max": 1320,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-tencent-stock": {
+   "base": 460,
+   "vol": 0.05,
+   "min": 82.8,
+   "max": 2530,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-apple-stock": {
+   "base": 185,
+   "vol": 0.03,
+   "min": 33.3,
+   "max": 1017.5,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-microsoft-stock": {
+   "base": 380,
+   "vol": 0.03,
+   "min": 68.4,
+   "max": 2090,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-tesla-stock": {
+   "base": 268,
+   "vol": 0.1,
+   "min": 48.24,
+   "max": 1474,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-meta-stock": {
+   "base": 620,
+   "vol": 0.06,
+   "min": 111.6,
+   "max": 3410,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-amazon-stock": {
+   "base": 198,
+   "vol": 0.05,
+   "min": 35.64,
+   "max": 1089,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-google-stock": {
+   "base": 176,
+   "vol": 0.04,
+   "min": 31.68,
+   "max": 968,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-amd-stock": {
+   "base": 182,
+   "vol": 0.08,
+   "min": 32.76,
+   "max": 1001,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-alibaba-stock": {
+   "base": 138,
+   "vol": 0.06,
+   "min": 24.84,
+   "max": 759,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-byd-stock": {
+   "base": 268,
+   "vol": 0.07,
+   "min": 48.24,
+   "max": 1474,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-cambricon-stock": {
+   "base": 620,
+   "vol": 0.12,
+   "min": 111.6,
+   "max": 3410,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-netease-stock": {
+   "base": 168,
+   "vol": 0.05,
+   "min": 30.24,
+   "max": 924,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-pdd-stock": {
+   "base": 148,
+   "vol": 0.08,
+   "min": 26.64,
+   "max": 814,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-samsung-stock": {
+   "base": 210,
+   "vol": 0.05,
+   "min": 37.8,
+   "max": 1155,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-sol-stock": {
+   "base": 1450,
+   "vol": 0.14,
+   "min": 261,
+   "max": 7975,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-card-ssr": {
+   "base": 52000,
+   "vol": 0.03,
+   "min": 9360,
+   "max": 286000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-card-rookie": {
+   "base": 38000,
+   "vol": 0.03,
+   "min": 6840,
+   "max": 209000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-car-holo": {
+   "base": 128000,
+   "vol": 0.03,
+   "min": 23040,
+   "max": 704000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-card-yugioh": {
+   "base": 86000,
+   "vol": 0.03,
+   "min": 15480,
+   "max": 473000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-sneaker-collab": {
+   "base": 32000,
+   "vol": 0.08,
+   "min": 5760,
+   "max": 176000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-figure-1of1": {
+   "base": 108000,
+   "vol": 0.03,
+   "min": 19440,
+   "max": 594000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-comic-manuscript": {
+   "base": 168000,
+   "vol": 0.03,
+   "min": 30240,
+   "max": 924000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-wristwatch-lux": {
+   "base": 268000,
+   "vol": 0.03,
+   "min": 48240,
+   "max": 1474000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-metaverse-land-core": {
+   "base": 980000,
+   "vol": 0.03,
+   "min": 176400,
+   "max": 5390000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-penthouse": {
+   "base": 620000,
+   "vol": 0.03,
+   "min": 111600,
+   "max": 3410000,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-school-district": {
+   "base": 205000,
+   "vol": 0.03,
+   "min": 36900,
+   "max": 1127500,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-store-commercial": {
+   "base": 315000,
+   "vol": 0.03,
+   "min": 56700,
+   "max": 1732500,
+   "r": "gold",
+   "c": "assets"
+  },
+  "a-stamp-rare": {
+   "base": 26000,
+   "vol": 0.05,
+   "min": 4680,
+   "max": 143000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-colored-coin": {
+   "base": 46000,
+   "vol": 0.05,
+   "min": 8280,
+   "max": 253000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-figure-limited": {
+   "base": 8600,
+   "vol": 0.05,
+   "min": 1548,
+   "max": 47300,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-blindbox-hidden": {
+   "base": 12800,
+   "vol": 0.05,
+   "min": 2304,
+   "max": 70400,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-console-cart": {
+   "base": 9800,
+   "vol": 0.05,
+   "min": 1764,
+   "max": 53900,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-postcard-set": {
+   "base": 16800,
+   "vol": 0.05,
+   "min": 3024,
+   "max": 92400,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-jersey-retro": {
+   "base": 32000,
+   "vol": 0.05,
+   "min": 5760,
+   "max": 176000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-perfume-limited": {
+   "base": 5400,
+   "vol": 0.05,
+   "min": 972,
+   "max": 29700,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-metaverse-stage": {
+   "base": 186000,
+   "vol": 0.05,
+   "min": 33480,
+   "max": 1023000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-luxury-apt": {
+   "base": 388000,
+   "vol": 0.05,
+   "min": 69840,
+   "max": 2134000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-townhouse": {
+   "base": 468000,
+   "vol": 0.05,
+   "min": 84240,
+   "max": 2574000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-standalone-villa": {
+   "base": 880000,
+   "vol": 0.05,
+   "min": 158400,
+   "max": 4840000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-office-half": {
+   "base": 520000,
+   "vol": 0.05,
+   "min": 93600,
+   "max": 2860000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-metaverse-plot-l": {
+   "base": 96000,
+   "vol": 0.05,
+   "min": 17280,
+   "max": 528000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-game-cart-collect": {
+   "base": 66000,
+   "vol": 0.05,
+   "min": 11880,
+   "max": 363000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-figure-studio": {
+   "base": 56000,
+   "vol": 0.05,
+   "min": 10080,
+   "max": 308000,
+   "r": "blue",
+   "c": "assets"
+  },
+  "a-card-promo": {
+   "base": 22000,
+   "vol": 0.05,
+   "min": 3960,
+   "max": 121000,
+   "r": "blue",
+   "c": "assets"
+  }
+ }
+}

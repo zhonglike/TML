@@ -1,0 +1,119 @@
+/**
+ * MONO — 发布检查
+ * 在提交/推送前跑一遍：语法检查全部模块 + 冒烟测试 + 资源完整性检查。
+ *   node scripts/release.mjs
+ */
+import { readdir, readFile, stat } from 'node:fs/promises';
+import { join, resolve, dirname, extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+let fails = 0;
+const ok = (cond, msg, extra = '') => {
+  console.log(`${cond ? '  ok  ' : ' FAIL '} ${msg}${extra ? ' — ' + extra : ''}`);
+  if (!cond) fails++;
+};
+
+/* 1. 语法检查（只对 src/scripts/tests，跳过生成的数据文件以免拖慢） */
+async function walk(dir, out = []) {
+  for (const e of await readdir(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) {
+      if (e.name === 'node_modules' || e.name === '.git') continue;
+      await walk(p, out);
+    } else if (['.js', '.mjs'].includes(extname(e.name))) out.push(p);
+  }
+  return out;
+}
+
+const files = [];
+await walk(join(ROOT, 'src'), files);
+await walk(join(ROOT, 'scripts'), files);
+await walk(join(ROOT, 'tests'), files);
+let bad = 0;
+for (const f of files) {
+  try {
+    execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' });
+  } catch (e) {
+    bad++;
+    console.log(` FAIL  syntax ${f.replace(ROOT, '.')}`);
+    console.log(String(e.stderr || e.message).split('\n').slice(0, 4).join('\n'));
+  }
+}
+ok(bad === 0, `语法检查 ${files.length} 个模块`, `${bad} 个失败`);
+
+/* 2. 关键文件存在性 */
+const required = [
+  'index.html', 'manifest.webmanifest', 'sw.js', 'CNAME', 'README.md',
+  'assets/icons/favicon.svg', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png',
+  'src/main.js', 'src/styles/main.css',
+  'src/core/const.js', 'src/core/util.js', 'src/core/rng.js', 'src/core/catalog.js',
+  'src/core/state.js', 'src/core/market.js', 'src/core/engine.js', 'src/core/save.js', 'src/core/idb.js',
+  'src/data/catalog-cs2.js', 'src/data/catalog-compute.js', 'src/data/catalog-hardware.js', 'src/data/catalog-assets.js',
+  'src/systems/loot.js', 'src/systems/economy.js', 'src/systems/inventory.js',
+  'src/systems/trade.js', 'src/systems/auction.js', 'src/systems/npc.js', 'src/systems/quest.js',
+  'src/ui/ui.js', 'src/ui/charts.js', 'src/ui/sound.js', 'src/ui/views.js',
+  'src/ui/views/dashboard.js', 'src/ui/views/bag.js', 'src/ui/views/draw.js', 'src/ui/views/market.js',
+  'src/ui/views/item.js', 'src/ui/views/orders.js', 'src/ui/views/auction.js', 'src/ui/views/records.js',
+  'src/ui/views/quests.js', 'src/ui/views/settings.js',
+  'data/prices.seed.json', 'desktop/main.cjs', 'desktop/package.json',
+  'mobile/capacitor.config.json', 'mobile/package.json',
+  '.github/workflows/pages.yml',
+];
+for (const f of required) {
+  const s = await stat(join(ROOT, f)).catch(() => null);
+  ok(s && s.size > 0, `存在 ${f}`);
+}
+
+/* 3. index.html / sw.js 引用的本地资源必须存在 */
+const html = await readFile(join(ROOT, 'index.html'), 'utf8');
+const refs = Array.from(html.matchAll(/(?:src|href)="([^"]+)"/g))
+  .map((m) => m[1])
+  .filter((u) => !u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#'));
+for (const r of refs) {
+  const s = await stat(join(ROOT, r)).catch(() => null);
+  ok(!!s, `index.html 引用 ${r}`);
+}
+const swText = await readFile(join(ROOT, 'sw.js'), 'utf8');
+const swRefs = Array.from(swText.matchAll(/'\.\/([^']+)'/g)).map((m) => m[1]);
+let swBad = [];
+for (const r of swRefs) {
+  if (r === '') continue;
+  const s = await stat(join(ROOT, r)).catch(() => null);
+  if (!s) swBad.push(r);
+}
+ok(swBad.length === 0, `sw.js 预缓存清单 ${swRefs.length} 项全部存在`, swBad.join(', '));
+
+/* 4. 冒烟测试（引擎 / 经济 / 市场） */
+console.log('\n  → 运行冒烟测试');
+let smokeOk = true;
+try {
+  const out = execFileSync(process.execPath, [join(ROOT, 'tests/smoke.mjs')], { stdio: 'pipe', encoding: 'utf8' });
+  const tail = out.trim().split('\n').slice(-6).join('\n');
+  console.log(tail.split('\n').map((l) => '    ' + l).join('\n'));
+  if (!/全部通过/.test(out)) smokeOk = false;
+} catch (e) {
+  smokeOk = false;
+  console.log(String(e.stdout || '').split('\n').slice(-12).map((l) => '    ' + l).join('\n'));
+  console.log(String(e.stderr || e.message).split('\n').slice(0, 6).map((l) => '    ' + l).join('\n'));
+}
+ok(smokeOk, '冒烟测试通过');
+
+/* 5. UI 无头渲染测试（页面 / 交互 / 存档往返） */
+console.log('\n  → 运行 UI 渲染测试');
+let uiOk = true;
+try {
+  const out = execFileSync(process.execPath, [join(ROOT, 'tests/ui.mjs')], { stdio: 'pipe', encoding: 'utf8' });
+  const lines = out.trim().split('\n');
+  console.log(lines.slice(-4).map((l) => '    ' + l).join('\n'));
+  if (!/全部通过/.test(out)) uiOk = false;
+} catch (e) {
+  uiOk = false;
+  console.log(String(e.stdout || '').split('\n').filter((l) => /FAIL/.test(l)).slice(0, 10).map((l) => '    ' + l).join('\n'));
+  console.log(String(e.stderr || e.message).split('\n').slice(0, 6).map((l) => '    ' + l).join('\n'));
+}
+ok(uiOk, 'UI 渲染测试通过');
+
+console.log(`\n${fails === 0 ? '发布检查全部通过。' : fails + ' 项检查失败。'}\n`);
+process.exit(fails ? 1 : 0);

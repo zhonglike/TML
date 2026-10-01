@@ -1,0 +1,22 @@
+{
+  "name": "MONO — 极简 · 暗黑经营模拟",
+  "short_name": "MONO",
+  "description": "极简黑白的抽奖经营模拟游戏：开箱、倒买倒卖、拍卖、K 线、NPC 市场。纯前端单机，可离线。",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./?src=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "categories": ["games", "simulation", "finance"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "assets/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
