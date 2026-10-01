@@ -1,0 +1,59 @@
+name: Deploy MONO to GitHub Pages
+
+# 主站部署：把仓库根目录当作静态站点根目录发布，
+# 自定义域名由根目录下的 CNAME 文件（TML.zhonglike.tech）声明。
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 发布前检查：语法 + 冒烟测试 + 资源完整性
+      - name: Release checks
+        run: node scripts/release.mjs
+
+      # 生成打包输入（Capacitor / 离线分发用，同时用于 Pages 发布）
+      - name: Build static bundle
+        run: node scripts/build-web.mjs
+
+      - name: Add .nojekyll
+        run: |
+          touch dist/.nojekyll
+          cp CNAME dist/CNAME 2>/dev/null || true
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
