@@ -36,6 +36,7 @@ export function create(ctx) {
   }
 
   function paint() {
+    bindDropZone();
     mount(body,
       h('div.grid.grid--2', null,
         // 表现
@@ -87,9 +88,22 @@ export function create(ctx) {
           sectionTitle('存档'),
           h('div.stack--tight.stack', { style: { marginTop: '8px' } }, ...slotRows()),
           h('div.btn-group', { style: { marginTop: '10px' } },
-            h('button.btn.btn--sm', { onclick: () => save.downloadSave() }, icon('download', 14), '导出 JSON'),
-            h('button.btn.btn--sm', { onclick: importDialog }, icon('upload', 14), '导入 JSON')),
+            h('button.btn.btn--sm.btn--primary', { onclick: async () => { const r = await save.shareSave(); if (r !== 'cancelled') toast(r === 'shared' ? '已打开分享面板 · 选「存到文件」' : '已下载到手机「文件 / 下载」里', { kind: 'good', ms: 3600 }); } }, icon('download', 14), '保存到手机'),
+            h('button.btn.btn--sm', { onclick: importDialog }, icon('upload', 14), '从文件导入')),
           h('div.hint', { style: { marginTop: '8px' }, text: '存档同时写入 localStorage（快路径）与 IndexedDB（完整快照）；每 30 秒与跨日自动保存。' })),
+        // 备份到手机 / 从手机导入
+        h('div.card.card--pad', null,
+          sectionTitle('备份到手机'),
+          h('div.hint', { style: { marginTop: '8px' }, text: '把进度存成一个 JSON 文件放到手机上；换设备或清了浏览器数据之后，把那个文件拖回来就能继续玩。' }),
+          h('div.stack--tight.stack', { style: { marginTop: '10px' } },
+            h('button.btn.btn--block.btn--primary', { onclick: async () => { const r = await save.shareSave(); if (r !== 'cancelled') toast(r === 'shared' ? '已打开分享面板 · 选「存到文件」' : '已下载到手机「文件 / 下载」里', { kind: 'good', ms: 3600 }); } }, icon('download', 15), '保存到手机'),
+            h('button.btn.btn--block', { onclick: () => importDialog() }, icon('upload', 15), '从文件导入')),
+          h('div', { id: 'save-drop', style: { marginTop: '8px', padding: '14px', textAlign: 'center', border: '1px dashed var(--line-2)', borderRadius: '10px', color: 'var(--text-3)', fontSize: '12px' } }, '把存档 JSON 拖到这里'),
+          h('div.kv-grid', { style: { marginTop: '10px' } },
+            kv('文件名', save.saveFileName()),
+            kv('体积', Math.round(save.saveSize() / 1024) + ' KB'),
+            kv('存档位', String(S.meta.slot + 1)),
+            kv('上次保存', S.meta.savedAt ? new Date(S.meta.savedAt).toLocaleString('zh-CN') : '—'))),
         // 关于
         h('div.card.card--pad', null,
           sectionTitle('关于'),
@@ -140,6 +154,62 @@ export function create(ctx) {
 
   function kv(k, v) {
     return h('div.kv', null, h('span.kv__k', { text: k }), h('span.kv__v', { text: String(v) }));
+  }
+
+  /** 拖拽导入：手机（分享 → 文件 → 拖）/ 桌面都可以把存档 JSON 直接丢到面板上 */
+  function bindDropZone() {
+    setTimeout(() => {
+      const drop = document.getElementById('save-drop');
+      if (!drop || drop._bound) return;
+      drop._bound = true;
+      const reset = () => {
+        drop.style.borderColor = 'var(--line-2)';
+        drop.style.color = 'var(--text-3)';
+      };
+      drop.addEventListener('click', () => importDialog());
+      drop.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        drop.style.borderColor = 'var(--stroke-2)';
+        drop.style.color = 'var(--text)';
+      });
+      drop.addEventListener('dragleave', reset);
+      drop.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        reset();
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (!f) {
+          toast('没有识别到文件', { kind: 'bad' });
+          return;
+        }
+        const text = typeof f.text === 'function'
+          ? await f.text().catch(() => null)
+          : null;
+        if (!text) {
+          // 老浏览器没有 File.text()：退回 FileReader
+          const reader = new FileReader();
+          const txt = await new Promise((res) => {
+            reader.onload = () => res(String(reader.result || ''));
+            reader.onerror = () => res(null);
+            reader.readAsText(f, 'utf-8');
+          });
+          if (!txt) {
+            toast('文件读取失败', { kind: 'bad' });
+            return;
+          }
+          const rr = await save.importText(txt, S.meta.slot);
+          if (rr.ok) {
+            toast(`已导入存档：${f.name}`, { kind: 'good' });
+            ctx.reload();
+          } else toast('导入失败：' + rr.reason, { kind: 'bad' });
+          return;
+        }
+        const r = await save.importText(text, S.meta.slot);
+        if (r.ok) {
+          toast(`已导入存档：${f.name}`, { kind: 'good' });
+          ctx.reload();
+        } else toast('导入失败：' + r.reason, { kind: 'bad' });
+      });
+    }, 0);
   }
 
   function toggle(on, onChange) {

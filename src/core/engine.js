@@ -92,6 +92,7 @@ export function wireCounters() {
     economy.resetDaily();
     quest.syncMilestones();
     quest.checkAchievements();
+    quest.checkBailout();
     // 预热期不自动保存：boot() 会推进 20 个游戏日（每个 day 事件都会到这里），
     // 若此时落盘，就会用「刚生成的 NPC / 市场」覆盖掉玩家读进来的存档。
     if (!engine.warming) autoSave();
@@ -194,6 +195,8 @@ export function advance(hours) {
   }
   S.clock.lastReal = Date.now();
   quest.syncMilestones();
+  // 破产补贴：现金见底且仓库清空时自动兜底，避免玩家彻底卡死
+  quest.checkBailout();
   bus.emit('advanced', S.clock.hours);
 }
 

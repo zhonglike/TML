@@ -61,25 +61,58 @@ const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 const easeInOutQuint = (t) => (t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2);
 
 /**
- * 播放一次轮盘
+ * 播放一次轮盘（循环卡带）
+ *
+ * 卡带是循环的：把候选卡重复若干轮拼成一整条，中奖卡放在**中间那一轮**。
+ * 这样落位时标记线左右都还有大量卡片 —— 永远不会出现
+ * 「滚到头之后标记线落在卡带之外 → 空白」。（手机上卡片更宽、可见张数更少，
+ * 卡带必须足够长，所以这里设了 MIN_CARDS 下限。）
+ *
  * @param {HTMLElement} host 容器（会被清空）
  * @param {object} win 中奖结果 { def, inst, rarity, qty }
- * @param {object} opt { rng, dur, spins, onTickPass, onSettle, reduceMotion }
+ * @param {object} opt { rng, dur, onTickPass, onSettle, reduceMotion, minCards }
  * @returns {Promise<void>}
  */
 export function playReel(host, win, opt = {}) {
-  const rng = opt.rng || { float: () => Math.random(), int: (a, b) => a + Math.floor(Math.random() * (b - a + 1)), chance: (p) => Math.random() < p };
+  const rng = opt.rng || {
+    float: () => Math.random(),
+    int: (a, b) => a + Math.floor(Math.random() * (b - a + 1)),
+    chance: (p) => Math.random() < p,
+  };
   const dur = opt.dur || 6000;
-  const spins = opt.spins || 3;
-  const total = Math.max(36, Math.round(spins * 12) + 8);
-  const winnerIndex = total - 6;
+  /** 一条卡带至少这么多张：手机一屏只能看到 2~3 张，太短就会「滚到头」 */
+  const minCards = opt.minCards || 52;
 
-  const items = [];
-  for (let i = 0; i < total; i++) {
-    items.push(i === winnerIndex
-      ? { def: win.def, inst: win.inst, isWinner: true }
-      : { def: filler(rng, i > winnerIndex - 5 && i < winnerIndex ? win.rarity : null), inst: null });
+  // 一轮的候选卡：中奖卡留一个占位，其余随机填充
+  const perCycle = Math.max(8, Math.ceil(minCards / 3));
+  const winnerSlot = perCycle - 4; // 一轮里中奖卡的位置（靠后，留出「快要出了」的铺垫）
+  const cycle = [];
+  for (let i = 0; i < perCycle; i++) {
+    if (i === winnerSlot) cycle.push({ def: win.def, inst: win.inst, isWinner: true });
+    else {
+      const near = i > winnerSlot - 5;
+      cycle.push({ def: filler(rng, near ? win.rarity : null), inst: null });
+    }
   }
+  // 重复若干轮，中奖卡落在**中间那一轮**
+  const cycles = Math.max(3, Math.ceil(minCards / perCycle));
+  const midCycle = Math.floor(cycles / 2);
+  const items = [];
+  for (let c = 0; c < cycles; c++) {
+    for (let i = 0; i < perCycle; i++) {
+      const base = cycle[i];
+      const idx = c * perCycle + i;
+      // 只有中轮的那张是真正的中奖卡，其余同位置卡换成普通卡（视觉上就是「循环」）
+      if (base.isWinner && c === midCycle) {
+        items.push({ def: win.def, inst: win.inst, isWinner: true });
+      } else if (base.isWinner) {
+        items.push({ def: filler(rng, null), inst: null });
+      } else {
+        items.push(base);
+      }
+    }
+  }
+  const winnerIndex = midCycle * perCycle + winnerSlot;
 
   const track = h('div.reel__track');
   mount(track, ...items.map((it) => reelCard(it, { dim: !it.isWinner })));

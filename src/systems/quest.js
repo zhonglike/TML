@@ -141,6 +141,68 @@ function redCount() {
   return n;
 }
 
+/* ------------------------------------------------------------ 破产补贴 */
+
+/** 触发门槛与金额 */
+export const BAILOUT = {
+  /** 现金低于该值才考虑补贴 */
+  threshold: 1000,
+  /** 补贴金额 */
+  grant: 3000,
+};
+
+function countItems() {
+  let n = 0;
+  for (const k in S.player.bag) n += S.player.bag[k].qty || 0;
+  return n;
+}
+
+/**
+ * 破产补贴：现金不足 1000 **且** 仓库里真的一件东西都没有时才发放。
+ * 只要还有可卖的东西（或在途挂单/拍卖标的），就先让玩家自己变现，
+ * 避免「囤货领补贴」被滥用。
+ * @returns {{ok:boolean, reason?:string, amount?:number}}
+ */
+export function checkBailout() {
+  const p = S.player;
+  if (p.cash >= BAILOUT.threshold) return { ok: false, reason: 'has-cash' };
+  const items = countItems();
+  if (items > 0) return { ok: false, reason: 'has-items', items };
+  if (p.listings.length || p.buyOrders.length) return { ok: false, reason: 'has-orders' };
+  const liveMine = (p.auctions || []).filter((a) => a.status === 'live' && a.mine);
+  if (liveMine.length) return { ok: false, reason: 'has-auctions' };
+
+  const d = day();
+  if (p.bailoutDay === d) return { ok: false, reason: 'already-today' };
+
+  p.bailoutDay = d;
+  p.stats.bailouts = (p.stats.bailouts || 0) + 1;
+  p.stats.bailoutTotal = (p.stats.bailoutTotal || 0) + BAILOUT.grant;
+  earn(BAILOUT.grant, 'bailout');
+  pushLedger({
+    type: 'bailout',
+    amount: BAILOUT.grant,
+    note: `破产补贴（第 ${p.stats.bailouts} 次）`,
+  });
+  bus.emit('bailout', { amount: BAILOUT.grant, count: p.stats.bailouts });
+  return { ok: true, amount: BAILOUT.grant };
+}
+
+/** 给 UI 展示用：距离能领补贴还差什么 */
+export function bailoutStatus() {
+  const p = S.player;
+  const items = countItems();
+  if (p.cash >= BAILOUT.threshold) {
+    return { eligible: false, items, text: `现金低于 ¥${BAILOUT.threshold} 且仓库为空时可领取` };
+  }
+  if (items > 0) return { eligible: false, items, text: `仓库里还有 ${items} 件可卖物品，先变现` };
+  if (p.listings.length || p.buyOrders.length) return { eligible: false, items, text: '还有挂单在市场上，先撤单变现' };
+  const liveMine = (p.auctions || []).filter((a) => a.status === 'live' && a.mine).length;
+  if (liveMine) return { eligible: false, items, text: '还有送拍的物品，等落槌' };
+  if (p.bailoutDay === day()) return { eligible: false, items, text: '今天已经领过补贴了' };
+  return { eligible: true, items, text: `可领取 ¥${BAILOUT.grant} 补贴` };
+}
+
 /* ------------------------------------------------------------ 判定与领奖 */
 
 /** 通用进度查询 */

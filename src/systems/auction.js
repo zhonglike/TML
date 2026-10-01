@@ -235,9 +235,11 @@ function unsold(a) {
   bus.emit('auction-settled', { auction: a, win: false, unsold: true });
 }
 
+/** 同时最多进行的 NPC 拍卖场次（不含玩家自己送拍的） */
+const MAX_LIVE_NPC_AUCTIONS = 2;
+
 /** 每 tick 推进拍卖 */
-export function tickAuctions(rng, hours) {
-  const steps = Math.max(1, Math.round(hours / 6));
+export function tickAuctions(rng, hours) {  const steps = Math.max(1, Math.round(hours / 6));
   for (let s = 0; s < steps; s++) {
     for (const a of S.player.auctions) {
       if (a.status !== 'live') continue;
@@ -258,9 +260,9 @@ export function tickAuctions(rng, hours) {
       S.player.auctions = live.concat(done.slice(0, 24));
     }
   }
-  // 维持一定的活跃拍卖数量
-  const liveCount = S.player.auctions.filter((a) => a.status === 'live').length;
-  if (liveCount < 4 && rng.chance(0.6)) spawnNpcAuction(rng);
+  // 同时最多 2 场进行中的 NPC 拍卖（玩家自己的送拍不受此限制）
+  const liveNpc = S.player.auctions.filter((a) => a.status === 'live' && !a.mine).length;
+  if (liveNpc < MAX_LIVE_NPC_AUCTIONS && rng.chance(0.6)) spawnNpcAuction(rng);
 }
 
 export function liveAuctions() {

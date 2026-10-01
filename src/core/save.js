@@ -240,17 +240,55 @@ export function exportBlob() {
   return new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
 }
 
+/** 存档文件名：带上游戏内天数与等级，方便在手机的「文件」里认出来 */
+export function saveFileName() {
+  const p = pack();
+  const d = Math.floor((p.clock ? p.clock.hours : 0) / 24) + 1;
+  const ymd = new Date().toISOString().slice(0, 10);
+  return `MONO-存档-第${d}天-Lv${p.player.level}-${ymd}.json`;
+}
+
 export function downloadSave(name) {
   const blob = exportBlob();
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = name || `mono-save-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = name || saveFileName();
   document.body.appendChild(a);
   a.click();
   setTimeout(() => {
     URL.revokeObjectURL(a.href);
     a.remove();
   }, 1000);
+}
+
+/** 存档体积（字节），用于界面提示 */
+export function saveSize() {
+  try {
+    return JSON.stringify(pack()).length;
+  } catch (e) {
+    return 0;
+  }
+}
+
+/**
+ * 手机首选：走系统分享面板，可以直接「存到文件」或发到自己的聊天窗口。
+ * 浏览器不支持 Web Share 时回退成普通下载。
+ * @returns {Promise<'shared'|'downloaded'|'cancelled'>}
+ */
+export async function shareSave() {
+  const name = saveFileName();
+  try {
+    const blob = exportBlob();
+    const file = new File([blob], name, { type: 'application/json' });
+    if (typeof navigator !== 'undefined' && navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: 'MONO 存档', text: 'MONO 存档备份' });
+      return 'shared';
+    }
+  } catch (e) {
+    if (e && e.name === 'AbortError') return 'cancelled';
+  }
+  downloadSave(name);
+  return 'downloaded';
 }
 
 export async function importText(text, slot = 0) {

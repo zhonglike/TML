@@ -200,5 +200,120 @@ console.log('\n== 跨存档：重启后再读档，NPC 引用必须仍能对上 
     unresolvable ? `${unresolvable} 处无法解析` : `检查 ${S.player.auctions.length} 场`);
 }
 
+console.log('\n== 并发上限：NPC 拍卖最多 2 场进行中 ==');
+{
+  let maxLive = 0;
+  let over = 0;
+  for (let d = 0; d < 40; d++) {
+    engine.advance(24);
+    const n = S.player.auctions.filter((a) => a.status === 'live' && !a.mine).length;
+    if (n > maxLive) maxLive = n;
+    if (n > 2) over++;
+  }
+  ok(maxLive <= 2, '进行中的 NPC 拍卖从不超过 2 场', `峰值 ${maxLive} 场`);
+  ok(over === 0, '没有任何一天超出上限');
+}
+
+console.log('\n== 挂单簿深度：每边最多 2 笔 ==');
+{
+  const npc = await import('../src/systems/npc.js');
+  const { BY_RARITY } = await import('../src/core/catalog.js');
+  let maxAsk = 0;
+  let maxBid = 0;
+  // 取样多种物品，覆盖不同流动性
+  const sample = [
+    ...BY_RARITY.blue.slice(0, 6),
+    ...BY_RARITY.green.slice(0, 4),
+    ...BY_RARITY.gold.slice(0, 3),
+  ];
+  for (const def of sample) {
+    const b = npc.book(def, engine.engine.rng);
+    maxAsk = Math.max(maxAsk, b.asks.length);
+    maxBid = Math.max(maxBid, b.bids.length);
+  }
+  ok(maxAsk <= 2, '卖盘最多 2 档', `峰值 ${maxAsk}`);
+  ok(maxBid <= 2, '买盘最多 2 档', `峰值 ${maxBid}`);
+}
+
+console.log('\n== 破产补贴 ==');
+{
+  const quest = await import('../src/systems/quest.js');
+  // 有现金：不给
+  S.player.cash = 5000;
+  ok(!quest.checkBailout().ok, '现金充足时不发放');
+
+  // 现金不足但仓库有货：不给（避免囤货领补贴）
+  const inv = await import('../src/systems/inventory.js');
+  const loot = await import('../src/systems/loot.js');
+  loot.drawMany(3, engine.engine.rng, { priceEach: 100, charge: () => true });
+  S.player.cash = 500;
+  const r1 = quest.checkBailout();
+  ok(!r1.ok && r1.reason === 'has-items', '仓库有货时不发放', `reason=${r1.reason} items=${r1.items}`);
+  ok(quest.bailoutStatus().eligible === false, '状态提示不可领');
+
+  // 清空仓库 + 现金见底：发放 3000
+  S.player.bag = {};
+  S.player.listings = [];
+  S.player.buyOrders = [];
+  S.player.auctions = [];
+  S.player.cash = 500;
+  const r2 = quest.checkBailout();
+  ok(r2.ok && r2.amount === 3000, '仓库清空且现金不足时发放 3000', r2.ok ? `+${r2.amount}` : `reason=${r2.reason}`);
+  ok(Math.abs(S.player.cash - 3500) < 1, '到账后现金正确', `${Math.round(S.player.cash)}`);
+
+  // 同日不重复发放
+  S.player.cash = 500;
+  const r3 = quest.checkBailout();
+  ok(!r3.ok && r3.reason === 'already-today', '同一游戏日只发一次', `reason=${r3.reason}`);
+
+  // 跨日：把「领过的日子」往回拨一天，模拟进入新的一天
+  S.player.bailoutDay = (S.player.bailoutDay || 0) - 1;
+  S.player.cash = 500;
+  S.player.bag = {};
+  const r4 = quest.checkBailout();
+  ok(r4.ok, '新的一天可以再领', r4.ok ? `+${r4.amount}` : `reason=${r4.reason}`);
+}
+
+console.log('\n== 存档导出 / 导入（保存到手机 → 下次拖回来） ==');
+{
+  const save = await import('../src/core/save.js');
+  const name = save.saveFileName();
+  ok(/^MONO-存档-第\d+天-Lv\d+-[\d-]+\.json$/.test(name), '存档文件名可读', name);
+  const size = save.saveSize();
+  ok(size > 1000, '存档体积合理', `${Math.round(size / 1024)} KB`);
+
+  // 导出 → 反序列化 → 导入，验证往返一致
+  const beforeCash = S.player.cash;
+  const beforeDay = S.clock.hours;
+  const beforeNpc = S.npcs.map((n) => n.name).join(',');
+  const beforeBag = Object.keys(S.player.bag).join(',');
+
+  const blob = save.exportBlob();
+  const text = typeof blob.text === 'function'
+    ? await blob.text()
+    : JSON.stringify(await new Promise((res) => {
+      const fr = new FileReader();
+      fr.onload = () => res(JSON.parse(String(fr.result)));
+      fr.readAsText(blob, 'utf-8');
+    }));
+  let parsed = null;
+  try { parsed = JSON.parse(text); } catch (e) { /* ignore */ }
+  ok(!!parsed && !!parsed.player && !!parsed.market && !!parsed.npcs, '导出内容是完整快照',
+    parsed ? `keys=${Object.keys(parsed).length}` : '解析失败');
+  ok(parsed && parsed.seed === S.__seed, '快照带种子（可复现市场）', String(parsed && parsed.seed));
+
+  // 破坏当前状态，再导入还原
+  S.player.cash = 1;
+  S.clock.hours = 0;
+  S.npcs = [];
+  S.player.bag = {};
+  const r = await save.importText(text, 0);
+  ok(r.ok, '导入成功', r.ok ? '' : String(r.reason));
+  ok(Math.abs(S.player.cash - beforeCash) < 1, '导入后现金还原', `${Math.round(S.player.cash)}`);
+  ok(Math.abs(S.clock.hours - beforeDay) < 0.001, '导入后游戏时间还原', String(S.clock.hours));
+  ok(S.npcs.map((n) => n.name).join(',') === beforeNpc, '导入后 NPC 还原', `${S.npcs.length} 位`);
+  ok(Object.keys(S.player.bag).join(',') === beforeBag, '导入后背包还原', `${Object.keys(S.player.bag).length} 组`);
+}
+
 console.log(`\n结果：${failures.length ? failures.length + ' 项失败 → ' + failures.join(' / ') : '全部通过'}\n`);
 process.exit(failures.length ? 1 : 0);

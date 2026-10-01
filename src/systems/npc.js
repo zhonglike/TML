@@ -118,6 +118,9 @@ export function bestOffer(def) {
 
 const ASK_REFRESH_HOURS = 6;
 
+/** 每个物品的挂单簿深度上限（买卖各最多这么多笔） */
+const BOOK_DEPTH = 2;
+
 /** 重建某物品的挂单簿（NPC 卖单 / 买单），供详情页展示与成交 */
 export function refreshBook(def, rng) {
   const m = mstate(def.id);
@@ -125,30 +128,30 @@ export function refreshBook(def, rng) {
   const mkt = m.p;
   m.asks = [];
   m.bids = [];
-  // 参与者数量由流动性决定
-  const depth = Math.max(1, Math.round(6 * def.liq * (1 + Math.abs(m.mom) * 3)));
   for (const npc of S.npcs) {
+    // 卖单 / 买单各自封顶 BOOK_DEPTH 笔
+    if (m.asks.length >= BOOK_DEPTH && m.bids.length >= BOOK_DEPTH) break;
     const focusK = (npc.bias[def.category] || 1);
-    if (!rng.chance(clamp(0.25 * focusK * def.liq, 0.02, 0.85))) continue;
+    if (!rng.chance(clamp(0.25 * focusK * def.liq, 0.02, 0.92))) continue;
     // 卖单：npc 持有则挂高一点
-    if (npc.stock[def.id] && npc.stock[def.id].qty > 0 && rng.chance(0.5 * npc.patience)) {
+    if (m.asks.length < BOOK_DEPTH && npc.stock[def.id] && npc.stock[def.id].qty > 0 && rng.chance(0.5 * npc.patience)) {
       const q = npc.stock[def.id].qty;
       const size = Math.max(1, Math.round(q * rng.range(0.15, 0.7)));
       const price = mkt * (npc.ask + rng.range(-0.01, 0.09)) * (npc.bias[def.category] || 1);
       m.asks.push({ npcId: npc.id, price, qty: size, kind: 'npc-ask' });
     }
     // 买单：有现金就会挂，价格偏低于市价
-    if (npc.cash > mkt * 2 && rng.chance(0.55 * npc.patience)) {
+    if (m.bids.length < BOOK_DEPTH && npc.cash > mkt * 2 && rng.chance(0.55 * npc.patience)) {
       const size = Math.max(1, Math.round((npc.cash * rng.range(0.02, 0.14) * def.liq) / mkt));
       const price = mkt * (npc.bid - rng.range(0, 0.06)) * (npc.bias[def.category] || 1);
       m.bids.push({ npcId: npc.id, price, qty: Math.min(size, 5000), kind: 'npc-bid' });
     }
-    if (m.asks.length + m.bids.length > depth * 3) break;
+    if (m.asks.length + m.bids.length >= BOOK_DEPTH * 2) break;
   }
   m.asks.sort((a, b) => a.price - b.price);
   m.bids.sort((a, b) => b.price - a.price);
-  m.asks = m.asks.slice(0, 14);
-  m.bids = m.bids.slice(0, 14);
+  m.asks = m.asks.slice(0, BOOK_DEPTH);
+  m.bids = m.bids.slice(0, BOOK_DEPTH);
   m.bookHour = S.clock.hours;
 }
 

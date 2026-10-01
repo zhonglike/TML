@@ -151,5 +151,22 @@ console.log('\n== 轮盘落位 ==\n');
   ok(rightEdge > 100 && rightEdge < 343 + 200, '中奖卡落在可视区内', `右边缘 ${rightEdge.toFixed(0)}px`);
 }
 
+// 场景 F：循环卡带长度 —— 手机一屏只看得到 2~3 张，卡带必须足够长
+{
+  const host = attach(343);
+  const p = reel.playReel(host, winner, { rng: engine.engine.rng, reduceMotion: true });
+  layout(host, 343);
+  await p;
+  const cards = host.querySelectorAll('.reel__card');
+  ok(cards.length >= 50, '卡带长度足够（不少于 50 张）', `${cards.length} 张`);
+  const idx = cards.findIndex((c) => c.classList.contains('is-winner'));
+  ok(idx >= 8 && idx <= cards.length - 9, '中奖卡位于卡带中段（两侧都有余量）',
+    `第 ${idx + 1} / ${cards.length} 张`);
+  // 循环：同一轮里应当出现重复的卡（说明是循环铺满的，而不是一次性拼接）
+  const ids = cards.map((c) => c.dataset.item);
+  const dupes = ids.length - new Set(ids).size;
+  ok(dupes > 0, '卡带由多轮循环拼接', `重复 ${dupes} 张`);
+}
+
 console.log(`\n结果：${failures.length ? failures.length + ' 项失败 → ' + failures.join(' / ') : '全部通过'}\n`);
 process.exit(failures.length ? 1 : 0);

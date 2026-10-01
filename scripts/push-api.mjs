@@ -9,8 +9,8 @@
  *
  * 令牌只从环境变量读取，绝不写入任何文件。
  */
-import { readFile } from 'node:fs/promises';
-import { dirname, join, resolve } from 'node:path';
+import { readFile, readdir } from 'node:fs/promises';
+import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
@@ -50,6 +50,49 @@ async function api(path, opt = {}) {
 
 const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
 
+/**
+ * 计算「本地工作树 vs 远端树」的差异文件。
+ * 不依赖本地 git 历史 —— 因为 API 上传产生的 commit 本地并不存在，
+ * `git diff <remoteSha> HEAD` 会直接报 bad object。
+ * 做法：取远端每个文件的 blob sha，再用 git hash-object 算本地文件的 blob sha 比对。
+ */
+async function diffAgainstRemote(remoteTreeSha) {
+  const tree = await api(`/repos/${OWNER}/${REPO}/git/trees/${remoteTreeSha}?recursive=1`);
+  const remote = new Map();
+  for (const e of tree.tree || []) {
+    if (e.type === 'blob') remote.set(e.path, e.sha);
+  }
+
+  // 本地工作树（跳过不需要发布的目录）
+  const SKIP_DIRS = new Set(['.git', 'node_modules', 'dist', '.vscode', '.idea']);
+  const files = [];
+  async function walk(dir) {
+    for (const e of await readdir(dir, { withFileTypes: true })) {
+      if (e.isDirectory()) {
+        if (SKIP_DIRS.has(e.name)) continue;
+        await walk(join(dir, e.name));
+      } else {
+        files.push(relative(ROOT, join(dir, e.name)).split('\\').join('/'));
+      }
+    }
+  }
+  await walk(ROOT);
+
+  const changed = [];
+  for (const rel of files) {
+    const abs = join(ROOT, rel);
+    let sha;
+    try {
+      sha = git(['hash-object', abs]);
+    } catch (e) {
+      continue;
+    }
+    if (remote.get(rel) !== sha) changed.push(rel);
+  }
+  // 远端有、本地没有的文件一律不动（例如仅存在于仓库的配置）
+  return changed.sort();
+}
+
 async function main() {
   const head = await api(`/repos/${OWNER}/${REPO}/git/ref/heads/${BRANCH}`);
   const remoteSha = head.object.sha;
@@ -57,14 +100,13 @@ async function main() {
   const baseTree = remoteCommit.tree.sha;
   console.log(`远端 ${BRANCH} = ${remoteSha.slice(0, 7)}（${remoteCommit.message.split('\n')[0]}）`);
 
-  // 待上传文件：显式参数，或自动取「本地 HEAD 与远端 commit 的差异」
+  // 待上传文件：显式参数，或自动按 blob sha 与远端树比对
   let files = process.argv.slice(2);
   if (!files.length) {
     try {
-      const out = git(['diff', '--name-only', remoteSha, 'HEAD']);
-      files = out ? out.split('\n').filter(Boolean) : [];
+      files = await diffAgainstRemote(baseTree);
     } catch (e) {
-      console.error('无法计算差异（远端 commit 可能不在本地）：' + e.message);
+      console.error('无法计算差异：' + e.message);
       process.exit(1);
     }
   }
