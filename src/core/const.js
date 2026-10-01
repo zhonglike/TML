@@ -33,13 +33,21 @@ export const CAT_LIST = Object.values(CATS);
 
 /* ---------------------------------------------------------------- 稀有度 */
 
+/**
+ * 稀有度表。
+ * weight = 单抽基础概率，总和为 1。
+ * 2026-10 调整：用户反馈「爆率太低」，金 1.5% → 2.4%、红 0.5% → 0.6%、
+ * 紫 3% → 5%、蓝 10% → 12%，白 60% → 55%、绿 25% → 25%。
+ * 调高稀有度会抬高单抽期望，因此同步下调了 loot.js 里的 DROP_SCALE 来维持平衡
+ * （tests/smoke.mjs 会打印「回收/成本」，必须始终 < 100%）。
+ */
 export const RARITY = {
-  white: { id: 'white', cn: '普通', cs: '消费级', color: '#B0B0B0', weight: 0.6, equity: 0.5 },
+  white: { id: 'white', cn: '普通', cs: '消费级', color: '#B0B0B0', weight: 0.55, equity: 0.5 },
   green: { id: 'green', cn: '军规', cs: '军规级', color: '#4A9E4A', weight: 0.25, equity: 0.65 },
-  blue: { id: 'blue', cn: '受限', cs: '受限级', color: '#5B8FD6', weight: 0.1, equity: 0.78 },
-  purple: { id: 'purple', cn: '保密', cs: '保密级', color: '#8B5FBF', weight: 0.03, equity: 0.88 },
-  gold: { id: 'gold', cn: '隐秘', cs: '隐秘级', color: '#D4A843', weight: 0.015, equity: 0.94 },
-  red: { id: 'red', cn: '罕见', cs: '罕见级', color: '#C0392B', weight: 0.005, equity: 1.0 },
+  blue: { id: 'blue', cn: '受限', cs: '受限级', color: '#5B8FD6', weight: 0.12, equity: 0.78 },
+  purple: { id: 'purple', cn: '保密', cs: '保密级', color: '#8B5FBF', weight: 0.05, equity: 0.88 },
+  gold: { id: 'gold', cn: '隐秘', cs: '隐秘级', color: '#D4A843', weight: 0.024, equity: 0.94 },
+  red: { id: 'red', cn: '罕见', cs: '罕见级', color: '#C0392B', weight: 0.006, equity: 1.0 },
 };
 
 export const RARITY_ORDER = ['white', 'green', 'blue', 'purple', 'gold', 'red'];

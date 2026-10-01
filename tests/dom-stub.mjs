@@ -415,7 +415,9 @@ export function installDom() {
   doc.body.parentElement = doc.documentElement;
 
   // index.html 里的关键挂载点
-  const ids = ['views', 'toasts', 'layer', 'tabbar', 'sidebar', 'sidebar-nav', 'sidebar-account', 'sidebar-foot', 'appbar-date', 'appbar-index', 'appbar-mood', 'speed-ctl', 'btn-sound', 'btn-help'];
+  // index.html 里的关键挂载点。新增元素时记得同步这里，
+  // 否则 main.js 里的 getElementById(...).onclick 会抛 null 错误。
+  const ids = ['views', 'toasts', 'layer', 'tabbar', 'sidebar', 'sidebar-nav', 'sidebar-account', 'sidebar-foot', 'appbar-date', 'appbar-index', 'appbar-mood', 'speed-ctl', 'save-flag', 'btn-save', 'btn-sound', 'btn-help'];
   for (const id of ids) {
     const el = new Element(id === 'toasts' || id === 'layer' ? 'div' : 'div');
     el.id = id;

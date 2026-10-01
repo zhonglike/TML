@@ -16,7 +16,7 @@ import * as auction from '../src/systems/auction.js';
 import * as inv from '../src/systems/inventory.js';
 import * as quest from '../src/systems/quest.js';
 import { wireCounters } from '../src/core/engine.js';
-import { ECON, TIME, RARITY_ORDER } from '../src/core/const.js';
+import { ECON, TIME, RARITY_ORDER, RARITY } from '../src/core/const.js';
 
 wireCounters();
 
@@ -113,7 +113,9 @@ const evMkt = marketSum / draws;
 console.log(`  单抽成本 ${ECON.drawPrice} | 期望回收价 ${evRec.toFixed(1)} (${(evRec / ECON.drawPrice * 100).toFixed(1)}%) | 期望市场价 ${evMkt.toFixed(1)} (${(evMkt / ECON.drawPrice * 100).toFixed(1)}%)`);
 ok(evRec < ECON.drawPrice, '回收价期望低于抽奖成本（抽奖不是印钞机）', `${(evRec / ECON.drawPrice * 100).toFixed(1)}%`);
 ok(evRec / ECON.drawPrice > 0.35, '回收价期望不至于毫无意义', `${(evRec / ECON.drawPrice * 100).toFixed(1)}%`);
-ok(Math.abs((tally.white || 0) / draws - 0.6) < 0.05, '白色概率接近 60%', `${((tally.white || 0) / draws * 100).toFixed(1)}%`);
+ok(Math.abs((tally.white || 0) / draws - RARITY.white.weight) < 0.05, '白色概率与配置一致', `${((tally.white || 0) / draws * 100).toFixed(1)}% / 配置 ${(RARITY.white.weight * 100).toFixed(0)}%`);
+ok((tally.gold || 0) / draws > 0.02, '金色概率已调高（>2%）', `${((tally.gold || 0) / draws * 100).toFixed(2)}%`);
+ok((tally.purple || 0) / draws > 0.04, '紫色概率已调高（>4%）', `${((tally.purple || 0) / draws * 100).toFixed(2)}%`);
 ok(golds + reds > 0, '金红可被开出', `gold ${golds} / red ${reds}`);
 
 // 分档验证：低等级略亏、高等级接近持平，但任何等级都不得变成印钞机。

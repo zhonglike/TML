@@ -239,6 +239,27 @@ table { border-collapse: collapse; width: 100%; }
   flex: 0 0 auto;
 }
 
+/* 存档状态徽标：不再自动保存后，靠它提示玩家「还没保存」 */
+.saveflag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--text-4);
+  white-space: nowrap;
+  padding: 2px 6px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+}
+.saveflag.is-dirty {
+  color: var(--text);
+  border-style: dashed;
+  border-color: var(--stroke-2);
+}
+.saveflag.is-stale {
+  color: var(--text-2);
+  border-color: var(--line-2);
+}
+
 .logo {
   width: 22px; height: 22px;
   border: 1px solid var(--stroke-2);
@@ -1456,6 +1477,25 @@ table { border-collapse: collapse; width: 100%; }
   .appbar__actions { gap: 4px; }
   .segmented__item { padding: 4px 7px; font-size: 11px; }
   .iconbtn { width: 30px; height: 30px; }
+  /* 手机上顶栏太挤：存档徽标只在「未保存」时显示 */
+  .saveflag { display: none; }
+  .saveflag.is-dirty { display: inline-block; font-size: 9.5px; padding: 1px 5px; }
+
+  /* 抽奖页在手机上「过于拉伸」：240px 最小高度 + 18px 内边距在窄屏显得空荡，
+     卡片之间也被撑得很散。这里整体收紧。 */
+  .draw { gap: 10px; }
+  .draw__stage { min-height: 0; padding: 10px; }
+  .draw__slot--reel { margin: 0 -10px; width: calc(100% + 20px); }
+  .draw__card { width: 138px; height: 190px; }
+  .draw__thumb b { font-size: 24px; }
+  .draw__info { padding: 8px 9px; }
+  .reel { padding: 10px 0; }
+  .reel__card { width: 92px; }
+  .reel__img { height: 62px; }
+  .reel__img b { font-size: 13px; }
+  .reel__meta { padding: 6px 7px 7px; }
+  .reel__name { font-size: 10px; height: 2.6em; }
+  .reel__fade { width: 34px; }
 }
 
 @media (max-width: 460px) {
@@ -1472,7 +1512,9 @@ table { border-collapse: collapse; width: 100%; }
   .iconbtn { width: 28px; height: 28px; }
   .view { padding-left: 10px; padding-right: 10px; }
   .reel__card { width: 84px !important; }
-  .reel__img { height: 58px; }
+  .reel__img { height: 56px; }
+  .reel__fade { width: 26px; }
+  .draw__card { width: 124px; height: 172px; }
 }
 
 @media (max-width: 400px) {

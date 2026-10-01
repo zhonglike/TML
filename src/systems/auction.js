@@ -238,6 +238,55 @@ function unsold(a) {
 /** 同时最多进行的 NPC 拍卖场次（不含玩家自己送拍的） */
 const MAX_LIVE_NPC_AUCTIONS = 2;
 
+/** 手动刷新的冷却（游戏小时）。界面上的「刷新」按钮会按这个值节流。 */
+export const REFRESH_COOLDOWN_HOURS = 24;
+
+/** 距离下次可手动刷新还剩多少游戏小时 */
+export function refreshCooldownLeft() {
+  const last = S.player.auctionRefreshAt;
+  if (last == null) return 0;
+  return Math.max(0, REFRESH_COOLDOWN_HOURS - (S.clock.hours - last));
+}
+
+/**
+ * 手动刷新拍卖行：结束过期的场次、补齐到上限、并给所有在场标的推进一次出价。
+ * 不会凭空造钱：所有结算都走正常流程。
+ * @returns {{ok:boolean, reason?:string, spawned:number, settled:number, wait?:number}}
+ */
+export function refreshAuctions(rng) {
+  const left = refreshCooldownLeft();
+  if (left > 0) return { ok: false, reason: 'cooldown', wait: left, spawned: 0, settled: 0 };
+
+  let settled = 0;
+  let bid = 0;
+  // 1) 过期的先结算
+  for (const a of S.player.auctions) {
+    if (a.status !== 'live') continue;
+    if (S.clock.hours >= a.endsAt) {
+      if (a.high) settle(a, a.high);
+      else unsold(a);
+      settled++;
+    } else {
+      // 2) 在场上标的立刻推一次出价（比自然节奏快一点，但仍是 NPC 自己的估值）
+      const before = a.high ? a.high.price : 0;
+      npcAutoBid(a, rng);
+      if ((a.high ? a.high.price : 0) > before) bid++;
+    }
+  }
+  // 3) 补齐 NPC 场次到上限
+  let spawned = 0;
+  let liveNpc = S.player.auctions.filter((a) => a.status === 'live' && !a.mine).length;
+  while (liveNpc < MAX_LIVE_NPC_AUCTIONS) {
+    const a = spawnNpcAuction(rng);
+    if (!a) break;
+    spawned++;
+    liveNpc++;
+  }
+  S.player.auctionRefreshAt = S.clock.hours;
+  bus.emit('auction-refresh', { spawned, settled, bid });
+  return { ok: true, spawned, settled, bid };
+}
+
 /** 每 tick 推进拍卖 */
 export function tickAuctions(rng, hours) {  const steps = Math.max(1, Math.round(hours / 6));
   for (let s = 0; s < steps; s++) {
@@ -261,8 +310,9 @@ export function tickAuctions(rng, hours) {  const steps = Math.max(1, Math.round
     }
   }
   // 同时最多 2 场进行中的 NPC 拍卖（玩家自己的送拍不受此限制）
+  // 生成节奏放慢：每 4 个 tick（=24 游戏小时）才有机会补一场，避免列表一直跳
   const liveNpc = S.player.auctions.filter((a) => a.status === 'live' && !a.mine).length;
-  if (liveNpc < MAX_LIVE_NPC_AUCTIONS && rng.chance(0.6)) spawnNpcAuction(rng);
+  if (liveNpc < MAX_LIVE_NPC_AUCTIONS && rng.chance(0.25)) spawnNpcAuction(rng);
 }
 
 export function liveAuctions() {

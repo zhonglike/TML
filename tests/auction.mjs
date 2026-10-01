@@ -315,5 +315,48 @@ console.log('\n== 存档导出 / 导入（保存到手机 → 下次拖回来）
   ok(Object.keys(S.player.bag).join(',') === beforeBag, '导入后背包还原', `${Object.keys(S.player.bag).length} 组`);
 }
 
+console.log('\n== 手动刷新拍卖行 ==');
+{
+  // 首次刷新应当成功
+  S.player.auctionRefreshAt = null;
+  const r1 = auction.refreshAuctions(engine.engine.rng);
+  ok(r1.ok, '首次手动刷新成功', `新增 ${r1.spawned} 场 · 结算 ${r1.settled} 场 · 出价 ${r1.bid} 场`);
+  const live1 = S.player.auctions.filter((a) => a.status === 'live' && !a.mine).length;
+  ok(live1 <= 2, '刷新后 NPC 场次仍不超过 2', `${live1} 场`);
+
+  // 冷却中不能再刷
+  const r2 = auction.refreshAuctions(engine.engine.rng);
+  ok(!r2.ok && r2.reason === 'cooldown', '冷却期内拒绝刷新', `还需 ${r2.wait} 小时`);
+  ok(auction.refreshCooldownLeft() > 0, '冷却计数可读', `${auction.refreshCooldownLeft().toFixed(1)} 小时`);
+
+  // 推进一天后可再刷
+  S.clock.hours += auction.REFRESH_COOLDOWN_HOURS + 1;
+  ok(auction.refreshCooldownLeft() === 0, '冷却结束后可再次刷新');
+  const r3 = auction.refreshAuctions(engine.engine.rng);
+  ok(r3.ok, '冷却结束后刷新成功', `新增 ${r3.spawned} 场`);
+}
+
+console.log('\n== 不再自动保存：只有主动保存才落盘 ==');
+{
+  const save = await import('../src/core/save.js');
+  // 先主动存一次，拿到基线
+  await engine.saveExplicit(0);
+  const base = save.readCache(0);
+  const baseCash = base.player.cash;
+
+  // 大幅改变状态并推进 3 天（过去这里每个 day 都会自动落盘）
+  S.player.cash = baseCash + 123456;
+  S.player.bag = {};
+  engine.advance(24 * 3);
+  const after = save.readCache(0);
+  ok(after.player.cash === baseCash, '推进 3 天后存档未被自动写回', `存档内现金 ${Math.round(after.player.cash)}`);
+
+  // 主动保存后才写入
+  await engine.saveExplicit(0);
+  const now = save.readCache(0);
+  ok(Math.abs(now.player.cash - S.player.cash) < 1, '主动保存后存档与内存一致', `${Math.round(now.player.cash)}`);
+  ok(engine.sinceManualSave() != null, '记录了上次主动保存时间', `${Math.round(engine.sinceManualSave() / 1000)} 秒前`);
+}
+
 console.log(`\n结果：${failures.length ? failures.length + ' 项失败 → ' + failures.join(' / ') : '全部通过'}\n`);
 process.exit(failures.length ? 1 : 0);

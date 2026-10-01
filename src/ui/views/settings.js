@@ -6,6 +6,7 @@ import {
   h, mount, icon, fmtPrice, sectionTitle, toast, confirmDialog, modal, segmented, emptyState,
 } from '../ui.js';
 import { S, newPlayer } from '../../core/state.js';
+import { saveExplicit } from '../../core/engine.js';
 import { APP, TIME, ECON } from '../../core/const.js';
 import * as save from '../../core/save.js';
 import { setSound, sfx } from '../sound.js';
@@ -30,7 +31,7 @@ export function create(ctx) {
           h('div.view__title', { text: '设置' }),
           h('div.view__sub', { text: `MONO ${APP.version} · 存档格式 v${APP.saveSchema} · 种子 ${S.__seed || '—'}` })),
         h('div.row', null,
-          h('button.btn.btn--sm', { onclick: () => save.save(S.meta.slot).then(() => toast('已保存', { kind: 'good' })) }, icon('save', 14), '立即保存'))),
+          h('button.btn.btn--sm', { onclick: () => saveExplicit().then((r) => toast(r && r.ok ? '已保存到存档位 ' + (S.meta.slot + 1) : '保存失败', { kind: r && r.ok ? 'good' : 'bad' })) }, icon('save', 14), '立即保存'))),
       (body = h('div', { id: 'settings-body' }))));
     paint();
   }
@@ -90,7 +91,7 @@ export function create(ctx) {
           h('div.btn-group', { style: { marginTop: '10px' } },
             h('button.btn.btn--sm.btn--primary', { onclick: async () => { const r = await save.shareSave(); if (r !== 'cancelled') toast(r === 'shared' ? '已打开分享面板 · 选「存到文件」' : '已下载到手机「文件 / 下载」里', { kind: 'good', ms: 3600 }); } }, icon('download', 14), '保存到手机'),
             h('button.btn.btn--sm', { onclick: importDialog }, icon('upload', 14), '从文件导入')),
-          h('div.hint', { style: { marginTop: '8px' }, text: '存档同时写入 localStorage（快路径）与 IndexedDB（完整快照）；每 30 秒与跨日自动保存。' })),
+          h('div.hint', { style: { marginTop: '8px' }, text: '存档只在你主动保存时写入（顶栏「保存」按钮 / 这里的按钮 / 导出备份），另有关闭页面或切到后台前的一次静默落盘。不再周期性自动保存。' })),
         // 备份到手机 / 从手机导入
         h('div.card.card--pad', null,
           sectionTitle('备份到手机'),

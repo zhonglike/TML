@@ -36,14 +36,41 @@ export function create(ctx) {
     return '匿名买家';
   }
 
+  /** 手动刷新：结算过期场次 + 给在场标的推进一次出价 + 补齐到 2 场 */
+  function refreshNow() {
+    const r = auction.refreshAuctions(ctx.rng);
+    if (!r.ok) {
+      toast(`刷新冷却中 · 还需 ${durStr(r.wait)}`, { kind: 'info' });
+      render();
+      return;
+    }
+    const parts = [];
+    if (r.settled) parts.push(`结算 ${r.settled} 场`);
+    if (r.bid) parts.push(`${r.bid} 场有新出价`);
+    if (r.spawned) parts.push(`新增 ${r.spawned} 场`);
+    toast(parts.length ? parts.join(' · ') : '暂时没有新变化', {
+      kind: parts.length ? 'good' : 'info',
+      iconName: 'refresh',
+    });
+    sfx('ding');
+    render();
+  }
+
+  /** 手动刷新的冷却提示 */
+  function cooldownText() {
+    const left = auction.refreshCooldownLeft();
+    return left > 0 ? ` · 刷新冷却 ${durStr(left)}` : ' · 可刷新';
+  }
+
   function render() {
     const live = auction.liveAuctions();
     mount(el, h('div.content', null,
       h('div.view__head', null,
         h('div', null,
           h('div.view__title', { text: '拍卖行' }),
-          h('div.view__sub', { text: `${live.length} 场进行中 · 我的送拍位 ${auction.myAuctions().filter((a) => a.status === 'live').length}/${auctionLimit()} · 佣金 5%` })),
+          h('div.view__sub', { text: `${live.length} 场进行中 · 我的送拍位 ${auction.myAuctions().filter((a) => a.status === 'live').length}/${auctionLimit()} · 佣金 5%${cooldownText()}` })),
         h('div.row', null,
+          h('button.btn.btn--sm', { onclick: () => refreshNow() }, icon('refresh', 14), '刷新'),
           h('button.btn.btn--sm', { onclick: () => sendDialog() }, icon('plus', 14), '送拍'),
           segmented([{ id: 'live', label: '进行中' }, { id: 'mine', label: '我的' }, { id: 'done', label: '落槌' }], st.tab, (id) => {
             st.tab = id;
@@ -281,8 +308,9 @@ export function create(ctx) {
     onEnter: () => render(),
     onTick: () => {
       if (!el.classList.contains('is-active')) return;
+      // 拍卖列表刷新放慢：1.2 秒一次会让列表一直跳，读不下去
       const now = Date.now();
-      if (now - lastTickAt < 1200) return;
+      if (now - lastTickAt < 5000) return;
       lastTickAt = now;
       paint();
     },

@@ -93,9 +93,8 @@ export function wireCounters() {
     quest.syncMilestones();
     quest.checkAchievements();
     quest.checkBailout();
-    // 预热期不自动保存：boot() 会推进 20 个游戏日（每个 day 事件都会到这里），
-    // 若此时落盘，就会用「刚生成的 NPC / 市场」覆盖掉玩家读进来的存档。
-    if (!engine.warming) autoSave();
+    // 注意：这里**不再自动保存**。存档只由玩家主动触发（顶栏「保存」按钮、
+    // 顶栏保存按钮 / 设置页保存 / 导出），以及关闭页面前的最后一次落盘。
   });
 }
 
@@ -297,6 +296,25 @@ export function saveNow(slot) {
 export function autoSave() {
   if (S.run.paused) return;
   save.save(S.meta.slot, { silent: true });
+}
+
+/** 玩家主动保存（顶栏按钮 / 设置页）。会弹出提示，与静默自动保存区分开。 */
+export function saveExplicit(slot) {
+  const s = slot != null ? slot : S.meta.slot;
+  return save.save(s).then((r) => {
+    if (r && r.ok) {
+      const d = new Date();
+      S.player.lastManualSave = { slot: s, at: d.getTime(), day: Math.floor(S.clock.hours / 24) };
+    }
+    return r;
+  });
+}
+
+/** 距离上次主动保存过了多少真实时间（毫秒），没有则返回 null */
+export function sinceManualSave() {
+  const m = S.player.lastManualSave;
+  if (!m || !m.at) return null;
+  return Date.now() - m.at;
 }
 
 /* ------------------------------------------------------------ 便捷统计 */

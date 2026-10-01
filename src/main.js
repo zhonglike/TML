@@ -2,7 +2,7 @@
  * MONO — 应用入口
  * 装配：设置 → 存档/离线结算 → 路由 → 各页面 → 主循环 → 通知 → 自动保存
  */
-import { engine, boot, startLoop, stopLoop, setSpeed, advance, applyOffline, setAlert, clearAlert, autoSave, dashboard as dashboardOf } from './core/engine.js';
+import { engine, boot, startLoop, stopLoop, setSpeed, advance, applyOffline, setAlert, clearAlert, saveExplicit, sinceManualSave, dashboard as dashboardOf } from './core/engine.js';
 import { S, newPlayer, initMarket, bagLimit, bagCount } from './core/state.js';
 import { APP, TIME, ECON, RARITY, RARITY_ORDER, CATS } from './core/const.js';
 import { ITEMS, getItem, ITEM_MAP } from './core/catalog.js';
@@ -177,6 +177,36 @@ function paintAppbar() {
   const soundBtn = document.getElementById('btn-sound');
   mount(soundBtn, icon(S.settings.sound ? 'bolt' : 'close', 15));
   soundBtn.classList.toggle('is-active', S.settings.sound !== false);
+  paintSaveFlag();
+}
+
+/**
+ * 存档状态徽标：让玩家一眼看到「还没保存」，而不是靠自动保存兜底。
+ * 不再自动落盘后，这个提示是防止丢档的主要手段。
+ */
+function paintSaveFlag() {
+  const host = document.getElementById('save-flag');
+  const btn = document.getElementById('btn-save');
+  if (!host) return;
+  const since = sinceManualSave();
+  const mins = since == null ? null : Math.floor(since / 60000);
+  let text = '';
+  let cls = 'saveflag';
+  if (since == null) {
+    text = '未保存';
+    cls += ' is-dirty';
+  } else if (mins >= 10) {
+    text = mins >= 60 ? `${Math.floor(mins / 60)} 小时前保存` : `${mins} 分钟前保存`;
+    cls += ' is-stale';
+  } else {
+    text = '已保存';
+  }
+  host.textContent = text;
+  host.className = cls;
+  if (btn) {
+    mount(btn, icon('save', 15));
+    btn.classList.toggle('is-active', since != null && (mins == null || mins < 10));
+  }
 }
 
 /* ------------------------------------------------------------------ 提示与通知 */
@@ -369,6 +399,18 @@ async function bootApp() {
 
   // 5) 导航与顶栏
   document.getElementById('btn-help').onclick = helpModal;
+  // 顶栏「保存」：玩家主动落盘（不再有周期性自动保存）
+  document.getElementById('btn-save').onclick = () => {
+    saveExplicit().then((r) => {
+      if (r && r.ok) {
+        toast('已保存到存档位 ' + (S.meta.slot + 1), { kind: 'good', iconName: 'save' });
+        sfx('ding');
+      } else {
+        toast('保存失败，请检查浏览器存储权限', { kind: 'bad' });
+      }
+      paintSaveFlag();
+    });
+  };
   document.getElementById('btn-sound').onclick = () => {
     S.settings.sound = !(S.settings.sound !== false);
     setSound(S.settings.sound);
@@ -385,15 +427,25 @@ async function bootApp() {
   // 6) 主循环
   startLoop();
 
-  // 7) 自动保存
-  setInterval(autoSave, APP.autosaveMs);
+  // 7) 存档：只保留「关闭页面前落盘 + 玩家主动保存」，不再周期性自动保存。
+  //    （用户要求：不要自动保存，只有玩家自己保存时才写档。）
   window.addEventListener('beforeunload', () => {
-    save.save(S.meta.slot, { silent: true });
+    try {
+      save.save(S.meta.slot, { silent: true });
+    } catch (e) { /* noop */ }
     quest.syncMilestones();
     const best = save.bestRecords();
     const eq = quest.equity();
     if (!best.length || eq > best[0].equity) {
       save.pushBest({ name: S.player.name, equity: Math.round(eq), day: Math.floor(S.clock.hours / 24) });
+    }
+  });
+  // 手机切后台也算「离开」，补一次静默落盘，避免真正丢档
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      try {
+        save.save(S.meta.slot, { silent: true });
+      } catch (e) { /* noop */ }
     }
   });
 
