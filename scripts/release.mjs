@@ -166,5 +166,19 @@ try {
 }
 ok(reelOk, '开箱轮盘落位测试通过');
 
+/* 9. 手机比例审计：按真实机型宽高检查 appbar 挤压、图表/轮盘尺寸、视口留白 */
+console.log('\n  → 运行手机比例审计');
+let ratioOk = true;
+try {
+  const out = execFileSync(process.execPath, [join(ROOT, 'tests/ratios.mjs')], { stdio: 'pipe', encoding: 'utf8' });
+  const tail = out.trim().split('\n').slice(-3).join('\n');
+  console.log(tail.split('\n').map((l) => '    ' + l).join('\n'));
+  if (!/硬性问题 0 项/.test(out)) ratioOk = false;
+} catch (e) {
+  ratioOk = false;
+  console.log(String(e.stdout || '').split('\n').filter((l) => /FAIL/.test(l)).slice(0, 8).map((l) => '    ' + l.trim()).join('\n'));
+}
+ok(ratioOk, '手机比例审计通过（10 组机型）');
+
 console.log(`\n${fails === 0 ? '发布检查全部通过。' : fails + ' 项检查失败。'}\n`);
 process.exit(fails ? 1 : 0);

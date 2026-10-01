@@ -87,6 +87,12 @@ html, body {
   background: var(--bg);
 }
 
+/* 移动端视口：用 dvh 避免浏览器地址栏/手势条造成的「高度算错」；
+   老浏览器回退到 100% */
+@supports (height: 100dvh) {
+  html, body { height: 100dvh; }
+}
+
 body {
   font-family: var(--font);
   color: var(--text);
@@ -174,7 +180,7 @@ table { border-collapse: collapse; width: 100%; }
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   height: var(--header-h);
   padding: 0 16px;
   padding-top: env(safe-area-inset-top);
@@ -182,6 +188,9 @@ table { border-collapse: collapse; width: 100%; }
   backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);
   border-bottom: 1px solid var(--line);
+  /* 关键：允许横向被压缩，否则子元素会把整行撑破屏幕宽度 */
+  min-width: 0;
+  overflow: hidden;
 }
 
 .appbar__title {
@@ -192,6 +201,13 @@ table { border-collapse: collapse; width: 100%; }
   align-items: center;
   gap: 8px;
   min-width: 0;
+  flex: 0 1 auto;
+  overflow: hidden;
+}
+.appbar__title > span:not(.logo) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .appbar__title small {
   font-family: var(--mono);
@@ -199,6 +215,9 @@ table { border-collapse: collapse; width: 100%; }
   color: var(--text-3);
   font-weight: 400;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .appbar__meta {
   font-family: var(--mono);
@@ -207,8 +226,18 @@ table { border-collapse: collapse; width: 100%; }
   display: flex;
   align-items: center;
   gap: 10px;
+  white-space: nowrap;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
 }
-.appbar__actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.appbar__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
 
 .logo {
   width: 22px; height: 22px;
@@ -1405,12 +1434,38 @@ table { border-collapse: collapse; width: 100%; }
   .iview { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
 
+@media (max-width: 700px) {
+  /* 顶部这一行在手机上放不下「品牌 + 指数情绪 + 5 档倍速 + 2 个按钮」，
+     实测需要约 610px。因此：隐藏指数/情绪，收窄速度档与图标按钮。 */
+  .appbar__meta { display: none; }
+  .appbar { gap: 8px; padding-left: 12px; padding-right: 12px; }
+  .appbar__actions { gap: 4px; }
+  .segmented__item { padding: 4px 7px; font-size: 11px; }
+  .iconbtn { width: 30px; height: 30px; }
+}
+
+@media (max-width: 460px) {
+  /* 更窄时连日期也收掉，只留品牌与操作区 */
+  .appbar__title small { display: none; }
+  .appbar__title { font-size: 14px; }
+  .segmented__item { padding: 4px 5px; font-size: 10.5px; }
+}
+
+@media (max-width: 360px) {
+  /* 超窄屏（280~360px）：进一步收窄，隐藏 logo 方块，只留文字品牌 */
+  .appbar .logo { display: none; }
+  .segmented__item { padding: 4px 4px; font-size: 10px; }
+  .iconbtn { width: 28px; height: 28px; }
+  .view { padding-left: 10px; padding-right: 10px; }
+  .reel__card { width: 84px !important; }
+  .reel__img { height: 58px; }
+}
+
 @media (max-width: 400px) {
   .iview { grid-template-columns: 1fr; }
   .grid--2 { grid-template-columns: 1fr; }
   .view { padding-left: 12px; padding-right: 12px; }
-  .appbar { padding-left: 12px; padding-right: 12px; }
-  .appbar__meta { display: none; }
+  .view__title { font-size: 19px; }
 }
 
 @media (max-width: 560px) {

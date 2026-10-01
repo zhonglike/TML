@@ -43,8 +43,21 @@ console.log('\n== 市场初始化 ==');
 const rng = new RNG('smoke-seed');
 initMarket(rng);
 npc.initNpcs(rng, 18);
+
+console.log('\n== NPC 商人 ==');
 ok(S.npcs.length === 18, 'NPC 生成', `${S.npcs.length}`);
 ok(npc.totalNpcCash() > 0, 'NPC 现金池', `${Math.round(npc.totalNpcCash()).toLocaleString()}`);
+{
+  const { NPC_NAMES } = await import('../src/core/const.js');
+  ok(NPC_NAMES.length >= 32, '网名池数量充足', `${NPC_NAMES.length} 个`);
+  ok(new Set(NPC_NAMES).size === NPC_NAMES.length, '网名无重复');
+  const masked = NPC_NAMES.filter((x) => /\*\*\*\*/.test(x)).length;
+  ok(masked === NPC_NAMES.length, '全部为脱敏网名（含 ****）', `${masked}/${NPC_NAMES.length}`);
+  ok(NPC_NAMES.every((x) => x.length <= 16), '网名长度可控', `最长 ${Math.max(...NPC_NAMES.map((x) => x.length))} 字`);
+  const liveNames = new Set(S.npcs.map((n) => n.name));
+  ok(liveNames.size === S.npcs.length, '实际生成的 NPC 名字不重复', `${liveNames.size}/${S.npcs.length}`);
+  ok(S.npcs.every((n) => /\*\*\*\*/.test(n.name) || NPC_NAMES.includes(n.name)), '生成的 NPC 名字来自网名池');
+}
 
 console.log('\n== 推进 30 天 ==');
 const t0 = Date.now();
