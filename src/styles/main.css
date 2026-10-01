@@ -964,9 +964,23 @@ table { border-collapse: collapse; width: 100%; }
   position: relative;
   min-height: 240px;
   display: grid;
-  place-items: center;
+  /* 关键：列必须拉伸。place-items:center 会让子元素按内容宽度收缩，
+     轮盘卡带（内联固定宽的卡）会把容器撑到上千像素，
+     导致轮盘不是居中滚动而是偏移滚动 —— 手机上尤其明显。
+     需要居中的只有单张翻卡，用 align-content 处理即可。 */
+  justify-items: stretch;
+  align-content: center;
   padding: 18px;
   perspective: 1200px;
+}
+/* 单张翻卡专用：真正居中 */
+.draw__stage--center { justify-items: center; }
+/* 轮盘容器：占满可用宽度并与视口边框对齐（负外边距抵消 stage 内边距） */
+.draw__slot--reel {
+  width: 100%;
+  min-width: 0;
+  margin: 0 -18px;
+  width: calc(100% + 36px);
 }
 .draw__card {
   width: 168px;

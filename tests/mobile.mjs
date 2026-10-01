@@ -218,6 +218,32 @@ function audit(root, label) {
       }
     }
 
+    // 轮盘容器与卡带宽度：这是「抽奖页手机适配」的核心
+    // （.draw__stage 的 justify-items 一旦是 center，容器会按内容宽度收缩到上千像素）
+    const reelBox = el.querySelector('.reel');
+    if (reelBox) {
+      const boxW = pxOf(reelBox.style && reelBox.style.width);
+      const slot = el.querySelector('.draw__slot--reel');
+      if (slot && !slot.classList.contains('draw__slot--reel')) {
+        issues.push({ kind: 'reel-no-slot', where: where + ' .reel', detail: '轮盘缺少 .draw__slot--reel 包裹' });
+      }
+      if (boxW != null && boxW > WIDTH) {
+        issues.push({
+          kind: 'reel-too-wide',
+          where: where + ' .reel',
+          detail: `轮盘容器固定宽 ${boxW}px > 屏幕 ${WIDTH}px`,
+        });
+      }
+      // 待机卡带：14 张卡的总宽必然远超屏幕，但它必须是 overflow:hidden 裁剪的
+      const cards = el.querySelectorAll('.reel__card');
+      if (cards.length > 3) {
+        const totalCardsW = cards.length * 120;
+        if (totalCardsW > WIDTH * 3 && !el.querySelector('.reel__strip')) {
+          issues.push({ kind: 'reel-unclipped', where: where + ' .reel', detail: '卡带没有裁剪层' });
+        }
+      }
+    }
+
     for (const c of el.children) walk(c, w, where + ' > ');
   };
   walk(root, VIEW_W, '');

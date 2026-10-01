@@ -425,7 +425,10 @@ export function installDom() {
 
   const localStorageData = new Map();
   const localStorage = {
-    getItem: (k) => (localStorageData.has(k) ? localStorageData.get(k) : null),
+    // 真实 localStorage 是字符串存储，取出来必然是新的副本。
+    // 早先直接返回同一个对象引用，导致「save 之后再 readCache 拿到的是刚存的副本」，
+    // 制造出「读档没生效」的假象。
+    getItem: (k) => (localStorageData.has(k) ? String(localStorageData.get(k)) : null),
     setItem: (k, v) => localStorageData.set(k, String(v)),
     removeItem: (k) => localStorageData.delete(k),
     clear: () => localStorageData.clear(),

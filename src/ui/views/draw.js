@@ -151,12 +151,14 @@ export function create(ctx) {
         h('div.reel__fade.reel__fade--r'),
         h('div.reel__marker', null, h('i'), h('i')));
       mount(track, ...idleCards(14));
-      mount(slot, h('div', null,
+      // 用 .draw__slot--reel 抵消 .draw__stage 的内边距，让卡带与视口等宽，
+      // 否则在手机上卡带会被 stage 的 18px 内边距挤压/错位
+      mount(slot, h('div.draw__slot--reel', null,
         idle,
         h('div.hint.text-c', { style: { marginTop: '10px' }, text: '选择下方按钮开始开箱 · 卡带滚动后停在你的出货上' })));
       return;
     }
-    mount(slot, h('div.draw__stage', null,
+    mount(slot, h('div.draw__stage.draw__stage--center', null,
       h('div.draw__card', { style: { transform: 'rotateY(0deg)' } },
         h('div.draw__face.draw__face--front', null, h('span', { text: 'MONO' }))),
       h('div.hint.text-c', { style: { marginTop: '12px' }, text: '点击下方按钮开始开箱' })));
@@ -279,7 +281,7 @@ export function create(ctx) {
     if (!results.length) return;
     sfx('suspense');
     const show = results.slice(0, 60);
-    mount(slot, h('div.draw__stage', null,
+    mount(slot, h('div.draw__stage.draw__stage--center', null,
       h('div.row.row--wrap', { style: { justifyContent: 'center', gap: '10px' } },
         ...show.map((r) => cardNode(r)))));
     const cards = Array.from(slot.querySelectorAll('.draw__card'));

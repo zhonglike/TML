@@ -30,6 +30,8 @@ export const engine = {
   lastReal: 0,
   running: false,
   ticks: 0,
+  /** 正处于 boot 预热期：此期间不写存档，避免覆盖玩家刚导入的档 */
+  warming: false,
   listeners: [],
 };
 
@@ -90,7 +92,9 @@ export function wireCounters() {
     economy.resetDaily();
     quest.syncMilestones();
     quest.checkAchievements();
-    autoSave();
+    // 预热期不自动保存：boot() 会推进 20 个游戏日（每个 day 事件都会到这里），
+    // 若此时落盘，就会用「刚生成的 NPC / 市场」覆盖掉玩家读进来的存档。
+    if (!engine.warming) autoSave();
   });
 }
 
@@ -105,12 +109,18 @@ export function boot(seedOrSave = null) {
   npc.initNpcs(engine.rng, 18);
   market.updateMood();
 
-  // 让市场先「跑」一段时间，开局就有历史 K 线与既定价格结构
-  const warm = 24 * 20; // 20 天
-  for (let i = 0; i < warm / TIME.hoursPerTick; i++) {
-    market.tick(engine.rng, { hours: TIME.hoursPerTick });
-    auction.tickAuctions(engine.rng, TIME.hoursPerTick);
-    npc.tickNpcs(engine.rng, TIME.hoursPerTick);
+  // 预热期：禁止自动保存（见 wireCounters 里的 day 监听）
+  engine.warming = true;
+  try {
+    // 让市场先「跑」一段时间，开局就有历史 K 线与既定价格结构
+    const warm = 24 * 20; // 20 天
+    for (let i = 0; i < warm / TIME.hoursPerTick; i++) {
+      market.tick(engine.rng, { hours: TIME.hoursPerTick });
+      auction.tickAuctions(engine.rng, TIME.hoursPerTick);
+      npc.tickNpcs(engine.rng, TIME.hoursPerTick);
+    }
+  } finally {
+    engine.warming = false;
   }
   S.clock.hours = 24 * 20;
 

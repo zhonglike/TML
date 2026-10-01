@@ -92,21 +92,25 @@ export function playReel(host, win, opt = {}) {
   mount(host, reel);
 
   // ---- 测量可视宽度 ----
-  // 从轮盘自身沿父级链向上找第一个「有效宽度」（嵌套容器宽度一致）。
-  // 不能只信 host.clientWidth：元素刚挂载、处于隐藏容器、或父级 display:none 时
-  // 它会返回 0，此时 center 变成 0，落位位移会被算成「把卡带推出屏幕」——
-  // 表现就是「滚过几张之后停在空白处，但东西确实出了」。
-  // 也不能取最大值：文档宽度可能大于内容区宽度（如 900 > 343），会算偏。
+  // 判据：宿主优先，其次沿父级链向上找第一个「比轮盘自身窄」的有效宽度。
+  //   · 宿主（#draw-slot）代表真实可用宽度；
+  //   · 轮盘自身不可信：它是 width:100% 的溢出裁剪容器，若父级被
+  //     justify-items:center 收缩，它的 clientWidth 会等于整条卡带的宽度（上千像素），
+  //     于是 center 被算成卡带中心 → 落位偏移（手机上表现为「停在空白处」）。
+  //   · 父级链取第一个 < reel.clientWidth 的宽度，作为兜底。
   const measure = () => {
     const good = (w) => typeof w === 'number' && w > 40 && w < 4000;
-    if (good(reel.clientWidth)) return reel.clientWidth;
-    let node = host;
+    if (good(host.clientWidth)) return host.clientWidth;
+    const reelW = reel.clientWidth;
+    let node = host.parentElement;
     for (let i = 0; i < 8 && node; i++) {
-      if (good(node.clientWidth)) return node.clientWidth;
+      const w = node.clientWidth;
+      if (good(w) && (!good(reelW) || w < reelW)) return w;
       node = node.parentElement;
     }
     const docEl = (typeof document !== 'undefined' && document.documentElement) ? document.documentElement : null;
     if (docEl && good(docEl.clientWidth - 32)) return docEl.clientWidth - 32;
+    if (good(reelW)) return reelW;
     return 343; // 375px 手机的典型内容宽，最后兜底
   };
   const width = Math.max(240, measure());

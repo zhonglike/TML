@@ -11,10 +11,14 @@ import { bus } from '../core/util.js';
 /** 生成初始 NPC 群体 */
 export function initNpcs(rng, count = 18) {
   S.npcs = [];
-  const names = rng.shuffle(NPC_NAMES.slice());
+  // 用固定标签派生独立子流：同一种子下 NPC 的名字与人格永远一致，
+  // 不会因为「谁先谁后多调用了一次随机」而错位。
+  const baseRng = rng;
+  const nrng = baseRng && typeof baseRng.derive === 'function' ? baseRng.derive('npc-init') : baseRng;
+  const names = nrng.shuffle(NPC_NAMES.slice());
   for (let i = 0; i < count; i++) {
     const a = NPC_ARCHETYPES[i % NPC_ARCHETYPES.length];
-    const cash = rng.range(a.cash[0], a.cash[1]);
+    const cash = nrng.range(a.cash[0], a.cash[1]);
     const npc = {
       id: 'npc' + (i + 1),
       name: names[i % names.length],
@@ -25,7 +29,7 @@ export function initNpcs(rng, count = 18) {
       /** itemId -> {qty, cost} */
       stock: {},
       /** 关注的品类（偏好） */
-      focus: rng.shuffle(['cs2', 'compute', 'hardware', 'assets']).slice(0, rng.int(1, 3)),
+      focus: nrng.shuffle(['cs2', 'compute', 'hardware', 'assets']).slice(0, nrng.int(1, 3)),
       /** 品牌/品类偏好度 */
       bias: {},
       bid: a.bid,
@@ -34,17 +38,17 @@ export function initNpcs(rng, count = 18) {
       patience: a.patience,
       vol: a.vol,
       /** 下次重组的游戏小时 */
-      nextRebuild: rng.int(12, 72),
+      nextRebuild: nrng.int(12, 72),
       lastActive: S.clock.hours,
       /** 挂出的买单：{id, itemId, price, qty, expires, wear} */
       bids: [],
       /** 挂出的卖单 */
       asks: [],
       seq: 1,
-      mood: rng.float(),
+      mood: nrng.float(),
       trades: 0,
     };
-    for (const c of npc.focus) npc.bias[c] = rng.range(0.85, 1.35);
+    for (const c of npc.focus) npc.bias[c] = nrng.range(0.85, 1.35);
     seedStock(npc, rng);
     S.npcs.push(npc);
   }

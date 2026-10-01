@@ -21,6 +21,21 @@ export function create(ctx) {
   let body = null;
   let lastTickAt = 0;
 
+  /**
+   * 把「可能失效的 NPC 引用」渲染成可读文字。
+   * 存档里出价人/买家存的是 npc id；旧存档或跨版本读档后 id 可能对不上，
+   * 直接用会显示 undefined —— 这里统一兜底，界面上永不出现 undefined。
+   */
+  function nameOf(who, storedName) {
+    if (who === 'player' || who === 'me') return '你';
+    if (who) {
+      const npc = S.npcs.find((n) => n.id === who);
+      if (npc && npc.name) return npc.name;
+    }
+    if (storedName && storedName !== 'undefined' && storedName !== 'null') return storedName;
+    return '匿名买家';
+  }
+
   function render() {
     const live = auction.liveAuctions();
     mount(el, h('div.content', null,
@@ -84,7 +99,7 @@ export function create(ctx) {
           h('td', null, h('div.ellipsis', { style: { maxWidth: '220px' }, text: a.name })),
           h('td', null, h('span.tag', { text: a.status === 'sold' ? (a.winnerWho === 'player' ? '我中标' : '成交') : '流拍' })),
           h('td.num', { text: a.high ? '¥' + fmtPrice(a.high.price) : '—' }),
-          h('td', { text: a.winner || '—' }),
+          h('td', { text: a.status === 'sold' ? nameOf(a.winnerWho, a.winner) : '—' }),
           h('td.dim', { text: dateTimeStr(a.settledAt || a.endsAt) })))))));
   }
 
@@ -102,7 +117,7 @@ export function create(ctx) {
       h('div.row.row--between', { style: { alignItems: 'flex-start' } },
         h('div.col', { style: { minWidth: 0, flex: '1' } },
           h('div.fs-13', { text: a.name }),
-          h('div.hint', { text: `${a.sellerName} 送拍 · 起拍 ¥${fmtPrice(a.start)} · 市价 ¥${fmtPrice(marketP)}` }),
+          h('div.hint', { text: `${nameOf(a.sellerId, a.sellerName)} 送拍 · 起拍 ¥${fmtPrice(a.start)} · 市价 ¥${fmtPrice(marketP)}` }),
           h('div.row', { style: { gap: '6px', flexWrap: 'wrap', marginTop: '6px' } },
             def ? rarityChip(def.rarity) : null,
             a.inst && a.inst.wear ? h('span.tag', { text: a.inst.wear }) : null,
@@ -110,14 +125,14 @@ export function create(ctx) {
             h('span.tag', { text: '剩余 ' + durStr(remain) }))),
         h('div.col', { style: { alignItems: 'flex-end' } },
           h('div.item__price', { text: high ? '¥' + fmtPrice(high) : '暂无出价' }),
-          h('div.item__meta', { text: a.high ? a.high.name + (isLeader ? '（你）' : '') : '起拍 ¥' + fmtPrice(a.start) }),
+          h('div.item__meta', { text: a.high ? nameOf(a.high.who, a.high.name) + (isLeader ? '（你）' : '') : '起拍 ¥' + fmtPrice(a.start) }),
           high ? h('span.fs-11' + (delta >= 0 ? '.up' : '.dn'), { text: (delta >= 0 ? '↑ ' : '↓ ') + Math.abs(delta * 100).toFixed(1) + '% vs 市价' }) : null)),
       high ? h('div.progress', { style: { marginTop: '10px' } },
         h('i.progress__bar', { style: { width: clamp((high / (a.buyout || marketP * 2)) , 0.02, 1) * 100 + '%' } })) : null,
       a.history && a.history.length
         ? h('div.stack--tight.stack', { style: { marginTop: '10px' } },
           ...a.history.slice(0, 3).map((x) => h('div.row.row--between', null,
-            h('span.fs-11.dim', { text: x.mine ? '你' : x.who }),
+            h('span.fs-11.dim', { text: x.mine ? '你' : nameOf(null, x.who) }),
             h('span.fs-11.num', { text: '¥' + fmtPrice(x.price) }))))
         : null,
       h('div.btn-group', { style: { marginTop: '12px' } },
@@ -181,7 +196,7 @@ export function create(ctx) {
           h('table.table.table--compact', null,
             h('thead', null, h('tr', null, h('th', { text: '出价人' }), h('th.num', { text: '价格' }), h('th', { text: '时间' }))),
             h('tbody', null, ...a.history.map((x) => h('tr', null,
-              h('td', { text: x.mine ? '你' : x.who }),
+              h('td', { text: x.mine ? '你' : nameOf(null, x.who) }),
               h('td.num', { text: '¥' + fmtPrice(x.price) }),
               h('td.dim', { text: dateTimeStr(x.at) })))))));
       },

@@ -180,5 +180,18 @@ try {
 }
 ok(ratioOk, '手机比例审计通过（10 组机型）');
 
+/* 10. 拍卖行显示完整性：不得出现 undefined */
+console.log('\n  → 运行拍卖行显示测试');
+let aucOk = true;
+try {
+  const out = execFileSync(process.execPath, [join(ROOT, 'tests/auction.mjs')], { stdio: 'pipe', encoding: 'utf8' });
+  console.log(out.trim().split('\n').slice(-3).map((l) => '    ' + l).join('\n'));
+  if (!/全部通过/.test(out)) aucOk = false;
+} catch (e) {
+  aucOk = false;
+  console.log(String(e.stdout || '').split('\n').filter((l) => /fail|FAIL/.test(l)).slice(0, 8).map((l) => '    ' + l.trim()).join('\n'));
+}
+ok(aucOk, '拍卖行显示测试通过（无 undefined / 跨存档可还原）');
+
 console.log(`\n${fails === 0 ? '发布检查全部通过。' : fails + ' 项检查失败。'}\n`);
 process.exit(fails ? 1 : 0);
