@@ -227,7 +227,8 @@ export function create(ctx) {
       toast(`开出 <b>${best.def.name}</b>（${RARITY[best.rarity].cn}）`, { kind: 'good', iconName: 'star', ms: 3600 });
     }
     renderResults(res, { best, spent, back });
-    render();
+    // 不在这里重新 render()：那会把刚渲染好的结算面板整块重建掉，
+    // 用户就看不到开箱结果了。按钮可用状态由 onTick 增量刷新。
   }
 
   /** CS 式轮盘：单抽完整播放，十连/百连首抽完整播放、其余快速扫过 */

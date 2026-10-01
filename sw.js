@@ -1,9 +1,15 @@
 /**
  * MONO — Service Worker
- * 目标：首屏极快 + 离线可玩。采用「缓存优先 + 后台更新」策略，
- * 静态资源按版本号整体失效，避免新版本与旧缓存混用。
+ *
+ * 策略（重要，别改回缓存优先）：
+ *   · 代码与文档类（HTML / JS / CSS / manifest / 种子数据）→ **网络优先**，
+ *     离线时回退缓存。这样每次部署用户刷新就能拿到新版本。
+ *   · 静态资源（图标等）→ 缓存优先（内容不变，省流量）。
+ *   · 一旦装上新的 SW，立刻跳到 waiting 并接管，同时清掉所有旧版本缓存。
+ *
+ * 曾经的问题：代码用缓存优先 + 版本号固定 → 用户永远停在旧版本，刷新无效。
  */
-const VERSION = 'mono-v1.0.0';
+const VERSION = 'mono-v1.1.0';
 const CORE = [
   './',
   './index.html',
@@ -50,20 +56,41 @@ const CORE = [
   './assets/icons/icon-512.png',
 ];
 
+/** 需要「网络优先」的请求：任何会影响功能行为的东西 */
+function isCodeRequest(url) {
+  if (url.pathname.endsWith('/') || url.pathname.endsWith('.html')) return true;
+  return /\.(js|mjs|css|webmanifest|json)$/i.test(url.pathname);
+}
+
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(VERSION).then((c) => Promise.all(
-      CORE.map((url) => c.add(new Request(url, { cache: 'reload' })).catch(() => null)),
-    )).then(() => self.skipWaiting()),
+    caches.open(VERSION)
+      .then((c) => Promise.all(
+        CORE.map((url) => c.add(new Request(url, { cache: 'reload' })).catch(() => null)),
+      ))
+      .then(() => self.skipWaiting()),
   );
 });
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim()),
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k)));
+      await self.clients.claim();
+    })(),
   );
+});
+
+self.addEventListener('message', (e) => {
+  const data = e.data || {};
+  if (data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+    return;
+  }
+  if (data.type === 'CLEAR_CACHES') {
+    e.waitUntil(caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k)))));
+  }
 });
 
 self.addEventListener('fetch', (e) => {
@@ -71,19 +98,24 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
-  // 价格种子：网络优先，失败回退缓存
-  if (url.pathname.endsWith('prices.seed.json')) {
+
+  // 代码 / 文档：网络优先，失败回退缓存，再失败回退首页
+  if (isCodeRequest(url)) {
     e.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(VERSION).then((c) => c.put(req, copy));
+          if (res && res.status === 200 && res.type === 'basic') {
+            const copy = res.clone();
+            caches.open(VERSION).then((c) => c.put(req, copy));
+          }
           return res;
         })
-        .catch(() => caches.match(req)),
+        .catch(() => caches.match(req).then((hit) => hit || caches.match('./index.html'))),
     );
     return;
   }
+
+  // 静态资源：缓存优先，命中即返回，否则取网络并缓存
   e.respondWith(
     caches.match(req).then((hit) => hit || fetch(req).then((res) => {
       if (res && res.status === 200 && res.type === 'basic') {

@@ -2,7 +2,7 @@
  * MONO — 应用入口
  * 装配：设置 → 存档/离线结算 → 路由 → 各页面 → 主循环 → 通知 → 自动保存
  */
-import { engine, boot, startLoop, stopLoop, setSpeed, advance, applyOffline, setAlert, clearAlert, autoSave } from './core/engine.js';
+import { engine, boot, startLoop, stopLoop, setSpeed, advance, applyOffline, setAlert, clearAlert, autoSave, dashboard as dashboardOf } from './core/engine.js';
 import { S, newPlayer, initMarket, bagLimit, bagCount } from './core/state.js';
 import { APP, TIME, ECON, RARITY, RARITY_ORDER, CATS } from './core/const.js';
 import { ITEMS, getItem, ITEM_MAP } from './core/catalog.js';
@@ -29,7 +29,7 @@ const ctx = {
   setAlert,
   clearAlert,
   itemOf: (id) => getItem(id),
-  dashboard: () => engine.dashboard(),
+  dashboard: () => dashboardOf(),
   watchlist: [],
   lastItemId: null,
   ledger: (e) => {
@@ -98,7 +98,7 @@ function back() {
 /* ------------------------------------------------------------------ 导航渲染 */
 
 function paintNav() {
-  const total = engine.dashboard();
+  const total = dashboardOf();
   const groups = {};
   for (const item of NAV) {
     groups[item.group] = groups[item.group] || [];
@@ -156,7 +156,7 @@ function badgeFor(viewId, d) {
 /* ------------------------------------------------------------------ 顶栏 */
 
 function paintAppbar() {
-  const d = engine.dashboard();
+  const d = dashboardOf();
   document.getElementById('appbar-date').textContent = d.dateText;
   const idxEl = document.getElementById('appbar-index');
   const moodEl = document.getElementById('appbar-mood');
@@ -443,9 +443,22 @@ async function bootApp() {
     if (map[e.key.toLowerCase()]) go(map[e.key.toLowerCase()]);
   });
 
-  // 11) PWA
+  // 11) PWA：注册 SW；发现新版本立刻接管，并在接管后重载一次拿新模块
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    navigator.serviceWorker.register('sw.js').then((reg) => {
+      const activate = (worker) => {
+        if (worker) worker.postMessage({ type: 'SKIP_WAITING' });
+      };
+      activate(reg.waiting);
+      reg.addEventListener('updatefound', () => activate(reg.installing));
+      reg.update().catch(() => {});
+      let reloaded = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (reloaded) return;
+        reloaded = true;
+        location.reload();
+      });
+    }).catch(() => {});
   }
   console.log(`[mono] booted in ${(performance.now() - t0).toFixed(0)}ms · ${ITEMS.length} items · seed ${engine.seed}`);
 }
@@ -521,7 +534,9 @@ ctx.loadSlot = async (slot) => {
 
 /* ------------------------------------------------------------------ GO */
 
-document.addEventListener('DOMContentLoaded', () => {
+// 启动入口：用 readyState 判断，而不是只监听 DOMContentLoaded。
+// 模块可能在 DOMContentLoaded 已经触发之后才执行，此时事件不会再触发、页面会白屏。
+function startApp() {
   bootApp().catch((e) => {
     console.error('[mono] boot failed', e);
     const host = document.getElementById('views');
@@ -533,4 +548,10 @@ document.addEventListener('DOMContentLoaded', () => {
         h('button.btn.btn--sm', { onclick: () => location.reload() }, '重新载入')));
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}

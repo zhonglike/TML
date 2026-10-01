@@ -115,5 +115,20 @@ try {
 }
 ok(uiOk, 'UI 渲染测试通过');
 
+/* 6. 启动回归测试：真的把 src/main.js 启动一遍（抓只有启动才暴露的错误） */
+console.log('\n  → 运行启动回归测试');
+let bootOk = true;
+try {
+  const out = execFileSync(process.execPath, [join(ROOT, 'tests/boot.mjs')], { stdio: 'pipe', encoding: 'utf8' });
+  const lines = out.trim().split('\n');
+  console.log(lines.slice(-3).map((l) => '    ' + l).join('\n'));
+  if (!/全部通过/.test(out)) bootOk = false;
+} catch (e) {
+  bootOk = false;
+  console.log(String(e.stdout || '').split('\n').filter((l) => /FAIL|boot failed/.test(l)).slice(0, 8).map((l) => '    ' + l).join('\n'));
+  console.log(String(e.stderr || e.message).split('\n').slice(0, 6).map((l) => '    ' + l).join('\n'));
+}
+ok(bootOk, '启动回归测试通过');
+
 console.log(`\n${fails === 0 ? '发布检查全部通过。' : fails + ' 项检查失败。'}\n`);
 process.exit(fails ? 1 : 0);

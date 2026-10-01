@@ -177,8 +177,8 @@ export function tick(rng, opt = {}) {
 
   // 4) 情绪推进
   updateMood();
-  // 5) 指数推进
-  S.session.index = computeIndex();
+  // 5) 指数推进：先记住上一刻点位，再重算（保证涨跌幅有正确的基准）
+  S.session.index = computeIndex({ prevTick: S.session.index.index });
 
   const hourMark = Math.floor(S.clock.hours);
   if (hourMark % 6 === 0) ev.emit('hour', hourMark);
@@ -360,7 +360,12 @@ function basket() {
   return out;
 }
 
-export function computeIndex() {
+/**
+ * 市场指数。
+ * 单位约定（重要）：`history` 存的是**指数点位**（1000 × 成分比值），
+ * 不是比值本身。之前这里是比值与点位混用，导致涨跌幅显示成 ↓99.90%。
+ */
+export function computeIndex(opt = {}) {
   const list = basket();
   let sum = 0;
   let n = 0;
@@ -371,17 +376,22 @@ export function computeIndex() {
     n++;
   }
   const raw = n ? sum / n : 1;
-  const prev = S.session.index.prev || raw;
-  const idxVal = 1000 * raw;
-  const chg = prev ? idxVal / (1000 * prev) - 1 : 0;
+  /** 指数点位：基准 1000 = 全部成分都在锚价 */
+  const point = raw * 1000;
   const history = S.session.index.history;
-  const d1 = history.length ? 1000 * history[history.length - 1] : idxVal;
+  const prevTick = opt.prevTick != null ? opt.prevTick : S.session.index.prevTick;
+  // 相对上一个 tick（主循环里展示的即时涨跌）
+  const change = prevTick ? point / prevTick - 1 : 0;
+  // 相对上一个已结算交易日（日涨跌）
+  const lastClose = history.length ? history[history.length - 1] : null;
+  const changeDay = lastClose ? point / lastClose - 1 : 0;
   return {
-    index: idxVal,
-    prev: idxVal,
+    index: point,
+    prev: prevTick || point,
+    prevTick: point,
     raw,
-    change: chg,
-    changeDay: d1 ? idxVal / d1 - 1 : 0,
+    change,
+    changeDay,
     history,
   };
 }
