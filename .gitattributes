@@ -1,0 +1,24 @@
+# 统一换行：避免 Windows 检出时把 LF 换成 CRLF，
+# 造成源码在 GitHub 上显示为「整文件被修改」或与本地字节不一致。
+* text=auto eol=lf
+
+# 明确二进制，禁止任何换行/EOL 转换（否则图标会损坏）
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.zip binary
+*.pdf binary
+
+# 生成物：让 GitHub 在 diff / 语言统计里降低噪声
+src/data/catalog-cs2.js     linguist-generated=true
+src/data/catalog-compute.js linguist-generated=true
+src/data/catalog-hardware.js linguist-generated=true
+src/data/catalog-assets.js  linguist-generated=true
+data/prices.seed.json       linguist-generated=true
+assets/icons/*.png          linguist-generated=true
