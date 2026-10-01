@@ -33,6 +33,7 @@ const CORE = [
   './src/ui/ui.js',
   './src/ui/charts.js',
   './src/ui/sound.js',
+  './src/ui/reel.js',
   './src/ui/views.js',
   './src/ui/views/dashboard.js',
   './src/ui/views/bag.js',

@@ -222,6 +222,11 @@ export function drawMany(n, rng, opt = {}) {
   return { results, spent, blocked, reason };
 }
 
+/** 取某个稀有度的全部候选（UI 预览卡带用） */
+export function poolByRarity(rarity) {
+  return BY_RARITY[rarity] || [];
+}
+
 /** 价格公示用：每个稀有度在池中的数量与均价 */
 export function poolInfo() {
   const o = odds();

@@ -177,6 +177,58 @@ try {
   ok(false, '弹窗/提示', e && e.message);
 }
 
+console.log('\n== 开箱轮盘（CS 式） ==');
+try {
+  const reel = await import('../src/ui/reel.js');
+  const host = ui.h('div');
+  document.getElementById('views').appendChild(host);
+  const win = { def: getItem('butterfly-doppler-ruby'), inst: { wear: 'FN', float: 0.01, st: true, patternScore: 0.5 }, rarity: 'red', qty: 1 };
+  const t0 = Date.now();
+  let settled = false;
+  await reel.playReel(host, win, {
+    rng: en.rng,
+    dur: 120,
+    reduceMotion: false,
+    onSettle: () => {
+      settled = true;
+    },
+  });
+  const cards = host.querySelectorAll('.reel__card');
+  const hit = host.querySelectorAll('.reel__card.is-hit');
+  ok(cards.length >= 30, '轮盘生成卡带', `${cards.length} 张`);
+  ok(settled, '轮盘回调触发');
+  ok(hit.length === 1, '唯一中奖卡被标记', `${hit.length} 张`);
+  const winnerCards = host.querySelectorAll('.reel__card.is-winner');
+  ok(
+    winnerCards.length === 1 && winnerCards[0].dataset.item === win.def.id,
+    '中奖卡就是抽到的物品',
+    winnerCards[0] ? winnerCards[0].dataset.item : '-',
+  );
+  const marker = host.querySelectorAll('.reel__marker');
+  ok(marker.length === 1, '存在判定标记线');
+  ok(Date.now() - t0 < 4000, '动画时长可控', `${Date.now() - t0}ms`);
+
+  // 十连：首抽完整播放 + 其余快速扫过
+  const host2 = ui.h('div');
+  document.getElementById('views').appendChild(host2);
+  const results = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => {
+    const def = getItem(i % 2 ? 'ak47-redline' : 'm4a4-black-mirage');
+    return { def, inst: { wear: 'FT', float: 0.3 }, rarity: def.rarity, qty: 1 };
+  });
+  await reel.playMultiReel(host2, results, { rng: en.rng, firstDur: 100, reduceMotion: false });
+  ok(host2.querySelectorAll('.reel__card').length >= 10, '十连轮盘渲染', `${host2.querySelectorAll('.reel__card').length} 张`);
+
+  // 降低动效时应当立即落位
+  const host3 = ui.h('div');
+  document.getElementById('views').appendChild(host3);
+  const t1 = Date.now();
+  await reel.playReel(host3, win, { rng: en.rng, dur: 5000, reduceMotion: true });
+  ok(Date.now() - t1 < 300, '开启「关闭动效」后立即落位', `${Date.now() - t1}ms`);
+} catch (e) {
+  ok(false, '开箱轮盘', e && e.message);
+  console.error('    ', (e && e.stack ? e.stack.split('\n').slice(0, 5).join('\n     ') : e));
+}
+
 console.log('\n== 存档往返（localStorage 路径） ==');
 try {
   const save = await import('../src/core/save.js');
