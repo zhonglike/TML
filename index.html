@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lum="default" data-motion="on">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<title>MONO — 极简 · 暗黑经营模拟</title>
+<meta name="description" content="MONO 是一款极简黑白的抽奖经营模拟游戏：开箱、倒买倒卖、拍卖、K 线、NPC 市场。纯前端，单机，可离线。" />
+<meta name="theme-color" content="#000000" />
+<meta name="color-scheme" content="dark" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="MONO" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+<link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 顶栏 -->
+    <header class="appbar">
+      <div class="appbar__title">
+        <span class="logo" aria-hidden="true">MO</span>
+        <span>MONO</span>
+        <small id="appbar-date">—</small>
+      </div>
+      <div class="appbar__meta">
+        <span id="appbar-index" class="num">—</span>
+        <span id="appbar-mood" class="num">—</span>
+      </div>
+      <div class="appbar__actions">
+        <div class="segmented" id="speed-ctl" role="group" aria-label="时间速度"></div>
+        <button class="iconbtn" id="btn-sound" type="button" aria-label="音效开关" title="音效"></button>
+        <button class="iconbtn" id="btn-help" type="button" aria-label="帮助" title="帮助与公式"></button>
+      </div>
+    </header>
+
+    <div class="main">
+      <!-- 侧边栏（桌面） -->
+      <nav class="sidebar" id="sidebar" aria-label="主导航">
+        <div class="sidebar__brand">
+          <span class="logo">MO</span>
+          <span>
+            <b>MONO</b><br />
+            <span>极简 · 暗黑经营模拟</span>
+          </span>
+        </div>
+        <div class="sidebar__group" id="sidebar-nav"></div>
+        <div class="sidebar__group">
+          <i>账户</i>
+          <div id="sidebar-account"></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="hint" id="sidebar-foot"></div>
+      </nav>
+
+      <!-- 视图容器：所有页面在这里渲染 -->
+      <section class="main" id="views" aria-live="polite"></section>
+    </div>
+
+    <!-- 底部标签栏（移动端） -->
+    <nav class="tabbar" id="tabbar" aria-label="主导航"></nav>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+  <div id="layer"></div>
+
+  <noscript>
+    <div class="empty" style="padding:80px 20px">
+      <b>MONO 需要 JavaScript</b>
+      <span>请在浏览器设置中启用 JavaScript 后重新载入。</span>
+    </div>
+  </noscript>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

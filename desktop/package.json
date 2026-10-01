@@ -1,0 +1,78 @@
+{
+  "name": "mono-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MONO 桌面套壳（Electron / WebView2 内核）",
+  "main": "main.cjs",
+  "author": "zhonglike",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis portable --publish never",
+    "dist:dir": "electron-builder --dir --publish never"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "tech.zhonglike.mono",
+    "productName": "MONO",
+    "copyright": "© 2026 zhonglike",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.cjs",
+      "package.json",
+      {
+        "from": "../",
+        "to": ".",
+        "filter": [
+          "index.html",
+          "manifest.webmanifest",
+          "sw.js",
+          "assets/**/*",
+          "src/**/*",
+          "data/**/*",
+          "!**/node_modules/**",
+          "!desktop/**",
+          "!mobile/**",
+          "!tests/**",
+          "!scripts/**",
+          "!**/*.md"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "icon": "../assets/icons/icon-512.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MONO",
+      "artifactName": "MONO-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "MONO-Portable-${version}.${ext}"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "category": "public.app-category.games",
+      "icon": "../assets/icons/icon-512.png"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "category": "Game",
+      "icon": "../assets/icons/icon-512.png"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "mono",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MONO — 极简 · 暗黑经营模拟（纯前端单机抽奖经营模拟游戏）",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://tml.zhonglike.tech",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhonglike/TML.git"
+  },
+  "keywords": [
+    "game",
+    "simulation",
+    "trading",
+    "lootbox",
+    "canvas",
+    "pwa",
+    "vanilla-js",
+    "github-pages"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "dev": "node scripts/serve.mjs",
+    "test": "node tests/smoke.mjs",
+    "smoke": "node tests/smoke.mjs",
+    "icons": "node scripts/gen-icons.mjs",
+    "gen:catalog": "node scripts/gen-catalog.mjs",
+    "gen:seed": "node scripts/gen-seed.mjs",
+    "release": "node scripts/release.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

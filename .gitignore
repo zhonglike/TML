@@ -1,0 +1,33 @@
+# 依赖与构建产物（Pages 只发布 dist/ 与仓库根静态文件）
+node_modules/
+dist/
+desktop/node_modules/
+desktop/dist/
+mobile/node_modules/
+mobile/android/
+mobile/ios/
+
+# 编辑器 / 系统
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 日志与临时文件
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tmp
+*.bak
+
+# 本地存档导出（避免把个人存档提交进仓库）
+mono-save-*.json
+mono-ledger-*.csv
+
+# 环境变量（切勿提交任何令牌）
+.env
+.env.*
+!.env.example
