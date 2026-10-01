@@ -31,6 +31,15 @@ function setup(canvas, height) {
   return { ctx, w, h };
 }
 
+/**
+ * 边距：右侧价格轴宽度随画布宽度自适应。
+ * 手机（375px 内容宽 ≈343px）上固定 54px 会吃掉太多绘图区，因此收窄到 42px。
+ */
+function padOf(w) {
+  const right = w < 420 ? 42 : 54;
+  const left = w < 420 ? 6 : 8;
+  return { l: left, r: right, t: 12, b: 18 };
+}
 const PAD = { l: 8, r: 54, t: 12, b: 18 };
 
 /**
@@ -48,6 +57,7 @@ export function drawKLine(canvas, data, opt = {}) {
     return;
   }
   const volH = Math.round(h * 0.22);
+  const PAD = padOf(w);
   const priceH = h - volH - PAD.t - PAD.b - 6;
   const plotW = w - PAD.l - PAD.r;
 
@@ -159,6 +169,7 @@ export function drawArea(canvas, values, opt = {}) {
   const height = opt.height || 160;
   const { ctx, w, h } = setup(canvas, height);
   const rows = (values || []).filter((v) => isFinite(v));
+  const PAD = padOf(w);
   if (rows.length < 2) {
     drawEmpty(ctx, w, h, '数据积累中');
     return;
@@ -216,6 +227,7 @@ export function drawSpark(canvas, values, opt = {}) {
   const height = opt.height || 26;
   const { ctx, w, h } = setup(canvas, height);
   const rows = (values || []).filter((v) => isFinite(v));
+  const PAD = padOf(w);
   if (rows.length < 2) return;
   let hi = Math.max(...rows);
   let lo = Math.min(...rows);
@@ -286,7 +298,9 @@ export function attachCrosshair(canvas, data, meta, opt = {}) {
     const rect = canvas.getBoundingClientRect();
     const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
     const w = rect.width;
+    const PAD = padOf(w);
     const plotW = w - PAD.l - PAD.r;
+    if (plotW < 60) return;
     const idx = Math.max(0, Math.min(rows.length - 1, Math.round(((x - PAD.l) / plotW) * (rows.length - 1))));
     const r = rows[idx];
     if (!r) return;

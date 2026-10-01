@@ -360,7 +360,17 @@ table { border-collapse: collapse; width: 100%; }
   margin-bottom: 16px;
 }
 .view__title { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
-.view__sub { font-size: 12px; color: var(--text-3); font-family: var(--mono); margin-top: 2px; }
+.view__sub {
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  margin-top: 2px;
+  /* 手机上这行信息密度很高（单抽价 / 折扣 / 格数），必须允许折行，
+     否则一个中文字 1em，375px 下必然撑破容器 */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
 
 .sect { margin-bottom: 20px; }
 .sect__title {
@@ -450,6 +460,8 @@ table { border-collapse: collapse; width: 100%; }
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-4);
+  /* 小屏（320px）上这类标签会很长，必须允许折行 */
+  overflow-wrap: anywhere;
 }
 .stat__value { font-size: 20px; font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .stat__value--sm { font-size: 15px; }
@@ -805,6 +817,18 @@ table { border-collapse: collapse; width: 100%; }
   color: var(--text-2);
   white-space: nowrap;
 }
+/* 手机上表格列多、单元格 nowrap 必然超出屏宽：
+   允许横向滚动（比强行折行更可读），并给容器留出滚动提示 */
+@media (max-width: 560px) {
+  .table td, .table th { white-space: normal; word-break: break-word; padding: 8px 7px; }
+  .table td.num, .table th.num { white-space: nowrap; }
+  .table--compact td, .table--compact th { font-size: 11px; padding: 6px 5px; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .kv-grid { grid-template-columns: 1fr; }
+  .kv { flex-direction: column; align-items: flex-start; gap: 0; }
+  .kv__k { font-size: 10px; }
+  .kv__v { font-size: 12px; text-align: left; white-space: normal; }
+}
 .table tbody tr { transition: background var(--dur) var(--ease); }
 .table tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
 .table tbody tr:last-child td { border-bottom: 0; }
@@ -855,7 +879,14 @@ table { border-collapse: collapse; width: 100%; }
 
 .kv { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 4px 0; font-size: 12px; }
 .kv__k { color: var(--text-4); font-size: 11px; }
-.kv__v { font-family: var(--mono); color: var(--text-2); text-align: right; }
+.kv__v {
+  font-family: var(--mono);
+  color: var(--text-2);
+  text-align: right;
+  /* 手机上 kv 值是长句（公式说明等），必须允许折行 */
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
 .kv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 14px; }
 
 .prob { display: flex; align-items: center; gap: 9px; font-size: 11.5px; }

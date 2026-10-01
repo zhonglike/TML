@@ -88,7 +88,7 @@ export function create(ctx) {
           })),
         h('div', { id: 'ledger-host', style: { padding: '0 14px 14px' } },
           rows.length
-            ? h('table.table', null,
+            ? h('div.table-wrap', null, h('table.table', null,
               h('thead', null, h('tr', null,
                 h('th', { text: '类型' }),
                 h('th', { text: '标的' }),
@@ -104,7 +104,7 @@ export function create(ctx) {
                 h('td.num', { text: e.price ? '¥' + fmtPrice(e.price) : '—' }),
                 h('td.num', { class: (e.amount || 0) >= 0 ? 'up' : 'dn', text: (e.amount >= 0 ? '+' : '') + (e.amount ? '¥' + fmtPrice(e.amount) : '—') }),
                 h('td.num', { class: (e.profit || 0) >= 0 ? 'up' : 'dn', text: e.profit != null ? (e.profit >= 0 ? '+' : '') + '¥' + fmtPrice(e.profit) : '—' }),
-                h('td.dim', { text: dateTimeStr(e.hour) })))))
+                h('td.dim', { text: dateTimeStr(e.hour) }))))))
             : emptyState('还没有流水记录', '完成一次开箱或交易后这里会留下记录', 'records'))),
       h('div.spacer', { style: { height: '14px' } }),
       h('div.card.card--pad', null,

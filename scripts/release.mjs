@@ -130,5 +130,28 @@ try {
 }
 ok(bootOk, '启动回归测试通过');
 
+/* 7. 移动端适配审计：按多种手机宽度渲染所有页面，检查溢出 */
+console.log('\n  → 运行移动端适配审计');
+let mobileOk = true;
+for (const w of [320, 375, 414, 430]) {
+  try {
+    const out = execFileSync(process.execPath, [join(ROOT, 'tests/mobile.mjs'), String(w)], { stdio: 'pipe', encoding: 'utf8' });
+    const m = out.match(/合计 (\d+) 处/);
+    const n = m ? Number(m[1]) : -1;
+    if (n !== 0) {
+      mobileOk = false;
+      console.log(`    FAIL @${w}px — ${n} 处问题`);
+      out.split('\n').filter((l) => /·|\[/.test(l)).slice(0, 6).forEach((l) => console.log('      ' + l.trim()));
+    } else {
+      console.log(`    ok   @${w}px 无溢出`);
+    }
+  } catch (e) {
+    mobileOk = false;
+    console.log(`    FAIL @${w}px 审计执行失败`);
+    console.log(String(e.stdout || '').split('\n').filter((l) => /\[|·/.test(l)).slice(0, 6).map((l) => '      ' + l.trim()).join('\n'));
+  }
+}
+ok(mobileOk, '移动端适配审计通过（320 / 375 / 414 / 430px）');
+
 console.log(`\n${fails === 0 ? '发布检查全部通过。' : fails + ' 项检查失败。'}\n`);
 process.exit(fails ? 1 : 0);
