@@ -91,21 +91,63 @@ export function playReel(host, win, opt = {}) {
     h('div.reel__marker', null, h('i'), h('i')));
   mount(host, reel);
 
-  const width = Math.max(240, host.clientWidth || 720);
+  // ---- 测量可视宽度 ----
+  // 从轮盘自身沿父级链向上找第一个「有效宽度」（嵌套容器宽度一致）。
+  // 不能只信 host.clientWidth：元素刚挂载、处于隐藏容器、或父级 display:none 时
+  // 它会返回 0，此时 center 变成 0，落位位移会被算成「把卡带推出屏幕」——
+  // 表现就是「滚过几张之后停在空白处，但东西确实出了」。
+  // 也不能取最大值：文档宽度可能大于内容区宽度（如 900 > 343），会算偏。
+  const measure = () => {
+    const good = (w) => typeof w === 'number' && w > 40 && w < 4000;
+    if (good(reel.clientWidth)) return reel.clientWidth;
+    let node = host;
+    for (let i = 0; i < 8 && node; i++) {
+      if (good(node.clientWidth)) return node.clientWidth;
+      node = node.parentElement;
+    }
+    const docEl = (typeof document !== 'undefined' && document.documentElement) ? document.documentElement : null;
+    if (docEl && good(docEl.clientWidth - 32)) return docEl.clientWidth - 32;
+    return 343; // 375px 手机的典型内容宽，最后兜底
+  };
+  const width = Math.max(240, measure());
   const center = width / 2;
+
   // 目标位移：让「中奖卡中心」对齐标记线，再留一点随机偏移避免每次都停在正中。
   // 注意：reel 左右各有 fade 覆盖，但标记线固定在 50%，因此按几何中心计算即可。
   const winnerCenter = winnerIndex * STEP + CARD_W / 2;
   const jitter = (rng.float() - 0.5) * (CARD_W * 0.4);
-  const finalX = -(Math.max(0, winnerCenter - center) + jitter);
+  // 位移必须为正数：负值意味着「卡带往右推」，中奖卡会被挤出可视区
+  const finalX = -Math.max(CARD_W, winnerCenter - center + jitter);
   const startX = 0;
 
   const reduce = !!opt.reduceMotion;
 
+  /**
+   * 落位自校验：真机上布局可能晚一拍（首帧 width 为 0、字体/滚动条改变宽度、
+   * 键盘弹出等），一旦中奖卡偏离标记线就修正回来。
+   * 返回最终使用的位移。
+   */
+  const settle = () => {
+    track.style.transform = `translate3d(${finalX.toFixed(2)}px,0,0)`;
+    const cards = track.querySelectorAll('.reel__card');
+    const card = cards[winnerIndex];
+    const nowW = measure();
+    if (card && nowW > 40 && Math.abs(nowW - width) > 24) {
+      // 宽度变了：按新宽度重新对齐，并做一次短过渡，避免视觉上跳变
+      const corrected = -Math.max(CARD_W, winnerCenter - nowW / 2 + jitter);
+      track.style.transition = 'transform 220ms ease-out';
+      track.style.transform = `translate3d(${corrected.toFixed(2)}px,0,0)`;
+      setTimeout(() => {
+        track.style.transition = '';
+      }, 260);
+    }
+    if (card) card.classList.add('is-hit');
+    if (opt.onSettle) opt.onSettle(win);
+  };
+
   return new Promise((resolve) => {
     if (reduce) {
-      track.style.transform = `translate3d(${finalX}px,0,0)`;
-      if (opt.onSettle) opt.onSettle(win);
+      settle();
       resolve();
       return;
     }
@@ -133,10 +175,7 @@ export function playReel(host, win, opt = {}) {
       }
       if (k < 1) requestAnimationFrame(frame);
       else {
-        track.style.transform = `translate3d(${finalX.toFixed(2)}px,0,0)`;
-        const cards = track.querySelectorAll('.reel__card');
-        if (cards[winnerIndex]) cards[winnerIndex].classList.add('is-hit');
-        if (opt.onSettle) opt.onSettle(win);
+        settle();
         resolve();
       }
     };
@@ -159,8 +198,10 @@ export async function playMultiReel(host, results, opt = {}) {
   });
   if (results.length === 1) return;
 
-  const limit = Math.min(results.length, opt.limit || 40);
-  const shown = results.slice(0, limit);
+  // 首件已经在轮盘里落位展示过了，这里只列其余结果，避免第 1 件被画两遍
+  const rest = results.slice(1);
+  const limit = Math.min(rest.length, opt.limit || 40);
+  const shown = rest.slice(0, limit);
   const fast = h('div.reel__fast');
   mount(fast, ...shown.map((r) => {
     const card = reelCard({ def: r.def, inst: r.inst }, {});
@@ -170,7 +211,9 @@ export async function playMultiReel(host, results, opt = {}) {
   }));
   const extra = h('div.hint.text-c', {
     style: { width: '100%' },
-    text: `共 ${results.length} 件${results.length > limit ? `（展示前 ${limit} 件，其余已进背包）` : ''}`,
+    text: rest.length > limit
+      ? `共 ${results.length} 件 · 下列 ${limit} 件（其余已进背包）`
+      : `共 ${results.length} 件 · 其余 ${shown.length} 件如下`,
   });
   mount(host, fast, extra);
 

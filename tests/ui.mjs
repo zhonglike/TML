@@ -216,7 +216,9 @@ try {
     return { def, inst: { wear: 'FT', float: 0.3 }, rarity: def.rarity, qty: 1 };
   });
   await reel.playMultiReel(host2, results, { rng: en.rng, firstDur: 100, reduceMotion: false });
-  ok(host2.querySelectorAll('.reel__card').length >= 10, '十连轮盘渲染', `${host2.querySelectorAll('.reel__card').length} 张`);
+  // 首件已在轮盘里展示，快速条只列其余 results.length - 1 件
+  const fastCards = host2.querySelectorAll('.reel__fast .reel__card').length;
+  ok(fastCards === results.length - 1, '十连快速条渲染', `${fastCards} 张 / 应为 ${results.length - 1}`);
 
   // 降低动效时应当立即落位
   const host3 = ui.h('div');

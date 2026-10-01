@@ -153,5 +153,18 @@ for (const w of [320, 375, 414, 430]) {
 }
 ok(mobileOk, '移动端适配审计通过（320 / 375 / 414 / 430px）');
 
+/* 8. 开箱轮盘落位测试 */
+console.log('\n  → 运行开箱轮盘落位测试');
+let reelOk = true;
+try {
+  const out = execFileSync(process.execPath, [join(ROOT, 'tests/reel.mjs')], { stdio: 'pipe', encoding: 'utf8' });
+  if (!/全部通过/.test(out)) reelOk = false;
+  out.trim().split('\n').slice(-4).forEach((l) => console.log('    ' + l));
+} catch (e) {
+  reelOk = false;
+  console.log(String(e.stdout || '').split('\n').filter((l) => /FAIL/.test(l)).slice(0, 8).map((l) => '    ' + l.trim()).join('\n'));
+}
+ok(reelOk, '开箱轮盘落位测试通过');
+
 console.log(`\n${fails === 0 ? '发布检查全部通过。' : fails + ' 项检查失败。'}\n`);
 process.exit(fails ? 1 : 0);

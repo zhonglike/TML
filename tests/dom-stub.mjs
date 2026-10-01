@@ -66,8 +66,10 @@ class Element {
     this.disabled = false;
     this.scrollTop = 0;
     this.scrollHeight = 1000;
-    this.clientHeight = 600;
-    this.clientWidth = 900;
+    /** 布局相关：默认 0，因为未挂载/未布局的元素在浏览器里就是 0。
+     *  早先默认 900 会让被测代码拿到假宽度，掩盖真实布局 bug（例如轮盘落位算错）。 */
+    this.clientHeight = 0;
+    this.clientWidth = 0;
     this.classList = new ClassList(this);
     // 布局相关：给图表用的假尺寸
     this.offsetWidth = 300;
@@ -199,7 +201,7 @@ class Element {
     return this.querySelectorAll(sel)[0] || null;
   }
   querySelectorAll(sel) {
-    const out = [];
+    const found = [];
     const stack = [this];
     while (stack.length) {
       const node = stack.pop();
@@ -208,14 +210,23 @@ class Element {
         const c = kids[i];
         if (c == null) continue;
         if (isEl(c)) {
-          if (matches(c, sel)) out.push(c);
+          if (matches(c, sel)) found.push(c);
           stack.push(c);
         }
       }
     }
-    // 保持文档顺序
-    out.sort((a, b) => indexOfNode(a) - indexOfNode(b));
-    return out;
+    // 复合选择器（逗号分隔）时仍需文档顺序 → 按路径做字典序排序
+    found.sort((a, b) => {
+      const pa = pathOf(a);
+      const pb = pathOf(b);
+      for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+        const x = pa[i] == null ? -1 : pa[i];
+        const y = pb[i] == null ? -1 : pb[i];
+        if (x !== y) return x - y;
+      }
+      return 0;
+    });
+    return found;
   }
   closest(sel) {
     let n = this;
@@ -276,15 +287,20 @@ function isEl(v) {
   return !!v && typeof v === 'object' && typeof v.tagName === 'string' && Array.isArray(v.children);
 }
 
-/** 文档顺序：用 parent 链上的索引拼一个可比较的字符串 */
-function indexOfNode(node) {
+/**
+ * 文档路径（每层在父节点中的下标数组），用于字典序比较。
+ * 早期版本把路径压成一个数字（每层 ×1000 再相加），在节点较多时
+ * 低位会被高位「吃掉」，导致 querySelectorAll 的顺序错乱、
+ * 依赖下标的计算（如轮盘落位）全部失真。
+ */
+function pathOf(node) {
   const path = [];
   let n = node;
   while (n && n.parentElement) {
     path.unshift(n.parentElement.children.indexOf(n));
     n = n.parentElement;
   }
-  return path.reduce((acc, i) => acc * 1000 + i, 0);
+  return path;
 }
 
 /** 极简选择器匹配：#id、.class、tag、[data-x]、* ，组合用逗号 */
