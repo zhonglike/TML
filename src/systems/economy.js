@@ -6,7 +6,7 @@
 import { getItem, priceFactor } from '../core/catalog.js';
 import { ECON, RARITY_ORDER } from '../core/const.js';
 import {
-  S, mstate, feeRate, recycleRate, repBonus, addXp, pushLedger, day,
+  S, mstate, feeRate, recycleRate, recycleRateFor, repBonus, addXp, pushLedger, day,
 } from '../core/state.js';
 import { applyImpact } from '../core/market.js';
 import * as inv from './inventory.js';
@@ -43,7 +43,7 @@ export function marketUnit(def, inst) {
 
 /** 回收商（系统回收）单价 —— 折价最狠，但瞬间成交 */
 export function recycleUnit(def, inst) {
-  return marketUnit(def, inst) * recycleRate();
+  return marketUnit(def, inst) * recycleRateFor(def);
 }
 
 /** 一口价卖给 NPC：在公允价上让一点，含手续费 */
@@ -241,4 +241,4 @@ export function dailyTradeLeft() {
   return Math.max(0, ECON.dailyTradeCap - S.player.daily.tradesToday);
 }
 
-export { feeRate, recycleRate, repBonus, inv };
+export { feeRate, recycleRate, recycleRateFor, repBonus, inv };

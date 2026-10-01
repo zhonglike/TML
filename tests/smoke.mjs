@@ -86,7 +86,7 @@ for (let i = 0; i < draws; i++) {
   const r = loot.drawOne(rng);
   tally[r.rarity] = (tally[r.rarity] || 0) + 1;
   const marketUnit = economy.marketUnit(r.def, r.inst);
-  recycleSum += marketUnit * r.qty * economy.recycleRate();
+  recycleSum += marketUnit * r.qty * economy.recycleRateFor(r.def);
   marketSum += marketUnit * r.qty;
   if (r.rarity === 'gold') golds++;
   if (r.rarity === 'red') reds++;
@@ -102,6 +102,55 @@ ok(evRec < ECON.drawPrice, '回收价期望低于抽奖成本（抽奖不是印�
 ok(evRec / ECON.drawPrice > 0.35, '回收价期望不至于毫无意义', `${(evRec / ECON.drawPrice * 100).toFixed(1)}%`);
 ok(Math.abs((tally.white || 0) / draws - 0.6) < 0.05, '白色概率接近 60%', `${((tally.white || 0) / draws * 100).toFixed(1)}%`);
 ok(golds + reds > 0, '金红可被开出', `gold ${golds} / red ${reds}`);
+
+// 分档验证：低等级略亏、高等级接近持平，但任何等级都不得变成印钞机。
+// 注意：单抽收益是重尾分布（一件红色可以顶几千抽），因此必须用大样本让均值收敛。
+console.log('\n== 抽奖经济 · 按稀有度的期望贡献（Lv.1，200000 抽） ==');
+const sampleLevel = S.player.level;
+S.player.level = 1;
+const BIG = 200000;
+const byRar = {};
+for (let i = 0; i < BIG; i++) {
+  const r = loot.drawOne(rng);
+  const v = economy.marketUnit(r.def, r.inst) * r.qty * economy.recycleRateFor(r.def);
+  const b = byRar[r.rarity] || (byRar[r.rarity] = { n: 0, sum: 0, max: 0 });
+  b.n++;
+  b.sum += v;
+  if (v > b.max) b.max = v;
+}
+let totalEv = 0;
+for (const k of RARITY_ORDER) {
+  const b = byRar[k];
+  if (!b) continue;
+  const ev = b.sum / BIG;
+  totalEv += ev;
+  console.log(
+    `  ${k.padEnd(6)} 占比 ${((b.n / BIG) * 100).toFixed(2).padStart(6)}%  ` +
+    `EV贡献 ${ev.toFixed(1).padStart(9)}  (${((ev / ECON.drawPrice) * 100).toFixed(1).padStart(6)}% of 成本)  ` +
+    `单件最大回收 ${Math.round(b.max).toLocaleString()}`,
+  );
+}
+console.log(`  合计 EV ${totalEv.toFixed(1)} = 成本的 ${((totalEv / ECON.drawPrice) * 100).toFixed(1)}%`);
+
+console.log('\n== 抽奖经济 · 等级曲线（每档 40000 抽） ==');
+const curve = [];
+const PER_LEVEL = 40000;
+for (const lv of [1, 10, 20, 35, 60]) {
+  S.player.level = lv;
+  let sum = 0;
+  for (let i = 0; i < PER_LEVEL; i++) {
+    const r = loot.drawOne(rng);
+    sum += economy.marketUnit(r.def, r.inst) * r.qty * economy.recycleRateFor(r.def);
+  }
+  const rate = sum / PER_LEVEL / ECON.drawPrice;
+  curve.push({ lv, rate });
+  console.log(`  Lv.${String(lv).padStart(2)}  回收/成本 = ${(rate * 100).toFixed(1)}%   （基础回收率 ${(economy.recycleRate() * 100).toFixed(0)}%）`);
+}
+S.player.level = sampleLevel;
+ok(curve.every((c) => c.rate < 1), '所有等级下抽奖都保持负期望',
+  curve.map((c) => `Lv${c.lv}:${(c.rate * 100).toFixed(0)}%`).join(' '));
+ok(curve[0].rate > 0.4 && curve[0].rate < 0.85, '低等级回收期望落在 40%~85%', `${(curve[0].rate * 100).toFixed(1)}%`);
+ok(curve[curve.length - 1].rate < 0.95, '满级也不会靠抽奖套利', `${(curve[curve.length - 1].rate * 100).toFixed(1)}%`);
 
 console.log('\n== 玩家流程（抽奖 → 入包 → 卖出 → 挂单 → 拍卖） ==');
 S.player = {
