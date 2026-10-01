@@ -206,11 +206,22 @@ export function feeRate() {
 }
 
 export function recycleRate() {
+  return recycleRateFor(null);
+}
+
+/**
+ * 回收折价：随等级与声望收窄，并按稀有度额外杀价。
+ * @param {object|null} def 物品定义；不传则返回基础（最高）折价率
+ */
+export function recycleRateFor(def) {
   const repBonus = Math.min(ECON.repPriceBonus, S.player.rep / 4000);
-  return Math.min(
+  const base = Math.min(
     ECON.recycleMax,
     ECON.recycleBase + (S.player.level - 1) * ECON.recyclePerLevel + repBonus,
   );
+  if (!def) return base;
+  const tier = ECON.recycleTier[def.rarity] != null ? ECON.recycleTier[def.rarity] : 1;
+  return base * tier;
 }
 
 /** 声望对报价的改善（0 ~ +6%） */

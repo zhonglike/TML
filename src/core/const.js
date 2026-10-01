@@ -103,10 +103,15 @@ export const ECON = {
   pitySoft: 20,
   pityBoost: 3,
   pityHard: 90,
-  /** 回收商基础折价（对锚价的百分比） */
+  /** 回收商基础折价（对锚价的百分比）；随等级与声望收窄，但永远保留折价 */
   recycleBase: 0.55,
-  recyclePerLevel: 0.008,
-  recycleMax: 0.86,
+  recyclePerLevel: 0.0045,
+  recycleMax: 0.82,
+  /**
+   * 稀有度折价系数：回收商对高价品杀价更狠（真实二手市场的常态），
+   * 同时也让「红色/金色物件必须走市场才能兑现」成为核心玩法。
+   */
+  recycleTier: { white: 1.0, green: 0.95, blue: 0.88, purple: 0.76, gold: 0.55, red: 0.32 },
   /** 一口价交易手续费 */
   feeBase: 0.06,
   feePerLevel: 0.0025,
