@@ -9,7 +9,6 @@ import { ITEMS, getItem, ITEM_MAP } from './core/catalog.js';
 import { bus, h, mount, icon, money, price as fmtPrice, thousands, durStr, dateTimeStr, haptic, floatUp } from './core/util.js';
 import { VIEWS, NAV, TABBAR } from './ui/views.js';
 import { toast, modal, layer, rarityChip, confirmDialog } from './ui/ui.js';
-import { sfx, unlock as unlockAudio, setSound } from './ui/sound.js';
 import * as save from './core/save.js';
 import * as market from './core/market.js';
 import * as loot from './systems/loot.js';
@@ -83,7 +82,6 @@ function go(viewId, params) {
   inst.el.scrollTop = 0;
   window.location.hash = viewId === 'dashboard' ? '' : '#' + viewId;
   paintNav();
-  sfx('tap');
 }
 
 function back() {
@@ -170,13 +168,8 @@ function paintAppbar() {
     title: s.cn || s.label,
     onclick: () => {
       setSpeed(s.id);
-      sfx('click');
     },
   }, s.label)));
-  // 音效按钮
-  const soundBtn = document.getElementById('btn-sound');
-  mount(soundBtn, icon(S.settings.sound ? 'bolt' : 'close', 15));
-  soundBtn.classList.toggle('is-active', S.settings.sound !== false);
   paintSaveFlag();
 }
 
@@ -222,14 +215,12 @@ function wireNotifications() {
     toast(`价格提醒：<b>${a.name}</b> ${a.up ? '涨到' : '跌到'} ¥${fmtPrice(a.price)}（目标 ¥${fmtPrice(a.target)}）`, {
       kind: a.up ? 'good' : 'bad', ms: 5200, iconName: 'bell',
     });
-    sfx(a.up ? 'coin' : 'thud');
     haptic('medium');
   });
   bus.on('fill', (e) => {
     toast(`${e.side === 'sell' ? '挂单成交' : '买单成交'}：<b>${e.order.name}</b> ×${e.qty} @ ¥${fmtPrice(e.price)}`, {
       kind: 'good', iconName: 'check',
     });
-    sfx(e.side === 'sell' ? 'coin' : 'buy');
   });
   bus.on('order-expired', (o) => {
     toast(`挂单过期退回：<b>${o.name}</b> ×${o.qty - o.filled}`, { kind: 'info', iconName: 'clock' });
@@ -244,7 +235,6 @@ function wireNotifications() {
       });
     } else if (win) {
       toast(`拍卖中标：<b>${a.name}</b>（¥${fmtPrice(a.high.price)}）`, { kind: 'good', ms: 4200, iconName: 'winner' });
-      sfx('levelup');
     } else {
       toast(`拍卖结束：<b>${a.name}</b> 被 ${a.winner} 拿下`, { kind: 'info' });
     }
@@ -255,7 +245,6 @@ function wireNotifications() {
     for (const a of list) {
       toast(`成就达成：<b>${a.cn}</b> · ${a.desc}`, { kind: 'good', ms: 4200, iconName: 'star' });
     }
-    sfx('levelup');
     haptic('heavy');
   });
   bus.on('day', (d) => {
@@ -272,7 +261,6 @@ function checkLevelUp() {
     toast(`等级提升：<b>Lv.${S.player.level}</b>（背包 ${bagLimit()} 格 · 挂单上限提升）`, {
       kind: 'good', ms: 4200, iconName: 'arrowUp',
     });
-    sfx('levelup');
     haptic('heavy');
   }
   lastLevel = S.player.level;
@@ -355,7 +343,6 @@ async function bootApp() {
   } catch (e) { /* noop */ }
   document.documentElement.setAttribute('data-lum', S.settings.lum || 'default');
   document.documentElement.setAttribute('data-motion', S.settings.motion || 'on');
-  setSound(S.settings.sound !== false);
 
   // 2) 启动引擎（生成市场 + NPC + 预热 20 天历史）
   const t0 = performance.now();
@@ -404,19 +391,11 @@ async function bootApp() {
     saveExplicit().then((r) => {
       if (r && r.ok) {
         toast('已保存到存档位 ' + (S.meta.slot + 1), { kind: 'good', iconName: 'save' });
-        sfx('ding');
       } else {
         toast('保存失败，请检查浏览器存储权限', { kind: 'bad' });
       }
       paintSaveFlag();
     });
-  };
-  document.getElementById('btn-sound').onclick = () => {
-    S.settings.sound = !(S.settings.sound !== false);
-    setSound(S.settings.sound);
-    ctx.saveSettings();
-    if (S.settings.sound) sfx('ding');
-    paintAppbar();
   };
   paintNav();
   paintAppbar();

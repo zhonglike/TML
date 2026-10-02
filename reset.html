@@ -60,6 +60,12 @@
   </div>
 
   <div class="card">
+    <div class="label">诊断信息（用于排查布局问题）</div>
+    <div class="kbd" id="diag">读取中…</div>
+    <button class="ghost" id="copydiag">复制诊断信息</button>
+  </div>
+
+  <div class="card">
     <div class="label">如果按钮没反应（手动方式）</div>
     <ol>
       <li>桌面浏览器：按 <b>F12</b> → Application → Storage → <b>Clear site data</b>，然后 Ctrl+Shift+R。</li>
@@ -75,6 +81,47 @@
       el.textContent = t;
       el.className = 'st ' + cls;
     };
+
+    // ---- 布局诊断 ----
+    // 「手机上被强制显示电脑版式」通常是布局视口没被压到设备宽度：
+    // 一旦 innerWidth 接近 980，我的 min-width:900px 桌面规则就会生效。
+    function collectDiag() {
+      const dpr = window.devicePixelRatio || 1;
+      const q = (mq) => (window.matchMedia(mq).matches ? '命中' : '否');
+      return [
+        '视口 innerWidth × innerHeight : ' + window.innerWidth + ' × ' + window.innerHeight,
+        '物理屏幕 screen              : ' + screen.width + ' × ' + screen.height + ' @' + dpr + 'x',
+        'CSS 视口 documentElement     : ' + document.documentElement.clientWidth + ' × ' + document.documentElement.clientHeight,
+        '相对设备宽度的缩放比例        : ' + (window.innerWidth / Math.max(1, screen.width / dpr)).toFixed(2) + '×',
+        '媒体查询 ≥900px(桌面版式)     : ' + q('(min-width: 900px)'),
+        '媒体查询 ≤700px(手机版式)     : ' + q('(max-width: 700px)'),
+        '指针类型 pointer:coarse       : ' + q('(pointer: coarse)'),
+        '触屏点数 max-touch-points    : ' + ((navigator.maxTouchPoints != null) ? navigator.maxTouchPoints : '—'),
+        '横竖 screen.orientation      : ' + ((screen.orientation && screen.orientation.type) || '—'),
+        'userAgent                    : ' + navigator.userAgent,
+      ].join('\n');
+    }
+    const diagBox = document.getElementById('diag');
+    const diagText = collectDiag();
+    diagBox.textContent = diagText;
+
+    // 同时在控制台留一份，方便直接复制
+    console.log('[MONO 诊断]\n' + diagText);
+
+    document.getElementById('copydiag').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(diagText);
+        status('诊断信息已复制，粘贴给我即可', 'ok');
+      } catch (e) {
+        // 剪贴板不可用时选中文本，让用户手动复制
+        const r = document.createRange();
+        r.selectNodeContents(diagBox);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+        status('已选中文本，长按复制即可', 'bad');
+      }
+    });
 
     // 顺带体检：确认当前拿到的是新版本代码
     try {

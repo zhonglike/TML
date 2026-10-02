@@ -6,7 +6,6 @@
 import { h, mount, icon } from '../core/util.js';
 import { RARITY } from '../core/const.js';
 import { ITEMS, BY_RARITY } from '../core/catalog.js';
-import { sfx } from './sound.js';
 
 const CARD_W = 112;
 const CARD_GAP = 8;
@@ -205,7 +204,6 @@ export function playReel(host, win, opt = {}) {
           if (it.isWinner) {
             /* 中奖那一刻由调用方播报 */
           } else {
-            sfx('tick');
           }
           if (opt.onTickPass) opt.onTickPass(slot, it);
         }
@@ -258,7 +256,6 @@ export async function playMultiReel(host, results, opt = {}) {
   // 顺序弹出的节奏感：只对前若干张发声，避免噪声堆叠
   for (let i = 0; i < Math.min(shown.length, 12); i++) {
     const r = shown[i];
-    sfx(r.rarity === 'gold' || r.rarity === 'red' ? 'coin' : 'tap');
     await new Promise((r2) => setTimeout(r2, 70));
   }
   await new Promise((r2) => setTimeout(r2, 260));

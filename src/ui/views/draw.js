@@ -13,7 +13,6 @@ import * as economy from '../../systems/economy.js';
 import * as quest from '../../systems/quest.js';
 import * as inv from '../../systems/inventory.js';
 import * as trade from '../../systems/trade.js';
-import { sfx, sfxRarity } from '../sound.js';
 import { playReel, playMultiReel } from '../reel.js';
 import { sleep, clamp, thousands, dateTimeStr, durStr } from '../../core/util.js';
 
@@ -236,7 +235,6 @@ export function create(ctx) {
   /** CS 式轮盘：单抽完整播放，十连/百连首抽完整播放、其余快速扫过 */
   async function runReel(slot, results) {
     if (!results.length) return;
-    sfx('suspense');
     const reduce = reduceMotion();
     const first = results[0];
     const wrap = h('div');
@@ -248,20 +246,17 @@ export function create(ctx) {
           rng: ctx.rng,
           dur: reduce ? 0 : 5600,
           reduceMotion: reduce,
-          onSettle: () => sfxRarity(first.rarity),
         });
       } else {
         await playReel(wrap, first, {
           rng: ctx.rng,
           dur: reduce ? 0 : 5000,
           reduceMotion: reduce,
-          onSettle: () => sfxRarity(first.rarity),
         });
         await playMultiReel(wrap, results, { rng: ctx.rng, reduceMotion: reduce });
       }
     } catch (e) {
       console.error('[mono] reel error', e);
-      sfxRarity(first.rarity);
     }
 
     // 结果小标签
@@ -279,7 +274,6 @@ export function create(ctx) {
   /** 3D 翻卡：保留为可选表现（十连/百连时逐张翻开） */
   async function runFlip(slot, results) {
     if (!results.length) return;
-    sfx('suspense');
     const show = results.slice(0, 60);
     mount(slot, h('div.draw__stage.draw__stage--center', null,
       h('div.row.row--wrap', { style: { justifyContent: 'center', gap: '10px' } },
@@ -289,7 +283,6 @@ export function create(ctx) {
     for (let i = 0; i < cards.length; i++) {
       await sleep(reduce ? 10 : (i === 0 ? 140 : Math.max(40, 260 - results.length * 2)));
       cards[i].classList.add('is-flipped');
-      sfxRarity(show[i].rarity);
       if (i % 12 === 11) await sleep(reduce ? 10 : 120);
     }
     await sleep(reduce ? 20 : 320);

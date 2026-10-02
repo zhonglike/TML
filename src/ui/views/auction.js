@@ -13,7 +13,6 @@ import * as inv from '../../systems/inventory.js';
 import * as economy from '../../systems/economy.js';
 import * as quest from '../../systems/quest.js';
 import { durStr, clamp, thousands, dateTimeStr } from '../../core/util.js';
-import { sfx } from '../sound.js';
 
 export function create(ctx) {
   const el = h('section.view', { dataset: { view: 'auction' } });
@@ -52,7 +51,6 @@ export function create(ctx) {
       kind: parts.length ? 'good' : 'info',
       iconName: 'refresh',
     });
-    sfx('ding');
     render();
   }
 
@@ -204,7 +202,6 @@ export function create(ctx) {
       toast(msg, { kind: 'bad' });
       return;
     }
-    sfx(buyout ? 'coin' : 'ding');
     toast(`${buyout ? '一口价拿下' : '出价成功'} <b>¥${fmtPrice(price)}</b>`, { kind: 'good' });
     quest.bump('auctionActs', 1);
     quest.daily('d_bids', 1);

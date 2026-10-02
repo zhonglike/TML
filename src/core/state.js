@@ -75,7 +75,6 @@ export const S = {
   npcs: [],
   events: [],
   settings: {
-    sound: true,
     haptics: true,
     lum: 'default',
     motion: 'on',

@@ -6,7 +6,6 @@ import { h, mount, icon, money, price as fmtPrice, pct, thousands, rollNumber, c
 import { RARITY, WEAR_BY_ID } from '../core/const.js';
 import { getItem, conditionLabel } from '../core/catalog.js';
 import { S } from '../core/state.js';
-import { sfx } from './sound.js';
 
 export { h, mount, icon, money, fmtPrice, pct, thousands, clamp };
 
@@ -71,7 +70,6 @@ export function itemUnit(o) {
       dataset: { item: def.id, key: o.key || '' },
       title: def.name + (def.desc ? '\n' + def.desc : ''),
       onclick: (e) => {
-        sfx('tap');
         if (o.onClick) o.onClick(e, o);
       },
     },
@@ -185,7 +183,6 @@ export function toast(text, opt = {}) {
     el.classList.add('is-out');
     setTimeout(() => el.remove(), 240);
   }, life);
-  if (opt.sound !== false) sfx(opt.kind === 'bad' ? 'error' : opt.kind === 'good' ? 'ding' : 'tap');
 }
 
 export function layer() {
@@ -224,7 +221,6 @@ export function modal(opt = {}) {
   host.appendChild(wrap);
   document.addEventListener('keydown', onKey);
   if (opt.render) opt.render(body, close);
-  sfx('open');
   return { body, close, panel };
 }
 
@@ -309,7 +305,6 @@ export function segmented(items, activeId, onChange) {
       text: it.label,
       title: it.title || '',
       onclick: () => {
-        sfx('tap');
         onChange(it.id);
       },
     }));
@@ -323,7 +318,6 @@ export function chips(items, activeId, onChange) {
     wrap.appendChild(h('button.chip' + (it.id === activeId ? '.is-active' : ''), {
       type: 'button',
       onclick: () => {
-        sfx('tap');
         onChange(it.id);
       },
     },

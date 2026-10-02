@@ -53,7 +53,7 @@ const required = [
   'src/data/catalog-cs2.js', 'src/data/catalog-compute.js', 'src/data/catalog-hardware.js', 'src/data/catalog-assets.js',
   'src/systems/loot.js', 'src/systems/economy.js', 'src/systems/inventory.js',
   'src/systems/trade.js', 'src/systems/auction.js', 'src/systems/npc.js', 'src/systems/quest.js',
-  'src/ui/ui.js', 'src/ui/charts.js', 'src/ui/sound.js', 'src/ui/views.js',
+  'src/ui/ui.js', 'src/ui/charts.js', 'src/ui/views.js',
   'src/ui/views/dashboard.js', 'src/ui/views/bag.js', 'src/ui/views/draw.js', 'src/ui/views/market.js',
   'src/ui/views/item.js', 'src/ui/views/orders.js', 'src/ui/views/auction.js', 'src/ui/views/records.js',
   'src/ui/views/quests.js', 'src/ui/views/settings.js',

@@ -1,6 +1,6 @@
 /**
  * MONO — 设置
- * 音效 / 触感 / 亮度 / 动效 / 交易确认 / 存档管理（多档、导入导出）/ 关于与公式说明。
+ * 触感 / 亮度 / 动效 / 交易确认 / 存档管理（多档、存档到手机）/ 备份 / 公式速查。
  */
 import {
   h, mount, icon, fmtPrice, sectionTitle, toast, confirmDialog, modal, segmented, emptyState,
@@ -9,7 +9,6 @@ import { S, newPlayer } from '../../core/state.js';
 import { saveExplicit } from '../../core/engine.js';
 import { APP, TIME, ECON } from '../../core/const.js';
 import * as save from '../../core/save.js';
-import { setSound, sfx } from '../sound.js';
 import { thousands, dateTimeStr, durStr } from '../../core/util.js';
 import { ITEMS } from '../../core/catalog.js';
 
@@ -20,7 +19,6 @@ export function create(ctx) {
   function applySettings() {
     document.documentElement.setAttribute('data-lum', S.settings.lum || 'default');
     document.documentElement.setAttribute('data-motion', S.settings.motion || 'on');
-    setSound(S.settings.sound !== false);
     ctx.saveSettings();
   }
 
@@ -43,12 +41,6 @@ export function create(ctx) {
         // 表现
         h('div.card.card--pad', null,
           sectionTitle('表现'),
-          row('音效', '极简合成音：交易、揭晓、成交', toggle(S.settings.sound !== false, (v) => {
-            S.settings.sound = v;
-            setSound(v);
-            if (v) sfx('ding');
-            applySettings();
-          })),
           row('触感反馈', '移动端 / WebView 支持时震动（light）', toggle(S.settings.haptics !== false, (v) => {
             S.settings.haptics = v;
             applySettings();
@@ -222,7 +214,6 @@ export function create(ctx) {
         const next = !el2.classList.contains('is-on');
         el2.classList.toggle('is-on', next);
         el2.setAttribute('aria-checked', next ? 'true' : 'false');
-        sfx('click');
         onChange(next);
       },
     }, h('i.switch__track'));
