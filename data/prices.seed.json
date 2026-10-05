@@ -1,6 +1,6 @@
 {
  "$schema": "mono/prices-seed@1",
- "generatedAt": "2026-10-01T13:47:00.497Z",
+ "generatedAt": "2026-10-05T10:04:23.906Z",
  "currency": "CNY",
  "note": "价格锚点来自公开市场行情的人工整理；CI 定时任务可覆盖本文件的 base 字段来刷新锚价。",
  "count": 535,
